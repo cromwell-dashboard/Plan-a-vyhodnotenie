@@ -1321,6 +1321,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pa-summary{font-size:13px;line-height:1.55;background:rgba(43,82,201,.05);border-radius:8px;padding:10px 12px}
 #nbpr .pa-empty{color:var(--muted);font-size:13px}
 #nbpr .gbars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px 22px;margin-top:6px}
+#nbpr .gmet{display:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--primary);margin-bottom:5px}
 /* ===== graf: dva vodorovné pruhy (realita / plán) ===== */
 #nbpr .gb{display:flex;flex-direction:column;gap:5px;margin-top:7px}
 #nbpr .gb-row{position:relative;height:13px}
@@ -2199,6 +2201,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr tbody tr.m-rev td.metric{color:#2b52c9;font-weight:700}
 #nbpr tbody tr.m-mar:not(.total) td:not(.segname):not(.partname){background:#e9f6ed}
 #nbpr tbody tr.m-mar td.metric{color:#1f8f5a;font-weight:700}
+@media (max-width:680px){
+  /* stĺpcové nadpisy nahradí popisok priamo v karte */
+  #nbpr .gbars-head{display:none!important}
+  #nbpr .gmet{display:block}
+}
 @media (max-width:900px){
   #nbpr .grid{grid-template-columns:1fr}
   #nbpr .grid.graphs{grid-template-columns:1fr}
@@ -4353,7 +4360,10 @@ function renderGraphs(){
     }
     var c=cellOf(k,metric);
     var note=(metric==="cnt" && CNT_NOTE[k]) ? CNT_NOTE[k] : "";
-    var head='<div class="thead"><span class="tname">'+icoHtml(k)+nm+'</span>'+tog;
+    /* na úzkom displeji nie sú nad grafmi stĺpcové nadpisy – metrika sa píše do karty */
+    var MET_NAZ={rev:"Výnosy", mar:"Marža", ebitda:"EBITDA", cnt:"Kusy"};
+    var head='<div class="gmet">'+(MET_NAZ[metric]||metric)+'</div>'+
+             '<div class="thead"><span class="tname">'+icoHtml(k)+nm+'</span>'+tog;
     if(note) return head+'</div><div class="gb-na">'+note+'</div>';
     if(!c.a && !c.p) return head+'</div><div class="gb-na">bez údajov za toto obdobie</div>';
     var pl=(c.p>0)?Math.round(c.a/c.p*100):null;
