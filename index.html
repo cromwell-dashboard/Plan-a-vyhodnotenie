@@ -2320,6 +2320,15 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   #nbpr .obdobie>.scrollwrap{flex:1 1 100%;min-width:0}
   #nbpr #f-month{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%}
   #nbpr #f-month::-webkit-scrollbar{display:none}
+  /* menej odsadenia po bokoch – priestor patrí tabuľke */
+  .page{padding:8px}
+  #nbpr{padding:8px 8px 22px}
+  #nbpr .filters{margin:0 -8px 12px;padding:10px 8px}
+  #nbpr .card{padding:12px 10px}
+  #nbpr .card.graph,#nbpr #graphs{padding:12px 10px}
+  #nbpr .gseg{padding:10px 10px 12px}
+  /* rozpad presahuje cez odsadenie bloku aj karty – využije celú šírku */
+  #nbpr .gexp-m{margin:12px -21px -12px;border-top:1px solid var(--line)}
   /* názvové stĺpce v rozpade nemusia byť také široké */
   #nbpr .pt-subtbl thead th.pt-n,#nbpr .pt-subtbl td.pt-subname{min-width:88px;width:88px;
     padding-left:9px;padding-right:4px}
