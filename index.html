@@ -1407,7 +1407,14 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .gmet{display:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
   color:var(--primary);margin-bottom:5px}
 /* ===== graf: dva vodorovné pruhy (realita / plán) ===== */
-#nbpr .gb{display:flex;flex-direction:column;gap:5px;margin-top:7px}
+#nbpr .gb-wrap{display:flex;align-items:center;gap:12px;margin-top:7px}
+#nbpr .gb{display:flex;flex-direction:column;gap:5px;flex:1 1 auto;min-width:0}
+#nbpr .gcell .gb-wrap>.tpct,#nbpr .gseg .gb-wrap>.tpct,#nbpr .gb-wrap>.tpct{
+  flex:0 0 auto;min-width:60px;text-align:right;font-size:17px!important;font-weight:800!important;
+  letter-spacing:-.01em;line-height:1.1;font-variant-numeric:tabular-nums}
+#nbpr .tpct-up{color:var(--pos)}
+#nbpr .tpct-down{color:var(--neg)}
+#nbpr .tpct-na{color:var(--muted-2)}
 #nbpr .gb-row{position:relative;height:13px}
 #nbpr .gb-track{position:absolute;inset:0}
 #nbpr .gb-fill{position:absolute;left:0;top:0;bottom:0;border-radius:4px;transition:width .45s cubic-bezier(.4,0,.2,1);
@@ -4588,16 +4595,19 @@ function renderGraphs(){
     if(!c.a && !c.p) return head+'</div><div class="gb-na">bez údajov za toto obdobie</div>';
     var pl=(c.p>0)?Math.round(c.a/c.p*100):null;
     var up=(pl===null)||(pl>=100);
-    head+='<span class="tpct" style="color:'+(pl===null?"var(--muted)":(up?"var(--pos)":"var(--neg)"))+'">'+(pl===null?"—":fmtNum(pl)+"\u00A0%")+'</span></div>';
+    head+='</div>';
+    /* percento stojí vedľa pruhov, zvislo na ich úrovni */
+    var pct='<span class="tpct'+(pl===null?' tpct-na':(up?' tpct-up':' tpct-down'))+'">'+
+      (pl===null?"—":fmtNum(pl)+"\u00A0%")+'</span>';
     if(pl===null){
-      return head+'<div class="gb">'+
+      return head+'<div class="gb-wrap"><div class="gb">'+
         '<div class="gb-row gb-plain"><b>'+fmtValFor(c.a,metric)+'</b></div>'+
-        '<div class="gb-row gb-noplan">plán nezadaný</div></div>';
+        '<div class="gb-row gb-noplan">plán nezadaný</div></div>'+pct+'</div>';
     }
     var zero=zeroFor(c);
     var body='<div class="gb">'+bar('gb-fill '+(up?'up':'down'), c.a, c.p, metric,false,'Realita '+CY, zero);
     body+=bar('gb-plan', c.p, c.p, metric, true, 'Plán '+CY, zero);
-    return head+body+'</div>';
+    return head+'<div class="gb-wrap">'+body+'</div>'+pct+'</div>';
   }
   var uzke=(window.innerWidth<=680);
   var html="";
