@@ -1274,7 +1274,6 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .dp-cmp td.dp-name .dp-chev{display:none}
   #nbpr .dp-cmp .dp-total td.dp-name .met-ico,#nbpr .dp-sumtbl .met-ico{color:rgba(255,255,255,.85)}
   #nbpr .pt-subtbl td.pt-met{padding:6px 4px;text-align:center;left:var(--wname,92px);min-width:32px}
-  #nbpr .pt-subtbl td.pt-subname,#nbpr .pt-subtbl thead th.pt-n{min-width:110px}
   #nbpr .pt-subtbl td.pt-subname .dp-chev{display:none}
   #nbpr .pt-cltbl tr.pt-clsub td.pt-cl{padding-left:10px;text-align:center}
   #nbpr .pt-cltbl td.pt-cl{min-width:120px}
@@ -2321,6 +2320,15 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   #nbpr .obdobie>.scrollwrap{flex:1 1 100%;min-width:0}
   #nbpr #f-month{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%}
   #nbpr #f-month::-webkit-scrollbar{display:none}
+  /* názvové stĺpce v rozpade nemusia byť také široké */
+  #nbpr .pt-subtbl thead th.pt-n,#nbpr .pt-subtbl td.pt-subname{min-width:88px;width:88px;
+    padding-left:9px;padding-right:4px}
+  #nbpr .pt-table th.pt-n,#nbpr .pt-table td.pt-n{min-width:88px}
+  #nbpr .pt-subtbl td.pt-met{left:88px;min-width:30px;width:30px}
+  #nbpr .pt-cltbl td.pt-cl{min-width:120px}
+  #nbpr .pt-table td.pt-n,#nbpr .pt-table th.pt-n{font-size:11px;padding:6px 6px 6px 9px}
+  #nbpr .pt-table td.pt-c{padding:6px 8px;font-size:11px}
+  #nbpr .pt-table thead th{font-size:9.5px;padding:5px 6px}
   /* bloky grafov sa musia zmestiť do kontajnera */
   #nbpr .gseg,#nbpr .gseg-m,#nbpr .cl-box,#nbpr .kpi,#nbpr .card{box-sizing:border-box}
   #nbpr .gbars,#nbpr .gseg{max-width:100%;min-width:0}
