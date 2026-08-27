@@ -2292,6 +2292,30 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
 .page{max-width:1500px;margin:0 auto;padding:18px}
 #nbpr .filters{display:flex}
 
+
+/* ===== mobil: opravy rozloženia (musí byť za základnými pravidlami) ===== */
+@media (max-width:680px){
+  /* pevná výška patrí len na počítač – na mobile by orezala zalomené mesiace */
+  #nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters #f-year,#nbpr .filters .reset{height:auto}
+  #nbpr .seg.wrap{flex-wrap:nowrap!important;max-width:none}
+  #nbpr .filters .seg{display:inline-flex;align-items:center;flex:0 0 auto}
+  #nbpr .filters .seg-chip,#nbpr .filters .seg button{height:32px}
+  /* tlačidlo nemusí byť cez celú šírku */
+  #nbpr .reset{width:auto;align-self:flex-end;margin-left:auto;padding:9px 16px}
+  /* na mobile lišta neostáva prilepená – zaberala by štvrtinu obrazovky
+     a prekrývala by grafy, takže by sa na ne nedalo ťuknúť */
+  #nbpr .filters{position:static;box-shadow:none;border-bottom-color:transparent}
+  /* štvrťroky a mesiace pod sebou – v jednom rade sa mesiace strácali mimo obrazovky */
+  #nbpr .obdobie{flex-wrap:wrap;overflow:visible;gap:8px}
+  #nbpr .obd-sep{display:none}
+  #nbpr .obdobie>#f-quarter{flex:1 1 100%;justify-content:space-between}
+  #nbpr .obdobie>.scrollwrap{flex:1 1 100%;min-width:0}
+  #nbpr #f-month{overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;width:100%}
+  #nbpr #f-month::-webkit-scrollbar{display:none}
+  /* bloky grafov sa musia zmestiť do kontajnera */
+  #nbpr .gseg,#nbpr .gseg-m,#nbpr .cl-box,#nbpr .kpi,#nbpr .card{box-sizing:border-box}
+  #nbpr .gbars,#nbpr .gseg{max-width:100%;min-width:0}
+}
 </style>
 </head>
 <body>
@@ -6039,7 +6063,7 @@ function placeBrand(){
 }
 /* náznak, že sa lišta dá posunúť do strany */
 function scrollCues(){
-  ["#nbpr .obdobie","#nbpr .seg-chips","#nbpr .dp-wrap"].forEach(function(sel){
+  ["#nbpr #f-month","#nbpr .seg-chips","#nbpr .dp-wrap"].forEach(function(sel){
     var el=document.querySelector(sel); if(!el) return;
     var w=el.parentNode;
     if(!w.classList.contains("scrollwrap")){
