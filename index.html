@@ -1142,11 +1142,32 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   color:var(--ink); background:var(--panel); line-height:1.45; -webkit-font-smoothing:antialiased;
   font-variant-numeric:tabular-nums; padding:22px; min-height:100%;
 }
-#nbpr .top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:18px}
+#nbpr .top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:14px}
+/* logo je súčasťou prilepenej lišty s filtrami */
+#nbpr .filters .brand{flex:0 0 auto;align-self:flex-end;padding-right:18px;margin-right:2px;
+  border-right:1px solid var(--line)}
+/* náznak posúvania sa zobrazuje len na úzkych displejoch */
+#nbpr .scrollcue{display:none}
+#nbpr .scrollwrap{position:relative;min-width:0}
+/* všetky ovládacie prvky lišty na jednej línii */
+#nbpr .filters{align-items:flex-end}
+#nbpr .fgroup{display:flex;flex-direction:column;justify-content:flex-end;gap:6px}
+#nbpr .flabel{line-height:1.1;margin:0}
+#nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters #f-year{margin:0}
+/* jednotná výška ovládacích prvkov – potom sedia aj popisky nad nimi */
+#nbpr .filters #f-year,#nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters .reset{
+  height:38px;box-sizing:border-box}
+#nbpr .filters .seg{display:flex;align-items:center}
+#nbpr .filters .seg-chip{height:30px;padding:0 13px}
+#nbpr .filters .seg button{height:30px;display:inline-flex;align-items:center}
+#nbpr .filters .obdobie{align-items:center}
+#nbpr .filters .reset{align-self:flex-end}
+#nbpr .filters .brand .mark{width:38px;height:38px}
+#nbpr .filters .brand h1{font-size:18px;margin-top:0}
+#nbpr .filters .brand .eyebrow{font-size:9.5px;letter-spacing:.14em}
 #nbpr .brand{display:flex;align-items:center;gap:14px}
-#nbpr .mark{width:44px;height:44px;border-radius:10px;background:var(--primary);position:relative;flex:none}
-#nbpr .mark:after{content:"";position:absolute;inset:11px;border:3px solid #fff;border-radius:3px;
-  clip-path:polygon(0 40%,50% 0,100% 40%,100% 100%,0 100%)}
+#nbpr .mark{width:44px;height:44px;border-radius:10px;overflow:hidden;flex:none;line-height:0}
+#nbpr .mark svg{display:block;width:100%;height:100%}
 #nbpr .eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700}
 #nbpr h1{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-top:1px}
 #nbpr h1 span{color:var(--green)}
@@ -1199,6 +1220,15 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .seg-chip{padding:8px 12px;font-size:13px;flex:0 0 auto}
   #nbpr .obdobie{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding-bottom:2px}
   #nbpr .obdobie::-webkit-scrollbar{display:none}
+  #nbpr .scrollwrap{position:relative}
+  #nbpr .scrollwrap::after{content:"";position:absolute;right:0;top:0;bottom:2px;width:44px;pointer-events:none;
+    background:linear-gradient(90deg,rgba(240,242,247,0),var(--panel) 72%);opacity:1;transition:opacity .15s ease}
+  #nbpr .scrollwrap.at-end::after{opacity:0}
+  #nbpr .scrollcue{position:absolute;right:4px;top:50%;transform:translateY(-50%);width:22px;height:22px;
+    border-radius:50%;background:var(--primary);color:#fff;display:flex!important;align-items:center;justify-content:center;
+    font-size:11px;font-weight:800;pointer-events:none;box-shadow:0 1px 4px rgba(16,24,40,.25);transition:opacity .15s ease}
+  #nbpr .scrollwrap.at-end .scrollcue{opacity:0}
+  #nbpr .seg-chips-wrap{position:relative}
   #nbpr .obdobie .seg{flex:0 0 auto}
   #nbpr .seg.wrap{flex-wrap:nowrap}
   #nbpr .seg button{padding:8px 11px;font-size:13px}
@@ -1217,19 +1247,28 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .kpi .kbig{font-size:clamp(13px,12cqi,23px);line-height:1.12;white-space:nowrap}
   #nbpr .kpi .ksub{font-size:clamp(9px,6cqi,11.5px)}
   #nbpr .kpi .kd-lbl,#nbpr .kpi .kd-val{font-size:clamp(9px,5.8cqi,11.5px)}
-  /* filtre pod seba */
-  #nbpr .filters{flex-direction:column;align-items:stretch}
-  #nbpr .fgroup{width:100%}
-  #nbpr .fgroup-seg,#nbpr .months-group{width:100%}
+  /* filtre: Rok a Segment vedľa seba, Obdobie na celú šírku */
+  #nbpr .filters{flex-direction:row;align-items:flex-end;gap:8px 10px}
+  #nbpr .fgroup{width:auto;min-width:0}
+  #nbpr .fgroup:has(#f-year){flex:0 0 auto}
+  #nbpr .fgroup-seg{flex:1 1 0;min-width:0}
+  #nbpr .months-group{flex:1 1 100%}
+  #nbpr #f-year{padding:8px 10px;font-size:13px}
   /* graf: jeden stĺpec */
   #nbpr .gbars{grid-template-columns:1fr;gap:10px}
   #nbpr .gbars .tbar{padding:10px 12px}
   #nbpr .mtog button{padding:3px 8px;font-size:10px}
   /* tabuľky: posúvanie prstom, menšie písmo */
   #nbpr .dp-wrap{-webkit-overflow-scrolling:touch}
-  #nbpr .dp-cmp td.dp-cell,#nbpr .dp-cmp thead th{font-size:11px}
-  #nbpr .dp-cmp td.dp-name{font-size:12px}
-  #nbpr .dp-cmp td.dp-metric{font-size:11px}
+  #nbpr .dp-cmp td.dp-cell,#nbpr .dp-cmp thead th{font-size:10px}
+  #nbpr .dp-cmp td.dp-name{font-size:11px}
+  #nbpr .dp-cmp td.dp-metric{font-size:10px}
+  #nbpr .dp-cmp td.dp-cell,#nbpr .dp-cmp td.dp-name,#nbpr .dp-cmp td.dp-metric{padding:5px 7px}
+  #nbpr .dp-cmp thead th{padding:5px 7px}
+  /* každá tabuľka má vlastnú hlavičku – pri posúvaní je stále jasné, čo je čo */
+  #nbpr .dp-headrep>tr>th{font-size:9px;padding:4px 7px}
+  #nbpr .dp-headrep>tr>th.dpg{font-size:9.5px;letter-spacing:.02em}
+  #nbpr .dp-headrep>tr>th small{display:none}
   #nbpr .dp-cmp thead th.dpg{font-size:10.5px}
   #nbpr .dp-cmp.dp-sumtbl>thead>tr>th.dpg{font-size:11px}
   #nbpr .dp-stack{gap:8px}
@@ -2225,7 +2264,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .gseg-head .tico svg{width:18px;height:18px}
   #nbpr .gseg-nm{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   #nbpr .gseg-click{cursor:pointer}
-  #nbpr .gseg-chev{font-size:10px;color:var(--muted-2);transition:transform .15s ease}
+  #nbpr .gseg-hint{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+    color:var(--primary);background:#eef1fb;border:1px solid #d5dcf5;border-radius:999px;padding:3px 9px}
+  #nbpr .gseg-chev{font-size:10px;color:var(--primary);transition:transform .15s ease}
   #nbpr .gseg-chev.open{transform:rotate(90deg)}
   #nbpr .gseg-m{padding-top:11px}
   #nbpr .thead-m{display:flex;align-items:center;gap:8px;margin-bottom:0}
@@ -2250,30 +2291,37 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:#33363F}
 .page{max-width:1500px;margin:0 auto;padding:18px}
 #nbpr .filters{display:flex}
-.maska-hint{background:#fff;border:1px solid #d7dbe6;border-left:4px solid #3d4eb8;border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:12.5px;line-height:1.55;color:#3a4256}
-.maska-hint b{color:#1a2233}
-@media print{.maska-hint{display:none}}
-@media (max-width:680px){
-  .maska-hint{max-height:2.9em;overflow:hidden;position:relative;cursor:pointer;padding:10px 12px;font-size:12px;margin-bottom:10px}
-  .maska-hint::after{content:"… ťuknutím rozbaliť";position:absolute;right:10px;bottom:6px;font-size:10.5px;
-    font-weight:700;color:#3d4eb8;background:linear-gradient(90deg,rgba(240,242,247,0),#eef0f5 32%);padding-left:26px}
-  .maska-hint.open{max-height:none}
-  .maska-hint.open::after{content:"ťuknutím zbaliť";position:static;display:block;margin-top:6px;background:none;padding:0}
-}
+
 </style>
 </head>
 <body>
 <div class="page">
-  <div class="maska-hint">
-    <b>Maska na plánovanie a vyhodnotenie za skupinu.</b> Údaje sa dopĺňajú v bloku <b>MASKA → polozky</b> na začiatku skriptu v tomto súbore
-    (otvorte súbor v textovom editore, prepíšte čísla, uložte a znovu otvorte v prehliadači).
-    Každý riadok má 12 čísel na plán a 12 na realitu — pre výnos, maržu a kusy (počet). Graf ukazuje tri časti <b>Výnosy · Marža · Kusy</b>
-    a prepínačom pod grafom sa prepína zobrazenie <b>Po segmentoch</b> / <b>Po firmách</b>. Segment <b>Tlač</b> zlučuje riadky Tlač a Tlač&nbsp;ND.
-  </div>
+  <!-- Poznámka pre toho, kto upravuje súbor:
+       Maska na plánovanie a vyhodnotenie za skupinu. Údaje sa dopĺňajú v bloku MASKA → polozky na začiatku skriptu v tomto súbore (otvorte súbor v textovom editore, prepíšte čísla, uložte a znovu otvorte v prehliadači). Každý riadok má 12 čísel na plán a 12 na realitu — pre výnos, maržu a kusy (počet). Graf ukazuje tri časti Výnosy · Marža · Kusy a prepínačom pod grafom sa prepína zobrazenie Po segmentoch / Po firmách. Segment Tlač zlučuje riadky Tlač a Tlač&nbsp;ND. -->
+
 <div id="nbpr">
   <div class="top">
     <div class="brand">
-      <div class="mark" aria-hidden="true"></div>
+      <div class="mark" aria-hidden="true">
+        <svg viewBox="0 0 512 512" width="100%" height="100%">
+          <defs>
+            <linearGradient id="hb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A5CCC"/><stop offset="1" stop-color="#33429E"/></linearGradient>
+            <radialGradient id="hg" cx="50%" cy="104%" r="80%">
+              <stop offset="0" stop-color="#2E9E5F" stop-opacity="1"/>
+              <stop offset="0.45" stop-color="#2E9E5F" stop-opacity="0.72"/>
+              <stop offset="1" stop-color="#2E9E5F" stop-opacity="0"/></radialGradient>
+            <clipPath id="hc"><rect width="512" height="512" rx="122"/></clipPath>
+          </defs>
+          <g clip-path="url(#hc)">
+            <rect width="512" height="512" fill="url(#hb)"/>
+            <rect width="512" height="512" fill="url(#hg)"/>
+            <rect x="87" y="95" width="197" height="51" rx="25" fill="#fff"/>
+            <rect x="87" y="177" width="291" height="51" rx="25" fill="#fff"/>
+            <rect x="87" y="260" width="339" height="51" rx="25" fill="#fff"/>
+            <rect x="87" y="343" width="236" height="51" rx="25" fill="#fff"/>
+          </g>
+        </svg>
+      </div>
       <div>
         <div class="eyebrow">Cromwell Group</div>
         <h1>Výsledky</h1>
@@ -3955,7 +4003,7 @@ var FIRMA = {};
 var MANUAL = {};
 var MANUAL_CANEDIT = false;
 var MGMT = {m:[],st:{},ob:{},kat:{}};
-var state = { year: defaultYear(), months: (function(){try{var s=localStorage.getItem('nbpr_months');if(s){var a=JSON.parse(s);if(Array.isArray(a)&&a.length)return a;}}catch(e){} return [1,2,3];})(), segment: "all", expanded: {}, segExpanded: null,
+var state = { year: defaultYear(), months: [1,2,3], segment: "all", expanded: {}, segExpanded: null,
               graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", komOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
 
 
@@ -4089,6 +4137,8 @@ function poslednyMesiac(){
   return last;
 }
 function ytdMesiace(){ var l=poslednyMesiac(), a=[]; for(var m=1;m<=l;m++) a.push(m); return a; }
+/* predvolený výber: posledný mesiac, za ktorý sú nahraté reálne dáta */
+function defaultMonths(){ var l=poslednyMesiac(); return l?[l]:[1,2,3]; }
 
 /* ---- KPIs ---- */
 function dial(pctVal){
@@ -4418,7 +4468,8 @@ function renderGraphs(){
       html+='<div class="gseg'+(open?' gseg-open':'')+'">'+
         '<div class="gseg-head'+(can?' gseg-click':'')+'"'+(can?(' data-seg="'+k+'"'):'')+'>'+
           icoHtml(k)+'<span class="gseg-nm">'+nm+'</span>'+
-          (can?'<span class="gseg-chev'+(open?' open':'')+'">▸</span>':'')+'</div>'+
+          (can?('<span class="gseg-hint">'+(open?'skryť':'tabuľka')+'</span>'+
+                '<span class="gseg-chev'+(open?' open':'')+'">▸</span>'):'')+'</div>'+
         '<div class="gseg-m">'+box(k,nm,"rev",true)+'</div>'+
         '<div class="gseg-m">'+box(k,nm,"mar",true)+'</div>'+
         '<div class="gseg-m">'+box(k,nm,"cnt",true)+'</div>'+
@@ -4983,6 +5034,7 @@ function renderTable(){
   function pctTxt(v){ return v===null?"—":fmtNum(v)+"\u00A0%"; }
   function pln(a,p){ return p>0?Math.round(a/p*100):null; }
   var ncell=dpNcell(hasPY);
+  var uzke=(window.innerWidth<=680);
 
   /* ---- pevné šírky stĺpcov: všetky tabuľky musia byť zarovnané ---- */
   var uzke=(window.innerWidth<=680);
@@ -5075,9 +5127,12 @@ function renderTable(){
 
   /* ---- 2) každý riadok vo vlastnej tabuľke (pri jedinom riadku sa vynechá) ---- */
   var segTbls='';
+  /* na úzkom displeji si každá tabuľka nesie vlastnú hlavičku, aby bolo pri
+     posúvaní stále vidieť, ktorý mesiac je ktorý */
+  var headSeg = uzke ? ('<thead class="dp-headrep">'+head.replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'')+'</thead>') : '';
   if(!single) rows.forEach(function(id){
     var nm=isF?((firmObj(id)&&firmObj(id).name)||id):((segObj(id)&&segObj(id).name)||id);
-    segTbls+='<table class="dp-table dp-cmp dp-segtbl" style="width:'+TOTW+'px">'+COLG+'<tbody>'+
+    segTbls+='<table class="dp-table dp-cmp dp-segtbl" style="width:'+TOTW+'px">'+COLG+headSeg+'<tbody>'+
       rowBlock(rowObjY(CY,isF,id), rowObjY(PY,isF,id), nm, false, mKeysFor(id), id)+
       '</tbody></table>';
   });
@@ -5313,7 +5368,7 @@ function renderAnalysis(){
   html+='<div class="pa-summary">'+sum+'</div>';
   host.innerHTML=html;
 }
-function renderAll(){ try{localStorage.setItem('nbpr_months',JSON.stringify(state.months));}catch(e){} renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail(); renderAnalysis(); try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} }
+function renderAll(){ renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail(); renderAnalysis(); try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ scrollCues(); }catch(e){} }
 
 /* ---- events ---- */
 _EL("f-year").addEventListener("change", function(e){ state.year=e.target.value; renderAll(); });
@@ -5357,7 +5412,7 @@ _EL("f-month").addEventListener("click", function(e){
   syncChips(); renderAll();
 });
 _EL("f-reset").addEventListener("click", function(){
-  state.year=defaultYear(); state.months=[1,2,3]; state.segment="all";
+  state.year=defaultYear(); state.months=defaultMonths(); state.segment="all";
   state.expanded={}; state.graphMode="plnenie"; state.dpView="mesiace";
   state.dpPlanMon=false; state.dpPyMon=false;
   state.subExpanded=null; state.segExpanded=null; state.tblExpanded=null; state.komOpen=null;
@@ -5429,6 +5484,8 @@ window.NBPlanReport = {
 
 var _dpRz, _wasNarrow=(window.innerWidth<=680);
 window.addEventListener("resize", function(){ clearTimeout(_dpRz); _dpRz=setTimeout(function(){
+  try{ placeBrand(); placeKpis(); }catch(e){}
+try{ kpiAutofit(); }catch(e){}
   try{ kpiAutofit(); }catch(e){}
   var now=(window.innerWidth<=680);
   if(now!==_wasNarrow){ _wasNarrow=now; renderAll(); return; }
@@ -5957,13 +6014,8 @@ function renderDataCheck(){
     state.chkOpen=!state.chkOpen; renderDataCheck();
   });
 })();
-(function(){
-  var mh=document.querySelector(".maska-hint");
-  if(mh) mh.addEventListener("click", function(){ if(window.innerWidth<=680) mh.classList.toggle("open"); });
-})();
 /* KPI: ak sa číslo do štvorca nezmestí, písmo sa doladí nadol */
 function kpiAutofit(){
-  if(window.innerWidth>680) return;
   document.querySelectorAll("#nbpr .kpi .kbig").forEach(function(el){
     el.style.fontSize="";
     var box=el.parentNode, avail=el.clientWidth||box.clientWidth;
@@ -5971,8 +6023,50 @@ function kpiAutofit(){
     while(el.scrollWidth>el.clientWidth+1 && fs>10 && guard<24){ fs-=0.7; el.style.fontSize=fs+"px"; guard++; }
   });
 }
+/* KPI karty patria nad graf; na počítači ide logo do lišty s filtrami */
+function placeKpis(){
+  var k=document.getElementById("kpis"), f=document.querySelector("#nbpr .filters");
+  if(!k||!f) return;
+  if(k.previousElementSibling!==f) f.parentNode.insertBefore(k, f.nextSibling);
+}
+function placeBrand(){
+  var br=document.querySelector("#nbpr .brand"), top=document.querySelector("#nbpr .top"),
+      f=document.querySelector("#nbpr .filters");
+  if(!br||!top||!f) return;
+  if(window.innerWidth<=680){ if(br.parentNode!==top) top.insertBefore(br, top.firstChild); }
+  else { if(br.parentNode!==f) f.insertBefore(br, f.firstChild); }
+  top.style.display = (top.children.length? "" : "none");
+}
+/* náznak, že sa lišta dá posunúť do strany */
+function scrollCues(){
+  ["#nbpr .obdobie","#nbpr .seg-chips","#nbpr .dp-wrap"].forEach(function(sel){
+    var el=document.querySelector(sel); if(!el) return;
+    var w=el.parentNode;
+    if(!w.classList.contains("scrollwrap")){
+      w=document.createElement("div"); w.className="scrollwrap";
+      el.parentNode.insertBefore(w, el); w.appendChild(el);
+      var cue=document.createElement("span"); cue.className="scrollcue"; cue.textContent="›";
+      cue.setAttribute("aria-hidden","true"); w.appendChild(cue);
+      el.addEventListener("scroll", function(){ oznac(w, el); }, {passive:true});
+    }
+    oznac(w, el);
+  });
+  function oznac(w, el){
+    var koniec = el.scrollWidth - el.clientWidth - el.scrollLeft < 6;
+    var netreba = el.scrollWidth <= el.clientWidth + 4;
+    w.classList.toggle("at-end", koniec || netreba);
+  }
+}
+/* výška prilepenej lišty – aby sa pod ňu dala prilepiť hlavička tabuľky */
+function stickyTop(){
+  var f=document.querySelector("#nbpr .filters");
+  if(f) document.getElementById("nbpr").style.setProperty("--stickytop", Math.round(f.getBoundingClientRect().height)+"px");
+}
 /* ---- boot ---- */
+try{ state.months=defaultMonths(); }catch(e){}
+try{ placeBrand(); placeKpis(); }catch(e){}
 renderFilters();
+try{ stickyTop(); scrollCues(); }catch(e){}
 renderAll();
 })();
 </script>
