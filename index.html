@@ -1204,6 +1204,31 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .obdobie{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #nbpr .obd-sep{width:1px;align-self:stretch;background:var(--line);margin:2px 2px}
 #nbpr .qb-ytd{font-weight:800;letter-spacing:.03em}
+/* stav spoločného úložiska */
+#nbpr .fb-stav{align-self:flex-end;font-size:10.5px;font-weight:700;letter-spacing:.03em;
+  border-radius:999px;padding:6px 11px;border:1px solid;white-space:nowrap;margin-right:8px}
+#nbpr .fb-ok{color:#1a6b3c;background:#f1f9f4;border-color:#bfe0cc}
+#nbpr .fb-warn{color:#8a5f08;background:#fdf7ea;border-color:#eeddb4}
+#nbpr .fb-info{color:#4b5563;background:#f4f5f8;border-color:#e0e3ea}
+/* prihlasovacie okno */
+.fb-login{position:fixed;inset:0;z-index:10000;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,rgba(31,42,74,.55),rgba(20,60,45,.55));backdrop-filter:blur(3px);padding:18px}
+.fb-card{width:340px;max-width:100%;background:#fff;border-radius:18px;padding:22px 22px 18px;
+  box-shadow:0 24px 60px rgba(16,24,40,.32);font-family:'Inter',system-ui,sans-serif;
+  display:flex;flex-direction:column;gap:10px}
+.fb-hd{font-size:17px;font-weight:800;color:#1f2a4a;letter-spacing:-.01em}
+.fb-sub{font-size:12px;color:#6b7280;margin-bottom:4px;line-height:1.5}
+.fb-in{font-family:inherit;font-size:13.5px;padding:11px 12px;border:1px solid #e2e5ec;border-radius:10px;
+  color:#2f3b5c;background:#fbfcfe}
+.fb-in:focus{outline:none;border-color:#3d4eb8;background:#fff;box-shadow:0 0 0 3px rgba(61,78,184,.12)}
+.fb-btn{margin-top:4px;font-family:inherit;font-size:13.5px;font-weight:700;color:#fff;cursor:pointer;
+  border:0;border-radius:10px;padding:11px 14px;
+  background:linear-gradient(100deg,#4A5CCC 0%,#3F6BA8 60%,#2E9E5F 150%)}
+.fb-btn:hover{filter:brightness(1.06)}
+.fb-err{font-size:12px;color:#b3342a;background:#fdf2f0;border:1px solid #f0cac4;border-radius:9px;padding:8px 10px}
+.fb-link{background:none;border:0;font-family:inherit;font-size:11px;color:#9aa1ad;cursor:pointer;padding:2px}
+.fb-link:hover{color:#6b7280;text-decoration:underline}
+.kom-pop-sign{margin:6px 14px 0;font-size:10px;color:#9aa1ad;font-style:italic}
 
 /* ======================= MOBIL ======================= */
 @media (max-width:680px){
@@ -1884,6 +1909,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 .kom-pop-t:focus{outline:none}
 .kom-pop-t:empty::before{content:attr(data-ph);color:#aab2c4}
 .kom-pop-t b{font-weight:800;color:#1f2a4a}
+.kom-pop-t ul,.kom-pop-t ol{margin:4px 0 4px 18px;padding:0}
+.kom-pop-t li{margin:2px 0}
+.kom-pop-t div{min-height:1.6em}
 .kom-pop-ft{display:flex;align-items:center;gap:9px;margin:8px 14px 0;padding-top:9px;
   border-top:1px solid rgba(61,78,184,.10)}
 .kom-b{border:0;background:rgba(61,78,184,.09);border-radius:8px;width:27px;height:24px;cursor:pointer;
@@ -2562,6 +2590,7 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
       <div class="seg-chips" id="f-segment" role="group" aria-label="Segment"></div>
     </div>
     <div class="spacer"></div>
+    <span class="fb-stav fb-info" id="fb-stav">Lokálny režim</span>
     <button class="reset" id="f-reset" type="button">Vyčistiť filtre</button>
     <div class="fgroup months-group">
       <div class="flabel">Obdobie</div>
@@ -6230,6 +6259,7 @@ function komPopOtvor(btn){
       '<button class="kom-pop-x" type="button" data-ptkomclose="1" title="Zavrieť">✕</button></div>'+
     '<div class="kom-pop-t" contenteditable="true" spellcheck="false" data-ptkomtext="'+kk+'" '+
       'data-ph="Napíšte komentár…"></div>'+
+    (typeof fbPodpis==="function"?fbPodpis(kk):'')+
     '<div class="kom-pop-ft">'+
       '<button class="kom-b" type="button" data-kombold="1" title="Tučné písmo — označte text"><b>B</b></button>'+
       '<span class="kom-pop-hint">označený text zvýrazníte cez B</span></div>';
@@ -6250,6 +6280,7 @@ function komUloz(pole){
   var html=cistiHtml(pole.innerHTML), txt=pole.textContent.trim();
   if(txt) KOM[kk]=html; else delete KOM[kk];
   komSave();
+  try{ fbZapisKomentar(kk, txt?html:""); }catch(e){}
   document.querySelectorAll('[data-ptkom="'+kk+'"]').forEach(function(b){
     b.classList.toggle('on', !!txt);
     b.title = txt ? ('Komentár: '+txt.slice(0,90)) : 'Pridať komentár';
@@ -6402,7 +6433,8 @@ var NOTES=(function(){
   try{ var raw=localStorage.getItem(NOTE_KEY); if(raw) base=JSON.parse(raw)||{}; }catch(e){}
   return base;
 })();
-function notesSave(){ try{ localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); }catch(e){} }
+function notesSave(){ try{ localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); }catch(e){}
+  try{ fbZapisPopisy(state.segment); }catch(e){} }
 function notesFor(segId){
   if(!NOTES[segId]){
     var src=(MASKA_POPISY&&MASKA_POPISY[segId])?MASKA_POPISY[segId]:POPISY_SABLONA;
@@ -6432,24 +6464,26 @@ function renderSegNotes(){
   });
   host.innerHTML=html||'<div class="sp-empty">Žiadne okná — pridajte tlačidlom „+ Pridať okno".</div>';
 }
-/* z poznámky uložíme iba text a tučné písmo – nič iné sa nevlepí */
+/* z poznámky uložíme text, tučné písmo a členenie na riadky/odrážky */
 function cistiHtml(h){
   var d=document.createElement('div'); d.innerHTML=String(h||'');
+  var POVOLENE={B:'b', STRONG:'b', BR:'br', DIV:'div', P:'div', UL:'ul', OL:'ol', LI:'li'};
   (function ocisti(uzol){
     [].slice.call(uzol.childNodes).forEach(function(n){
-      if(n.nodeType===3) return;
-      if(n.nodeType!==1){ n.remove(); return; }
-      var tag=n.tagName.toLowerCase();
+      if(n.nodeType===3) return;                 /* text ponechať */
+      if(n.nodeType!==1){ n.remove(); return; }  /* komentáre a pod. preč */
       ocisti(n);
-      if(tag==='b'||tag==='strong'){
-        while(n.attributes.length) n.removeAttribute(n.attributes[0].name);
-        if(tag==='strong'){ var b=document.createElement('b'); b.innerHTML=n.innerHTML; n.replaceWith(b); }
-      } else {
-        n.replaceWith.apply(n, [].slice.call(n.childNodes));
+      var nova=POVOLENE[n.tagName];
+      if(!nova){ n.replaceWith.apply(n, [].slice.call(n.childNodes)); return; }
+      while(n.attributes.length) n.removeAttribute(n.attributes[0].name);
+      if(nova!==n.tagName.toLowerCase()){
+        var e=document.createElement(nova);
+        while(n.firstChild) e.appendChild(n.firstChild);
+        n.replaceWith(e);
       }
     });
   })(d);
-  return d.innerHTML.replace(/\s+/g,' ').trim();
+  return d.innerHTML.trim();
 }
 function noteCollectFrom(el){
   var card=el.closest('.sp-note'); if(!card) return;
@@ -7598,8 +7632,192 @@ function ptHeadOffset(){
     if(h>0) th.closest('table').style.setProperty('--pth1', h+'px');
   });
 }
+/* ===================== SPOLOČNÉ ÚLOŽISKO (Firebase) =====================
+   Komentáre a okná popisu sa ukladajú do Realtime Database, takže ich
+   vidia všetci naraz. Bez pripojenia beží dashboard ďalej lokálne a
+   rozpísané texty sa nahrajú, len čo sa spojenie obnoví. */
+var FB_CONFIG = {
+  apiKey: "AIzaSyAi271i_qgsKiAeVBFOCbUfKccgyBClxSc",
+  authDomain: "cromwellgroup-tyzdenny-report.firebaseapp.com",
+  /* ↓↓↓ DOPLNIŤ: adresa Realtime Database z konzoly Firebase ↓↓↓
+     Nájdeš ju v Build → Realtime Database, hneď nad tabuľkou dát.
+     Vyzerá napr. takto:
+       https://cromwellgroup-tyzdenny-report-default-rtdb.europe-west1.firebasedatabase.app  */
+  databaseURL: "",
+  projectId: "cromwellgroup-tyzdenny-report",
+  storageBucket: "cromwellgroup-tyzdenny-report.firebasestorage.app",
+  messagingSenderId: "998598557554",
+  appId: "1:998598557554:web:dcf8a546fcf8423386e7eb"
+};
+var FB_KOREN = "vysledky";     /* vetva v databáze – Týždenný report sa nedotkne */
+
+var FB = { pripojene:false, uzivatel:null, db:null, auth:null, cakaju:[] };
+
+function fbStav(text, druh){
+  var el=document.getElementById("fb-stav"); if(!el) return;
+  el.textContent=text; el.className="fb-stav fb-"+(druh||"info");
+}
+function fbUdaj(cesta){ return FB.db.ref(FB_KOREN+"/"+cesta); }
+function fbMeno(){
+  var u=FB.uzivatel; if(!u) return "";
+  return u.displayName || (u.email||"").split("@")[0] || "neznámy";
+}
+/* načítanie knižnice – ak sa nepodarí, ostávame v lokálnom režime */
+function fbNacitaj(hotovo){
+  if(!FB_CONFIG.databaseURL){ fbStav("Lokálny režim – doplňte adresu databázy","warn"); return; }
+  var zdroje=[
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js",
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js",
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"
+  ];
+  var i=0;
+  (function dalsi(){
+    if(i>=zdroje.length){ hotovo(); return; }
+    var s=document.createElement("script");
+    s.src=zdroje[i++]; s.async=false;
+    s.onload=dalsi;
+    s.onerror=function(){ fbStav("Bez pripojenia – ukladám lokálne","warn"); };
+    document.head.appendChild(s);
+  })();
+}
+function fbStart(){
+  fbNacitaj(function(){
+    try{
+      firebase.initializeApp(FB_CONFIG);
+      FB.auth=firebase.auth(); FB.db=firebase.database();
+      FB.auth.onAuthStateChanged(function(u){
+        FB.uzivatel=u||null;
+        if(u){ fbPrihlaseny(); } else { fbPrihlasenieUkaz(); }
+      });
+      FB.db.ref(".info/connected").on("value", function(s){
+        FB.pripojene=!!s.val();
+        if(FB.uzivatel) fbStav(FB.pripojene?("Zdieľané · "+fbMeno()):"Bez spojenia – ukladám lokálne", FB.pripojene?"ok":"warn");
+      });
+    }catch(e){ fbStav("Lokálny režim ("+e.message+")","warn"); }
+  });
+}
+/* ---- prihlásenie ---- */
+function fbPrihlasenieUkaz(){
+  if(document.getElementById("fb-login")) return;
+  var d=document.createElement("div");
+  d.id="fb-login"; d.className="fb-login";
+  d.innerHTML='<form class="fb-card" autocomplete="on">'+
+    '<div class="fb-hd">Výsledky · Cromwell Group</div>'+
+    '<div class="fb-sub">Prihláste sa rovnakým účtom ako do Týždenného reportu.</div>'+
+    '<input class="fb-in" type="email" name="email" placeholder="E-mail" autocomplete="username" required>'+
+    '<input class="fb-in" type="password" name="heslo" placeholder="Heslo" autocomplete="current-password" required>'+
+    '<button class="fb-btn" type="submit">Prihlásiť sa</button>'+
+    '<div class="fb-err" hidden></div>'+
+    '<button class="fb-link" type="button" data-fbskip="1">Pokračovať bez prihlásenia (komentáre sa neuložia spoločne)</button>'+
+  '</form>';
+  document.body.appendChild(d);
+  d.querySelector("form").addEventListener("submit", function(e){
+    e.preventDefault();
+    var f=e.target, err=d.querySelector(".fb-err");
+    err.hidden=true;
+    FB.auth.signInWithEmailAndPassword(f.email.value.trim(), f.heslo.value)
+      .catch(function(x){
+        err.hidden=false;
+        err.textContent = (x.code==="auth/invalid-credential"||x.code==="auth/wrong-password"||x.code==="auth/user-not-found")
+          ? "Nesprávny e-mail alebo heslo." : ("Prihlásenie zlyhalo: "+x.message);
+      });
+  });
+  d.querySelector("[data-fbskip]").addEventListener("click", function(){
+    d.remove(); fbStav("Lokálny režim – bez zdieľania","warn");
+  });
+}
+function fbPrihlasenieSkry(){ var d=document.getElementById("fb-login"); if(d) d.remove(); }
+
+/* ---- po prihlásení: presun lokálnych textov a živé sledovanie ---- */
+function fbPrihlaseny(){
+  fbPrihlasenieSkry();
+  fbStav("Zdieľané · "+fbMeno(),"ok");
+  fbPresunLokalne();
+  fbSleduj();
+}
+/* jednorazovo nahrá to, čo má človek zapísané v prehliadači */
+function fbPresunLokalne(){
+  var hotovo="cg_fb_presun_v1";
+  if(localStorage.getItem(hotovo)) return;
+  var pocet=0;
+  Object.keys(KOM).forEach(function(k){
+    if(!KOM[k]) return;
+    fbUdaj("komentare/"+fbKluc(k)).transaction(function(cur){
+      if(cur && cur.text) return;                 /* v databáze už niečo je – nechávame */
+      pocet++;
+      return { text:KOM[k], autor:fbMeno(), cas:Date.now(), kluc:k };
+    });
+  });
+  Object.keys(NOTES).forEach(function(seg){
+    fbUdaj("popisy/"+fbKluc(seg)).transaction(function(cur){
+      if(cur) return;
+      return { data:JSON.stringify(NOTES[seg]), autor:fbMeno(), cas:Date.now() };
+    });
+  });
+  localStorage.setItem(hotovo, String(Date.now()));
+}
+function fbKluc(k){ return String(k).replace(/[.#$\[\]\/]/g,"~"); }
+function fbSleduj(){
+  fbUdaj("komentare").on("value", function(s){
+    var d=s.val()||{}, zmena=false;
+    var nove={};
+    Object.keys(d).forEach(function(id){
+      var z=d[id]; if(!z||!z.text) return;
+      var k=z.kluc||id;
+      nove[k]=z.text;
+      KOM_META[k]={autor:z.autor||"", cas:z.cas||0};
+      if(KOM[k]!==z.text) zmena=true;
+    });
+    Object.keys(KOM).forEach(function(k){ if(nove[k]===undefined) zmena=true; });
+    KOM=nove;
+    try{ localStorage.setItem(KOM_KEY, JSON.stringify(KOM)); }catch(e){}
+    if(zmena){ try{ renderAll(); }catch(e){} try{ renderGraphs(); }catch(e){} fbBublinuObnov(); }
+  });
+  fbUdaj("popisy").on("value", function(s){
+    var d=s.val()||{}, zmena=false;
+    Object.keys(d).forEach(function(id){
+      try{ var arr=JSON.parse(d[id].data||"[]");
+        if(JSON.stringify(NOTES[id])!==JSON.stringify(arr)){ NOTES[id]=arr; zmena=true; }
+      }catch(e){}
+    });
+    if(zmena){ try{ localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); }catch(e){}
+               try{ renderSegNotes(); }catch(e){} }
+  });
+}
+/* zápis – volá sa pri každej zmene textu */
+function fbZapisKomentar(kluc, text){
+  if(!FB.db || !FB.uzivatel) return;
+  var ref=fbUdaj("komentare/"+fbKluc(kluc));
+  if(text && text.trim()) ref.set({ text:text, autor:fbMeno(), cas:Date.now(), kluc:kluc });
+  else ref.remove();
+}
+function fbZapisPopisy(seg){
+  if(!FB.db || !FB.uzivatel) return;
+  fbUdaj("popisy/"+fbKluc(seg)).set({ data:JSON.stringify(NOTES[seg]||[]), autor:fbMeno(), cas:Date.now() });
+}
+/* kto a kedy komentár naposledy upravil */
+var KOM_META={};
+function fbPodpis(kluc){
+  var m=KOM_META[kluc]; if(!m||!m.autor) return "";
+  var d=new Date(m.cas||0), dnes=new Date();
+  var kedy = (d.toDateString()===dnes.toDateString())
+    ? ("dnes "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"))
+    : (d.getDate()+". "+(d.getMonth()+1)+". "+d.getFullYear());
+  return '<div class="kom-pop-sign">'+m.autor+' · '+kedy+'</div>';
+}
+function fbBublinuObnov(){
+  if(!KOM_POP) return;
+  var pole=KOM_POP.querySelector("[data-ptkomtext]"); if(!pole) return;
+  if(document.activeElement===pole) return;         /* práve píše – nerušíme */
+  var kk=pole.getAttribute("data-ptkomtext");
+  if(pole.innerHTML!==(KOM[kk]||"")) pole.innerHTML=KOM[kk]||"";
+  var s=KOM_POP.querySelector(".kom-pop-sign");
+  if(s) s.outerHTML=fbPodpis(kk); else if(fbPodpis(kk)) KOM_POP.querySelector(".kom-pop-ft").insertAdjacentHTML("beforebegin", fbPodpis(kk));
+}
+
 /* ---- boot ---- */
 try{ state.months=defaultMonths(); }catch(e){}
+try{ fbStart(); }catch(e){}
 try{ placeBrand(); placeKpis(); }catch(e){}
 renderFilters();
 try{ stickyTop(); scrollCues(); }catch(e){}
