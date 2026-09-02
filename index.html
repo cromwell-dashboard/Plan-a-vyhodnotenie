@@ -1853,6 +1853,51 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   position:sticky;left:172px;background:#fff;box-shadow:1px 0 0 #e5e7eb}
 #nbpr .pt-subtbl thead th.pt-n{min-width:172px}
 #nbpr .pt-subtbl td.pt-subname{min-width:172px;font-weight:700;color:#1f2937}
+/* komentár k firme v rozpade */
+#nbpr .dp-noplan,#nbpr .pt-noplan{opacity:.85}
+#nbpr .pt-kom{margin-left:7px;border:1px solid #d7dbe4;background:#fff;border-radius:6px;padding:2px 5px;
+  cursor:pointer;color:#9aa1ad;vertical-align:middle;line-height:0;transition:all .12s ease}
+#nbpr .pt-kom:hover{border-color:var(--primary);color:var(--primary)}
+#nbpr .pt-kom.on{color:#2E9E5F;border-color:#bfe0cc;background:#f2faf5}
+#nbpr .pt-kom.act{color:#fff;background:var(--primary);border-color:var(--primary)}
+/* plávajúca bublina s komentárom */
+.kom-pop{position:fixed;z-index:9999;width:340px;
+  background:linear-gradient(160deg,#ffffff 0%,#f7f9ff 55%,#f2f7f4 100%);
+  border:1px solid rgba(61,78,184,.14);border-radius:18px;
+  box-shadow:0 22px 48px -12px rgba(31,42,74,.30), 0 2px 8px rgba(31,42,74,.08);
+  font-family:'Inter',system-ui,sans-serif;padding:0 0 10px}
+.kom-pop.drag{box-shadow:0 30px 60px -10px rgba(31,42,74,.38)}
+.kom-pop.drag .kom-pop-arrow{opacity:0}
+.kom-pop-arrow{position:absolute;top:-7px;left:24px;width:13px;height:13px;transition:opacity .15s ease;
+  background:linear-gradient(135deg,#4A5CCC,#3F6BA8);border-radius:3px;transform:rotate(45deg)}
+.kom-pop-hd{display:flex;align-items:center;gap:8px;padding:10px 14px 11px;cursor:move;touch-action:none;user-select:none;
+  background:linear-gradient(100deg,#4A5CCC 0%,#3F6BA8 55%,#2E9E5F 140%);
+  border-radius:17px 17px 0 0}
+.kom-pop-hd span{font-size:10.5px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#fff}
+.kom-pop-x{margin-left:auto;border:0;background:rgba(255,255,255,.18);border-radius:8px;cursor:pointer;
+  width:22px;height:22px;cursor:pointer;color:#fff;font-size:11px;line-height:1;flex:none;
+  transition:background .12s ease}
+.kom-pop-x:hover{background:rgba(255,255,255,.34)}
+.kom-pop-t{margin:12px 14px 0;min-width:230px;min-height:78px;height:106px;max-width:76vw;
+  resize:both;overflow:auto;font-size:13px;line-height:1.6;color:#2f3b5c;box-sizing:border-box;
+  border:0;background:transparent;padding:0 2px}
+.kom-pop-t:focus{outline:none}
+.kom-pop-t:empty::before{content:attr(data-ph);color:#aab2c4}
+.kom-pop-t b{font-weight:800;color:#1f2a4a}
+.kom-pop-ft{display:flex;align-items:center;gap:9px;margin:8px 14px 0;padding-top:9px;
+  border-top:1px solid rgba(61,78,184,.10)}
+.kom-b{border:0;background:rgba(61,78,184,.09);border-radius:8px;width:27px;height:24px;cursor:pointer;
+  color:#3d4eb8;font-size:11px;line-height:1;transition:background .12s ease}
+.kom-b:hover{background:rgba(61,78,184,.20)}
+.kom-b b{font-weight:900}
+.kom-pop-hint{font-size:10px;color:#9aa1ad}
+/* hlavičky rozpadov zostávajú viditeľné pri rolovaní v paneli */
+#nbpr .pt-scroll,#nbpr .cl-scroll{max-height:min(72vh,760px);overflow:auto}
+#nbpr .pt-table thead th,#nbpr .pt-cltbl thead th{position:sticky;top:0;z-index:14;
+  background:#f2f5fa;box-shadow:inset 0 -1px 0 var(--line)}
+#nbpr .pt-table thead tr:nth-child(2) th,#nbpr .pt-cltbl thead tr:nth-child(2) th{top:var(--pth1,30px)}
+#nbpr .pt-table th.pt-n,#nbpr .pt-table th.pt-methead,
+#nbpr .pt-cltbl th.pt-cl,#nbpr .pt-cltbl th.pt-methead{z-index:16}
 #nbpr .pt-subtbl tr.pt-subfirst td{border-top:2px solid #dcdfe4}
 #nbpr .pt-subtbl tr.pt-clickrow{cursor:pointer}
 #nbpr .pt-subtbl tr.pt-clickrow:hover td:not(.pt-n):not(.pt-met){background-color:#fafbfd}
@@ -1862,6 +1907,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .cl-head{display:flex;align-items:center;gap:8px;padding:5px 10px;background:linear-gradient(180deg,#f6f7fb,#e9ecf4);
   border-bottom:1px solid #e2e6ef;font-size:11.5px;font-weight:700;color:#2f3a52}
 #nbpr .cl-head span{font-weight:600;color:#6b7280;margin-left:auto;font-size:10.5px}
+#nbpr .cl-head .pt-kom{margin-left:8px}
 #nbpr .cl-close{width:18px;height:18px;padding:0;border:1px solid #d3d7df;background:#fff;border-radius:50%;
   font-family:inherit;font-size:10px;font-weight:700;line-height:1;cursor:pointer;color:#6b7280;flex:0 0 auto}
 #nbpr .cl-close:hover{background:#eef1f7;color:#2f3a52}
@@ -5188,7 +5234,7 @@ var MANUAL = {};
 var MANUAL_CANEDIT = false;
 var MGMT = {m:[],st:{},ob:{},kat:{}};
 var state = { year: defaultYear(), months: [1,2,3], segment: "all", expanded: {}, segExpanded: null,
-              graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", komOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
+              graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", komOpen: null, ptKomOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
 
 
 /* --- bezpečný prístup k DOM (v maske sú niektoré bloky odstránené) --- */
@@ -5757,13 +5803,22 @@ var DP_MN=["Jan","Feb","Mar","Apr","Máj","Jún","Júl","Aug","Sep","Okt","Nov",
 function dpPer(){ var p=state.months.slice().sort(function(a,b){return a-b;}); return p.length?p:[1,2,3,4,5,6,7,8,9,10,11,12]; }
 function dpShowMon(){ return state.dpView!=="spolu"; }
 /* ktoré bloky majú rozpad po mesiacoch (plán sa dá skryť samostatne) */
-function dpFlags(){ var mon=dpShowMon(); return {real:mon, plan:mon&&state.dpPlanMon!==false, py:mon&&state.dpPyMon!==false}; }
+/* plnenie bez plánu: ak reálne dodávame, je to plus – nie neutrálny stav */
+function plnTrieda(pl, a, pre){
+  if(pl!==null) return (pl>=100?' '+pre+'-ok':' '+pre+'-bad');
+  if(a>0.5) return ' '+pre+'-ok '+pre+'-noplan';
+  if(a<-0.5) return ' '+pre+'-bad';
+  return ' '+pre+'-neu';
+}
+function plnTitul(pl, a){ return (pl===null && a>0.5) ? 'title="Plán nie je zadaný – celá realita je nad rámec plánu"' : ''; }
+function dpFlags(){ var mon=dpShowMon(); return {real:mon&&state.dpRealMon!==false, plan:mon&&state.dpPlanMon!==false, py:mon&&state.dpPyMon!==false}; }
 function dpW(f){ return (f?(dpPer().length+1):1) + (dpHasYtd()?1:0); }
 /* YTD = od januára po posledný zvolený mesiac; zobrazí sa, len keď sa líši od výberu */
 function dpYtd(){ var p=dpPer(), out=[]; for(var m=1;m<=p[p.length-1];m++) out.push(m); return out; }
 function dpHasYtd(){ var p=dpPer(); return p[0]>1 || p.length!==p[p.length-1]; }
 function dpToggleCol(k){
-  if(k==="plan") state.dpPlanMon=!(state.dpPlanMon!==false);
+  if(k==="real") state.dpRealMon=!(state.dpRealMon!==false);
+  else if(k==="plan") state.dpPlanMon=!(state.dpPlanMon!==false);
   else if(k==="py") state.dpPyMon=!(state.dpPyMon!==false);
 }
 /* hlavička v blokoch: Realita CY | Plán CY | Plnenie | Realita PY | 2026 vs 2025 */
@@ -5782,10 +5837,11 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
       (open?'Skryť mesiace – '+what:'Zobraziť mesiace – '+what)+'" title="'+
       (open?'Skryť mesiace, zobraziť iba súčet':'Zobraziť mesiace')+'">'+(open?'\u2212':'+')+'</button>') : '';
   }
-  var planBtn=colBtn('plan', fl.plan, 'plán'), pyBtn=colBtn('py', fl.py, 'realita '+PY);
+  var realBtn=colBtn('real', fl.real, 'realita '+CY),
+      planBtn=colBtn('plan', fl.plan, 'plán'), pyBtn=colBtn('py', fl.py, 'realita '+PY);
   if(!mon){
     return '<tr>'+firstTh(ytd?2:1)+
-      (ytd?('<th class="dpg dp-bstart" colspan="2">Realita · '+CY+'</th>'+
+      (ytd?('<th class="dpg dp-bstart" colspan="2">Realita · '+CY+realBtn+'</th>'+
             '<th class="dpg dp-bstart" colspan="2">Plán · '+CY+planBtn+'</th>'+
             '<th class="dpg dp-bstart" colspan="2">Plnenie</th>'+
             (hasPY?('<th class="dpg dp-bstart" colspan="2">Realita · '+PY+pyBtn+'</th>'+
@@ -5804,7 +5860,7 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
     '</tr>';
   }
   var h1='<tr>'+firstTh(2)+
-    '<th class="dpg dp-bstart" colspan="'+wR+'">Realita · '+CY+'</th>'+
+    '<th class="dpg dp-bstart" colspan="'+wR+'">Realita · '+CY+realBtn+'</th>'+
     '<th class="dpg dp-bstart" colspan="'+wP+'">Plán · '+CY+planBtn+'</th>'+
     '<th class="dpg dp-bstart" colspan="'+wPl+'">Plnenie<small>realita/plán</small></th>'+
     (hasPY?('<th class="dpg dp-bstart" colspan="'+wY+'">Realita · '+PY+pyBtn+'</th>'+
@@ -5827,7 +5883,8 @@ function ptCells(get, hasPY, metric){
   function eur(v){ if(!v || Math.abs(v)<0.5) v=0; return fmtValFor(v,MK); }
   function pctT(v){ return v===null?"—":fmtNum(v)+"\u00A0%"; }
   function pln(a,p){ return p>0?Math.round(a/p*100):null; }
-  function ok(a,p){ if(!(p>0)) return ' pt-neu'; return (Math.round(a/p*100)>=100)?' pt-ok':' pt-bad'; }
+  /* bez plánu, ale s kladnou realitou – reálne dodávame, takže zelená */
+  function ok(a,p){ if(!(p>0)) return (a>0.5?' pt-ok':(a<-0.5?' pt-bad':' pt-neu')); return (Math.round(a/p*100)>=100)?' pt-ok':' pt-bad'; }
   var A=get(per,'a'), P=get(per,'p'), PYv=hasPY?get(per,'y'):0, out='';
   var ytd=dpHasYtd(), YP=dpYtd();
   var Ay=ytd?get(YP,'a'):0, Py=ytd?get(YP,'p'):0, PYy=(ytd&&hasPY)?get(YP,'y'):0;
@@ -5839,7 +5896,7 @@ function ptCells(get, hasPY, metric){
   out+='<td class="pt-c pt-bB pt-tot'+(fl.plan?'':' pt-bstart')+'">'+eur(P)+'</td>';
   if(ytd) out+='<td class="pt-c pt-bB pt-tot pt-ytd">'+eur(Py)+'</td>';
   var pl=pln(A,P);
-  out+='<td class="pt-c pt-pl pt-bstart'+(pl===null?' pt-neu':(pl>=100?' pt-ok':' pt-bad'))+'">'+pctT(pl)+'</td>';
+  out+='<td class="pt-c pt-pl pt-bstart'+plnTrieda(pl,A,'pt')+'" '+plnTitul(pl,A)+'>'+pctT(pl)+'</td>';
   if(ytd){ var ply=pln(Ay,Py);
     out+='<td class="pt-c pt-pl pt-ytd'+(ply===null?' pt-neu':(ply>=100?' pt-ok':' pt-bad'))+'">'+pctT(ply)+'</td>'; }
   if(hasPY){
@@ -5902,19 +5959,19 @@ function subsDetailHtml(id, isF){
           var labN=Math.min(3,ncol);
           body+='<tr class="pt-fgrp'+(hasCl?' dp-grp-click':'')+'"'+attr+'>'+
             '<td class="dp-grp-lbl" colspan="'+labN+'">'+(sCY.name||k)+
-              (hasCl?('<i class="dp-grp-ch'+(openK?' open':'')+'">▸</i>'):'')+'</td>'+
+              (hasCl?('<i class="dp-grp-ch'+(openK?' open':'')+'">▸</i>'):'')+ptKomBtn(id,k,(sCY.name||k))+'</td>'+
             (ncol>labN?('<td class="dp-grp-fill" colspan="'+(ncol-labN)+'"></td>'):'')+'</tr>';
         } else {
           nameTd='<td class="pt-n pt-subname" rowspan="'+mk.length+'">'+
             (hasCl?('<span class="dp-chev'+(openK?' open':'')+'">▸</span>'):'<span class="dp-chev dp-chev-off"></span>')+
-            (sCY.name||k)+'</td>';
+            (sCY.name||k)+ptKomBtn(id,k,(sCY.name||k))+'</td>';
         }
       }
       body+='<tr class="'+cls+'"'+attr+'>'+nameTd+
         '<td class="pt-met">'+metCell(mkp[0],mkp[1])+'</td>'+
         ptCells(function(mm,wh){ return (wh==='y') ? sumMetricY(sPY,mkp[0],mm).a : sumMetricY(sCY,mkp[0],mm)[wh]; }, hasPY, mkp[0])+'</tr>';
     });
-    if(openK && hasCl) body+='<tr class="pt-exp"><td colspan="'+(ncol+(uzke?0:1))+'">'+clientsTableHtml(sCY,sPY,hasPY,(sCY.name||k),id)+'</td></tr>';
+    if(openK && hasCl) body+='<tr class="pt-exp"><td colspan="'+(ncol+(uzke?0:1))+'">'+clientsTableHtml(sCY,sPY,hasPY,(sCY.name||k),id,id,k)+'</td></tr>';
   });
   var sumRev=sumMetricY(oCY,'rev',dpPer()).a, sumMar=sumMetricY(oCY,'mar',dpPer()).a;
   return '<div class="gxbox pt-box '+gxTheme(id)+'">'+
@@ -5950,7 +6007,7 @@ function metricsPresent(obj){
 }
 /* tabuľka klientov (tretia úroveň) – rozloženie ako v XLS:
    riadok klienta = Výnosy (bledosivý), pod ním marža, [marža (S)], kusy */
-function clientsTableHtml(sCY, sPY, hasPY, label, rowId){
+function clientsTableHtml(sCY, sPY, hasPY, label, rowId, komSeg, komFirma){
   var CY=String(state.year), PY=prevYear();
   var order=sCY.casti.order.slice();
   var note=(rowId && CNT_NOTE[rowId]) ? CNT_NOTE[rowId] : "";
@@ -6009,7 +6066,9 @@ function clientsTableHtml(sCY, sPY, hasPY, label, rowId){
       .replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'')
       .replace(/class="dpg/g,'class="pt-g dpg').replace(/class="dp-sum/g,'class="pt-g dp-sum')
       .replace(/class="dp-b([ABC]) /g,'class="pt-b$1 ').replace(/class="dp-tot"/g,'class="pt-toth"');
-  return '<div class="cl-box"><div class="cl-head">Klienti — '+label+' <span>'+order.length+' klientov</span>'+
+  /* rovnaký komentár ako pri firme v rozpade – je to tá istá poznámka */
+  var komBtn = komSeg ? ptKomBtn(komSeg, komFirma, label) : '';
+  return '<div class="cl-box"><div class="cl-head">Klienti — '+label+komBtn+' <span>'+order.length+' klientov</span>'+
     '<button class="cl-close" type="button" data-subclose="1" title="Zavrieť">✕</button></div>'+
     '<div class="cl-scroll"><table class="pt-table pt-cltbl"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div></div>';
 }
@@ -6025,7 +6084,7 @@ function partsDetailHtml(id, isF){
     var nmK=(objCY.name||id);
     return '<div class="pt-box gxbox"><div class="pt-head"><span>Rozpad — '+nmK+'</span>'+
       '<button class="pt-close" type="button" data-close="1" title="Zavrieť">✕</button></div>'+
-      clientsTableHtml(objCY, objPY, hasPY, nmK, id)+'</div>';
+      clientsTableHtml(objCY, objPY, hasPY, nmK, id, id, '-')+'</div>';
   }
   var order=objCY.casti.order.slice();
   var per=dpPer(), mon=dpShowMon();
@@ -6123,6 +6182,118 @@ function komSave(){ try{ localStorage.setItem(KOM_KEY, JSON.stringify(KOM)); }ca
 function komKey(seg,sub,cl){ return seg+"|"+(sub||"-")+"|"+cl; }
 var KOM_ICON='<svg viewBox="0 0 16 16" width="11" height="11" aria-hidden="true">'+
   '<path d="M2.4 2.6h11.2v8.1H7.2L4.3 13v-2.3H2.4z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
+
+/* komentáre k firmám v rozpade Detailného prehľadu */
+/* komentár ako plávajúca bublina pri ikonke */
+var KOM_POP=null, KOM_POP_T=0;
+function komPopDoOkna(){
+  if(!KOM_POP) return;
+  var r=KOM_POP.getBoundingClientRect();
+  var x=Math.min(Math.max(8, r.left), Math.max(8, window.innerWidth-r.width-8));
+  var y=Math.min(Math.max(8, r.top), Math.max(8, window.innerHeight-r.height-8));
+  KOM_POP.style.left=Math.round(x)+'px'; KOM_POP.style.top=Math.round(y)+'px';
+}
+/* bublinu možno chytiť za hlavičku a presunúť kamkoľvek po obrazovke */
+function komPopDrag(p){
+  var hd=p.querySelector('.kom-pop-hd'); if(!hd) return;
+  hd.addEventListener('pointerdown', function(e){
+    if(e.target.closest('[data-ptkomclose]')) return;
+    e.preventDefault();
+    var r=p.getBoundingClientRect(), dx=e.clientX-r.left, dy=e.clientY-r.top;
+    p.classList.add('drag');
+    function pohyb(ev){
+      var x=Math.min(Math.max(4, ev.clientX-dx), window.innerWidth-r.width-4);
+      var y=Math.min(Math.max(4, ev.clientY-dy), window.innerHeight-r.height-4);
+      p.style.left=Math.round(x)+'px'; p.style.top=Math.round(y)+'px';
+    }
+    function koniec(){
+      p.classList.remove('drag');
+      window.removeEventListener('pointermove', pohyb);
+      window.removeEventListener('pointerup', koniec);
+    }
+    window.addEventListener('pointermove', pohyb);
+    window.addEventListener('pointerup', koniec);
+  });
+}
+function komPopZavri(){
+  if(KOM_POP){ KOM_POP.remove(); KOM_POP=null; }
+  document.querySelectorAll('.pt-kom.act').forEach(function(b){ b.classList.remove('act'); });
+}
+function komPopOtvor(btn){
+  var kk=btn.getAttribute('data-ptkom'), nazov=btn.getAttribute('data-ptkomnaz')||'';
+  komPopZavri();
+  btn.classList.add('act');
+  var p=document.createElement('div');
+  p.className='kom-pop';
+  p.innerHTML='<div class="kom-pop-arrow"></div>'+
+    '<div class="kom-pop-hd"><span>'+nazov+'</span>'+
+      '<button class="kom-pop-x" type="button" data-ptkomclose="1" title="Zavrieť">✕</button></div>'+
+    '<div class="kom-pop-t" contenteditable="true" spellcheck="false" data-ptkomtext="'+kk+'" '+
+      'data-ph="Napíšte komentár…"></div>'+
+    '<div class="kom-pop-ft">'+
+      '<button class="kom-b" type="button" data-kombold="1" title="Tučné písmo — označte text"><b>B</b></button>'+
+      '<span class="kom-pop-hint">označený text zvýrazníte cez B</span></div>';
+  document.body.appendChild(p);
+  p.querySelector('[data-ptkomtext]').innerHTML = KOM[kk]||'';
+  KOM_POP=p; KOM_POP_T=Date.now(); komPopDrag(p);
+  var r=btn.getBoundingClientRect(), w=p.offsetWidth, h=p.offsetHeight;
+  var x=Math.min(Math.max(8, r.left), window.innerWidth-w-8);
+  var y=(r.bottom+8+h<window.innerHeight) ? (r.bottom+8) : Math.max(8, r.top-h-8);
+  p.style.left=Math.round(x)+'px'; p.style.top=Math.round(y)+'px';
+  var ta=p.querySelector('[data-ptkomtext]');
+  try{ ta.focus({preventScroll:true}); }catch(e){ ta.focus(); }
+  var rg=document.createRange(); rg.selectNodeContents(ta); rg.collapse(false);
+  var sl=window.getSelection(); sl.removeAllRanges(); sl.addRange(rg);
+}
+function komUloz(pole){
+  var kk=pole.getAttribute("data-ptkomtext");
+  var html=cistiHtml(pole.innerHTML), txt=pole.textContent.trim();
+  if(txt) KOM[kk]=html; else delete KOM[kk];
+  komSave();
+  document.querySelectorAll('[data-ptkom="'+kk+'"]').forEach(function(b){
+    b.classList.toggle('on', !!txt);
+    b.title = txt ? ('Komentár: '+txt.slice(0,90)) : 'Pridať komentár';
+  });
+}
+/* obsluha bubliny: otvorenie, zavretie a priebežné ukladanie */
+(function(){
+  document.addEventListener("click", function(e){
+    if(e.target.closest("[data-ptkomclose]")){ e.preventDefault(); e.stopPropagation(); komPopZavri(); return; }
+    var b=e.target.closest("[data-ptkom]");
+    if(b){ e.preventDefault(); e.stopPropagation();
+      if(KOM_POP && b.classList.contains('act')) komPopZavri(); else komPopOtvor(b);
+      return; }
+  }, true);
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") komPopZavri(); });
+  /* pri zmene veľkosti okna bublinu len vrátime do viditeľnej plochy */
+  window.addEventListener("resize", function(){ if(KOM_POP) komPopDoOkna(); });
+  document.addEventListener("input", function(e){
+    var t=e.target.closest && e.target.closest("[data-ptkomtext]"); if(!t) return;
+    komUloz(t);
+  });
+  /* tučné písmo v bubline */
+  document.addEventListener("mousedown", function(e){
+    var bb=e.target.closest("[data-kombold]"); if(!bb) return;
+    e.preventDefault();   /* nech sa nestratí označenie textu */
+  }, true);
+  document.addEventListener("click", function(e){
+    var bb=e.target.closest("[data-kombold]"); if(!bb) return;
+    e.preventDefault(); e.stopPropagation();
+    var pole=KOM_POP && KOM_POP.querySelector('[data-ptkomtext]'); if(!pole) return;
+    var sel=window.getSelection();
+    if(sel && sel.rangeCount && !sel.isCollapsed && pole.contains(sel.anchorNode)){
+      document.execCommand('bold');
+      komUloz(pole);
+    }
+  }, true);
+})();
+function ptKomKey(segId, firma){ return "rozpad|"+segId+"|"+firma; }
+function ptKomBtn(segId, firma, nazov){
+  var kk=ptKomKey(segId,firma), txt=String(KOM[kk]||"").replace(/<[^>]*>/g,"").trim();
+  return '<button class="pt-kom'+(txt?' on':'')+'" type="button" data-ptkom="'+kk+'" '+
+    'data-ptkomnaz="Komentár — '+String(nazov||firma).replace(/"/g,'&quot;')+'" '+
+    'title="'+(txt?('Komentár: '+txt.replace(/"/g,'&quot;').slice(0,90)):'Pridať komentár')+'">'+KOM_ICON+'</button>';
+}
 
 /* zoskupenie klientov podľa firmy */
 function segChartGroups(segKey){
@@ -6385,7 +6556,8 @@ function renderTable(){
     var A=g(per,'a'), P=g(per,'p'), PYv=hasPY?g(per,'y'):0, out='';
     var ytd=dpHasYtd(), YP=dpYtd();
     var Ay=ytd?g(YP,'a'):0, Py=ytd?g(YP,'p'):0, PYy=(ytd&&hasPY)?g(YP,'y'):0;
-    function ok(a,p){ if(!(p>0)) return ' dp-neu'; return (Math.round(a/p*100)>=100)?' dp-ok':' dp-bad'; }
+    /* bez plánu, ale s kladnou realitou – reálne dodávame, takže zelená */
+    function ok(a,p){ if(!(p>0)) return (a>0.5?' dp-ok':(a<-0.5?' dp-bad':' dp-neu')); return (Math.round(a/p*100)>=100)?' dp-ok':' dp-bad'; }
     if(fl.real) per.forEach(function(mo,i){
       out+='<td class="dp-cell dp-bA'+(i===0?' dp-bstart':'')+'">'+fV(g([mo],'a'))+'</td>'; });
     out+='<td class="dp-cell dp-bA dp-tot'+(fl.real?'':' dp-bstart')+ok(A,P)+'">'+fV(A)+'</td>';
@@ -6394,7 +6566,7 @@ function renderTable(){
     out+='<td class="dp-cell dp-bB dp-tot'+(fl.plan?'':' dp-bstart')+'">'+fV(P)+'</td>';
     if(ytd) out+='<td class="dp-cell dp-bB dp-tot dp-ytd">'+fV(Py)+'</td>';
     var pl=pln(A,P);
-    out+='<td class="dp-cell dp-sum dp-bstart'+(pl===null?' dp-neu':(pl>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(pl)+'</td>';
+    out+='<td class="dp-cell dp-sum dp-bstart'+plnTrieda(pl,A,'dp')+'" '+plnTitul(pl,A)+'>'+pctTxt(pl)+'</td>';
     if(ytd){ var ply=pln(Ay,Py);
       out+='<td class="dp-cell dp-sum dp-ytd'+(ply===null?' dp-neu':(ply>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ply)+'</td>'; }
     if(hasPY){
@@ -6707,7 +6879,7 @@ function renderAnalysis(){
   html+='<div class="pa-summary">'+sum+'</div>';
   host.innerHTML=html;
 }
-function renderAll(){ renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail(); renderAnalysis(); try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ scrollCues(); }catch(e){} }
+function renderAll(){ renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail(); renderAnalysis(); try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ ptHeadOffset(); }catch(e){} try{ scrollCues(); }catch(e){} }
 
 /* ---- events ---- */
 _EL("f-year").addEventListener("change", function(e){ state.year=e.target.value; renderAll(); });
@@ -6723,9 +6895,15 @@ _EL("f-quarter").addEventListener("click", function(e){
   if(q==="all"){ state.months=[1,2,3,4,5,6,7,8,9,10,11,12]; }
   else if(q==="ytd"){ state.months=ytdMesiace(); }
   else{
-    var qm=QUARTERS[+q], allSel=qm.every(function(m){return state.months.indexOf(m)>=0;});
+    /* ak je zobrazený len automaticky predvolený mesiac, štvrťrok ho nahradí
+       (inak by zostal visieť mimo zvoleného obdobia); ďalšie kliky sa už pridávajú */
+    var autoM=defaultMonths();
+    if(state.months.length===autoM.length && state.months.every(function(m){ return autoM.indexOf(m)>=0; }))
+      state.months=[];
+    var qm=QUARTERS[+q], allSel=qm.length>0 && qm.every(function(m){return state.months.indexOf(m)>=0;});
     if(allSel){ state.months=state.months.filter(function(m){return qm.indexOf(m)<0;}); }
     else{ qm.forEach(function(m){ if(state.months.indexOf(m)<0) state.months.push(m); }); sortMonths(); }
+    if(!state.months.length) state.months=defaultMonths();
   }
   syncChips(); renderAll();
 });
@@ -6753,7 +6931,7 @@ _EL("f-month").addEventListener("click", function(e){
 _EL("f-reset").addEventListener("click", function(){
   state.year=defaultYear(); state.months=defaultMonths(); state.segment="all";
   state.expanded={}; state.graphMode="plnenie"; state.dpView="mesiace";
-  state.dpPlanMon=false; state.dpPyMon=false;
+  state.dpRealMon=true; state.dpPlanMon=false; state.dpPyMon=false;
   state.subExpanded=null; state.segExpanded=null; state.tblExpanded=null; state.komOpen=null;
   renderFilters(); renderAll();
 });
@@ -7412,6 +7590,13 @@ function scrollCues(){
 function stickyTop(){
   var f=document.querySelector("#nbpr .filters");
   if(f) document.getElementById("nbpr").style.setProperty("--stickytop", Math.round(f.getBoundingClientRect().height)+"px");
+}
+function ptHeadOffset(){
+  document.querySelectorAll('#nbpr .pt-table thead, #nbpr .pt-cltbl thead').forEach(function(th){
+    var r1=th.querySelector('tr'); if(!r1) return;
+    var h=Math.round(r1.getBoundingClientRect().height);
+    if(h>0) th.closest('table').style.setProperty('--pth1', h+'px');
+  });
 }
 /* ---- boot ---- */
 try{ state.months=defaultMonths(); }catch(e){}
