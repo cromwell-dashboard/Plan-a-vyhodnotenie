@@ -7729,14 +7729,21 @@ function fbPoPrihlaseni(){
   FB.db.collection(FB_USERS).where("email","==",(FB.uzivatel.email||"")).limit(1).get()
     .then(function(q){ if(!q.empty){ var m=q.docs[0].data().name; if(m){ FB.meno=m; fbStav("Zdieľané · "+FB.meno,"ok"); } } })
     .catch(function(){});
-  fbSleduj();
-  fbPresunLokalne();
+  /* DÔLEŽITÉ PORADIE: najprv nahráme, čo má človek v prehliadači,
+     a až potom začneme počúvať databázu. Opačne by prázdna databáza
+     prepísala lokálne komentáre skôr, než by sa stihli uložiť. */
+  fbPresunLokalne().then(fbSleduj).catch(fbSleduj);
 }
 function fbKluc(k){ return String(k).replace(/\//g,"~"); }
 /* jednorazovo nahrá to, čo má človek zapísané v prehliadači */
 function fbPresunLokalne(){
   var znacka="cg_fb_presun_v2";
-  if(localStorage.getItem(znacka)) return;
+  /* poistka: pred akýmkoľvek zásahom si odložíme kópiu lokálnych textov */
+  try{
+    if(!localStorage.getItem("cg_koment_zaloha"))
+      localStorage.setItem("cg_koment_zaloha", JSON.stringify({komentare:KOM, popisy:NOTES, cas:Date.now()}));
+  }catch(e){}
+  if(localStorage.getItem(znacka)) return Promise.resolve();
   var ulohy=[];
   Object.keys(KOM).forEach(function(k){
     if(!KOM[k]) return;
@@ -7753,7 +7760,7 @@ function fbPresunLokalne(){
       return r.set({ data:JSON.stringify(NOTES[seg]), autor:FB.meno, cas:Date.now() });
     }));
   });
-  Promise.all(ulohy).then(function(){ localStorage.setItem(znacka, String(Date.now())); }).catch(function(){});
+  return Promise.all(ulohy).then(function(){ localStorage.setItem(znacka, String(Date.now())); });
 }
 /* živé sledovanie zmien od kolegov */
 function fbSleduj(){
@@ -7766,7 +7773,13 @@ function fbSleduj(){
       KOM_META[k]={autor:z.autor||"", cas:z.cas||0};
       if(KOM[k]!==z.text) zmena=true;
     });
-    Object.keys(KOM).forEach(function(k){ if(nove[k]===undefined) zmena=true; });
+    /* čo je zapísané len lokálne, sa nezahodí – naopak, doplní sa do databázy */
+    Object.keys(KOM).forEach(function(k){
+      if(nove[k]===undefined && KOM[k]){
+        nove[k]=KOM[k];
+        try{ fbZapisKomentar(k, KOM[k]); }catch(e){}
+      }
+    });
     KOM=nove;
     try{ localStorage.setItem(KOM_KEY, JSON.stringify(KOM)); }catch(e){}
     FB.pripojene=true; fbStav("Zdieľané · "+FB.meno,"ok");
