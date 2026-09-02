@@ -1316,12 +1316,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .sp-metric .chart-toggle-btn{flex:1 1 0;padding:8px 6px}
   #nbpr .sp-tools{margin-left:0;width:100%}
   #nbpr .sp-btn{flex:1 1 auto;text-align:center}
-  #nbpr .sp-row{grid-template-columns:20px minmax(70px,1fr) 66px 66px minmax(70px,1fr) 44px;gap:6px}
+  #nbpr .sp-row{grid-template-columns:18px minmax(0,1fr) minmax(0,64px) minmax(0,64px) minmax(0,1fr) minmax(0,42px);gap:5px}
   #nbpr .sp-name{font-size:11px}
-  #nbpr .sp-num{font-size:10.5px}
+  #nbpr .sp-num{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:10.5px}
   #nbpr .sp-val,#nbpr .sp-val-in{font-size:10px}
   #nbpr .sp-pl{font-size:10.5px}
-  #nbpr .sp-pane+.sp-pane{border-top:2px solid var(--line);margin-top:14px;padding-top:12px}
 #nbpr .sp-pane{padding:8px 10px 10px}
   #nbpr .sp-notes{gap:8px}
   #nbpr .nw-third,#nbpr .nw-half,#nbpr .nw-full{flex:1 1 100%}
@@ -1986,19 +1985,20 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .sp-val-r{left:calc(50% + 8px);text-align:left}
 #nbpr .sp-vpos{color:#1a6b3c}
 #nbpr .sp-vneg{color:#b3342a}
-#nbpr .sp-pl{font-size:11.5px;font-weight:700;text-align:right;color:#6b7280}
+#nbpr .sp-pl{font-size:11.5px;font-weight:700;text-align:right;color:#6b7280;min-width:0;overflow:hidden}
 /* dve časti: Cromwell / Kolos */
-#nbpr .sp-panes{display:flex;flex-direction:column;gap:16px}
-#nbpr .sp-panes-2{flex-direction:row;align-items:flex-start}
-#nbpr .sp-panes-2 .sp-pane{flex:1 1 0;min-width:0}
-#nbpr .sp-pane+.sp-pane{border-top:2px solid var(--line);margin-top:14px;padding-top:12px}
-#nbpr .sp-pane{border:1px solid #e6e9f0;border-radius:10px;padding:10px 12px 12px;background:#fcfdfe}
+/* panely v mriežke – najviac dva vedľa seba, ďalšie sa zalomia pod ne
+   (pri Poštových službách je tak Adresné hore a Neadresné pod ním) */
+#nbpr .sp-panes{display:grid;grid-template-columns:1fr;gap:16px;align-items:start}
+#nbpr .sp-panes-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+#nbpr .sp-pane{min-width:0;border:1px solid #e6e9f0;border-radius:10px;
+  padding:10px 12px 12px;background:#fcfdfe}
 #nbpr .sp-pane-head{background:#f4f6fa;border-radius:7px;padding:5px 9px;
   border-left:3px solid var(--primary);display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:#2f3a52;margin-bottom:6px}
 #nbpr .sp-pane-cnt{font-size:10.5px;font-weight:600;color:#9ca3af;margin-left:auto}
 /* ikonka komentára */
-#nbpr .sp-row{grid-template-columns:22px minmax(110px,1fr) 92px 92px minmax(120px,1.5fr) 54px;position:relative}
-#nbpr .sp-num{font-size:11.5px;font-weight:600;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#nbpr .sp-row{grid-template-columns:22px minmax(0,1fr) minmax(0,88px) minmax(0,88px) minmax(0,1.4fr) minmax(0,54px);position:relative}
+#nbpr .sp-num{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11.5px;font-weight:600;text-align:right;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #nbpr .sp-num-r{color:#1f2937}
 #nbpr .sp-num-p{color:#9ca3af;font-weight:500}
 #nbpr .sp-hdr{padding:0 0 5px;border-bottom:1px solid var(--line);margin-bottom:5px}
@@ -2065,7 +2065,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .nc-grey .sp-note-head{background:linear-gradient(180deg,#f6f7f9,#e8eaef);color:#3a4256}
 #nbpr .nc-grey{border-color:#dcdfe6}
 @media (max-width:900px){
-  #nbpr .sp-row{grid-template-columns:20px minmax(90px,1fr) 78px 78px minmax(90px,1.2fr) 48px}
+  #nbpr .sp-row{grid-template-columns:20px minmax(0,1fr) minmax(0,76px) minmax(0,76px) minmax(0,1.2fr) minmax(0,46px)}
   #nbpr .nw-third,#nbpr .nw-half{flex:1 1 100%}
 }
 /* ===== sumárna tabuľka: všetok nefarebný text bielou ===== */
@@ -2429,6 +2429,8 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   /* prvý stĺpec je teraz metrika – tá sa drží vľavo */
   #nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{left:0}
   #nbpr .pt-subtbl td.pt-met{left:0}
+  /* panely odchýlok na mobile pod sebou */
+  #nbpr .sp-panes,#nbpr .sp-panes-2{grid-template-columns:1fr!important;gap:12px}
   /* názvové stĺpce v rozpade nemusia byť také široké */
   #nbpr .pt-subtbl thead th.pt-n,#nbpr .pt-subtbl td.pt-subname{min-width:88px;width:88px;
     padding-left:9px;padding-right:4px}
