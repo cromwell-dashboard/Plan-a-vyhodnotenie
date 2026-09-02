@@ -7632,71 +7632,63 @@ function ptHeadOffset(){
     if(h>0) th.closest('table').style.setProperty('--pth1', h+'px');
   });
 }
-/* ===================== SPOLOČNÉ ÚLOŽISKO (Firebase) =====================
-   Komentáre a okná popisu sa ukladajú do Realtime Database, takže ich
-   vidia všetci naraz. Bez pripojenia beží dashboard ďalej lokálne a
-   rozpísané texty sa nahrajú, len čo sa spojenie obnoví. */
+/* ===================== SPOLOČNÉ ÚLOŽISKO (Firestore) =====================
+   Komentáre a okná popisu sa ukladajú do Cloud Firestore v projekte
+   cromwellgroup-tyzdenny-report – v tom istom, kde beží Týždenný report.
+   Bez pripojenia beží dashboard ďalej lokálne; rozpísané texty sa nahrajú,
+   len čo sa spojenie obnoví (Firestore si ich medzitým podrží). */
 var FB_CONFIG = {
   apiKey: "AIzaSyAi271i_qgsKiAeVBFOCbUfKccgyBClxSc",
   authDomain: "cromwellgroup-tyzdenny-report.firebaseapp.com",
-  /* ↓↓↓ DOPLNIŤ: adresa Realtime Database z konzoly Firebase ↓↓↓
-     Nájdeš ju v Build → Realtime Database, hneď nad tabuľkou dát.
-     Vyzerá napr. takto:
-       https://cromwellgroup-tyzdenny-report-default-rtdb.europe-west1.firebasedatabase.app  */
-  databaseURL: "",
   projectId: "cromwellgroup-tyzdenny-report",
   storageBucket: "cromwellgroup-tyzdenny-report.firebasestorage.app",
   messagingSenderId: "998598557554",
   appId: "1:998598557554:web:dcf8a546fcf8423386e7eb"
 };
-var FB_KOREN = "vysledky";     /* vetva v databáze – Týždenný report sa nedotkne */
+/* vlastné kolekcie – existujúcich dát Týždenného reportu sa nedotýkame */
+var FB_KOM  = "resultsComments";
+var FB_POP  = "resultsNotes";
+var FB_USERS= "users";          /* už existuje – berieme z nej meno autora */
 
-var FB = { pripojene:false, uzivatel:null, db:null, auth:null, cakaju:[] };
+var FB = { db:null, auth:null, uzivatel:null, meno:"", pripojene:false, zapina:false };
+var KOM_META = {};
 
 function fbStav(text, druh){
   var el=document.getElementById("fb-stav"); if(!el) return;
   el.textContent=text; el.className="fb-stav fb-"+(druh||"info");
 }
-function fbUdaj(cesta){ return FB.db.ref(FB_KOREN+"/"+cesta); }
-function fbMeno(){
-  var u=FB.uzivatel; if(!u) return "";
-  return u.displayName || (u.email||"").split("@")[0] || "neznámy";
-}
-/* načítanie knižnice – ak sa nepodarí, ostávame v lokálnom režime */
 function fbNacitaj(hotovo){
-  if(!FB_CONFIG.databaseURL){ fbStav("Lokálny režim – doplňte adresu databázy","warn"); return; }
   var zdroje=[
     "https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js",
     "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js",
-    "https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"
+    "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"
   ];
   var i=0;
   (function dalsi(){
     if(i>=zdroje.length){ hotovo(); return; }
-    var s=document.createElement("script");
-    s.src=zdroje[i++]; s.async=false;
-    s.onload=dalsi;
-    s.onerror=function(){ fbStav("Bez pripojenia – ukladám lokálne","warn"); };
-    document.head.appendChild(s);
+    var sc=document.createElement("script");
+    sc.src=zdroje[i++]; sc.async=false;
+    sc.onload=dalsi;
+    sc.onerror=function(){ fbStav("Bez pripojenia – ukladám lokálne","warn"); };
+    document.head.appendChild(sc);
   })();
 }
 function fbStart(){
+  fbStav("Pripájam…","info");
   fbNacitaj(function(){
+    if(typeof firebase==="undefined"){ fbStav("Lokálny režim – bez zdieľania","warn"); return; }
     try{
       firebase.initializeApp(FB_CONFIG);
-      FB.auth=firebase.auth(); FB.db=firebase.database();
+      FB.auth=firebase.auth(); FB.db=firebase.firestore();
+      try{ FB.db.enablePersistence({synchronizeTabs:true}); }catch(e){}
       FB.auth.onAuthStateChanged(function(u){
         FB.uzivatel=u||null;
-        if(u){ fbPrihlaseny(); } else { fbPrihlasenieUkaz(); }
-      });
-      FB.db.ref(".info/connected").on("value", function(s){
-        FB.pripojene=!!s.val();
-        if(FB.uzivatel) fbStav(FB.pripojene?("Zdieľané · "+fbMeno()):"Bez spojenia – ukladám lokálne", FB.pripojene?"ok":"warn");
+        if(u) fbPoPrihlaseni(); else fbPrihlasenieUkaz();
       });
     }catch(e){ fbStav("Lokálny režim ("+e.message+")","warn"); }
   });
 }
-/* ---- prihlásenie ---- */
+/* ---- prihlásenie rovnakým účtom ako do Týždenného reportu ---- */
 function fbPrihlasenieUkaz(){
   if(document.getElementById("fb-login")) return;
   var d=document.createElement("div");
@@ -7713,57 +7705,61 @@ function fbPrihlasenieUkaz(){
   document.body.appendChild(d);
   d.querySelector("form").addEventListener("submit", function(e){
     e.preventDefault();
-    var f=e.target, err=d.querySelector(".fb-err");
-    err.hidden=true;
+    var f=e.target, err=d.querySelector(".fb-err"), btn=d.querySelector(".fb-btn");
+    err.hidden=true; btn.disabled=true; btn.textContent="Prihlasujem…";
     FB.auth.signInWithEmailAndPassword(f.email.value.trim(), f.heslo.value)
       .catch(function(x){
+        btn.disabled=false; btn.textContent="Prihlásiť sa";
         err.hidden=false;
-        err.textContent = (x.code==="auth/invalid-credential"||x.code==="auth/wrong-password"||x.code==="auth/user-not-found")
-          ? "Nesprávny e-mail alebo heslo." : ("Prihlásenie zlyhalo: "+x.message);
+        err.textContent = /invalid-credential|wrong-password|user-not-found|invalid-email/.test(x.code||"")
+          ? "Nesprávny e-mail alebo heslo." : ("Prihlásenie zlyhalo: "+(x.message||x.code));
       });
   });
   d.querySelector("[data-fbskip]").addEventListener("click", function(){
     d.remove(); fbStav("Lokálny režim – bez zdieľania","warn");
   });
 }
-function fbPrihlasenieSkry(){ var d=document.getElementById("fb-login"); if(d) d.remove(); }
-
-/* ---- po prihlásení: presun lokálnych textov a živé sledovanie ---- */
-function fbPrihlaseny(){
-  fbPrihlasenieSkry();
-  fbStav("Zdieľané · "+fbMeno(),"ok");
-  fbPresunLokalne();
+function fbPoPrihlaseni(){
+  var d=document.getElementById("fb-login"); if(d) d.remove();
+  FB.meno = FB.uzivatel.displayName || (FB.uzivatel.email||"").split("@")[0];
+  fbStav("Zdieľané · "+FB.meno,"ok");
+  /* meno z existujúcej kolekcie users, aby sedelo s Týždenným reportom */
+  FB.db.collection(FB_USERS).where("email","==",(FB.uzivatel.email||"")).limit(1).get()
+    .then(function(q){ if(!q.empty){ var m=q.docs[0].data().name; if(m){ FB.meno=m; fbStav("Zdieľané · "+FB.meno,"ok"); } } })
+    .catch(function(){});
   fbSleduj();
+  fbPresunLokalne();
 }
+function fbKluc(k){ return String(k).replace(/\//g,"~"); }
 /* jednorazovo nahrá to, čo má človek zapísané v prehliadači */
 function fbPresunLokalne(){
-  var hotovo="cg_fb_presun_v1";
-  if(localStorage.getItem(hotovo)) return;
-  var pocet=0;
+  var znacka="cg_fb_presun_v2";
+  if(localStorage.getItem(znacka)) return;
+  var ulohy=[];
   Object.keys(KOM).forEach(function(k){
     if(!KOM[k]) return;
-    fbUdaj("komentare/"+fbKluc(k)).transaction(function(cur){
-      if(cur && cur.text) return;                 /* v databáze už niečo je – nechávame */
-      pocet++;
-      return { text:KOM[k], autor:fbMeno(), cas:Date.now(), kluc:k };
-    });
+    var r=FB.db.collection(FB_KOM).doc(fbKluc(k));
+    ulohy.push(r.get().then(function(sn){
+      if(sn.exists) return;                       /* v databáze už niečo je – nechávame */
+      return r.set({ text:KOM[k], autor:FB.meno, cas:Date.now(), kluc:k });
+    }));
   });
   Object.keys(NOTES).forEach(function(seg){
-    fbUdaj("popisy/"+fbKluc(seg)).transaction(function(cur){
-      if(cur) return;
-      return { data:JSON.stringify(NOTES[seg]), autor:fbMeno(), cas:Date.now() };
-    });
+    var r=FB.db.collection(FB_POP).doc(fbKluc(seg));
+    ulohy.push(r.get().then(function(sn){
+      if(sn.exists) return;
+      return r.set({ data:JSON.stringify(NOTES[seg]), autor:FB.meno, cas:Date.now() });
+    }));
   });
-  localStorage.setItem(hotovo, String(Date.now()));
+  Promise.all(ulohy).then(function(){ localStorage.setItem(znacka, String(Date.now())); }).catch(function(){});
 }
-function fbKluc(k){ return String(k).replace(/[.#$\[\]\/]/g,"~"); }
+/* živé sledovanie zmien od kolegov */
 function fbSleduj(){
-  fbUdaj("komentare").on("value", function(s){
-    var d=s.val()||{}, zmena=false;
-    var nove={};
-    Object.keys(d).forEach(function(id){
-      var z=d[id]; if(!z||!z.text) return;
-      var k=z.kluc||id;
+  FB.db.collection(FB_KOM).onSnapshot(function(sn){
+    var nove={}, zmena=false;
+    sn.forEach(function(doc){
+      var z=doc.data(); if(!z||!z.text) return;
+      var k=z.kluc||doc.id;
       nove[k]=z.text;
       KOM_META[k]={autor:z.autor||"", cas:z.cas||0};
       if(KOM[k]!==z.text) zmena=true;
@@ -7771,48 +7767,52 @@ function fbSleduj(){
     Object.keys(KOM).forEach(function(k){ if(nove[k]===undefined) zmena=true; });
     KOM=nove;
     try{ localStorage.setItem(KOM_KEY, JSON.stringify(KOM)); }catch(e){}
+    FB.pripojene=true; fbStav("Zdieľané · "+FB.meno,"ok");
     if(zmena){ try{ renderAll(); }catch(e){} try{ renderGraphs(); }catch(e){} fbBublinuObnov(); }
-  });
-  fbUdaj("popisy").on("value", function(s){
-    var d=s.val()||{}, zmena=false;
-    Object.keys(d).forEach(function(id){
-      try{ var arr=JSON.parse(d[id].data||"[]");
-        if(JSON.stringify(NOTES[id])!==JSON.stringify(arr)){ NOTES[id]=arr; zmena=true; }
+  }, function(){ fbStav("Bez spojenia – ukladám lokálne","warn"); });
+
+  FB.db.collection(FB_POP).onSnapshot(function(sn){
+    var zmena=false;
+    sn.forEach(function(doc){
+      try{ var arr=JSON.parse(doc.data().data||"[]");
+        if(JSON.stringify(NOTES[doc.id])!==JSON.stringify(arr)){ NOTES[doc.id]=arr; zmena=true; }
       }catch(e){}
     });
     if(zmena){ try{ localStorage.setItem(NOTE_KEY, JSON.stringify(NOTES)); }catch(e){}
                try{ renderSegNotes(); }catch(e){} }
-  });
+  }, function(){});
 }
-/* zápis – volá sa pri každej zmene textu */
+/* zápisy */
 function fbZapisKomentar(kluc, text){
   if(!FB.db || !FB.uzivatel) return;
-  var ref=fbUdaj("komentare/"+fbKluc(kluc));
-  if(text && text.trim()) ref.set({ text:text, autor:fbMeno(), cas:Date.now(), kluc:kluc });
-  else ref.remove();
+  var r=FB.db.collection(FB_KOM).doc(fbKluc(kluc));
+  if(text && text.trim()) r.set({ text:text, autor:FB.meno, cas:Date.now(), kluc:kluc });
+  else r.delete();
 }
 function fbZapisPopisy(seg){
-  if(!FB.db || !FB.uzivatel) return;
-  fbUdaj("popisy/"+fbKluc(seg)).set({ data:JSON.stringify(NOTES[seg]||[]), autor:fbMeno(), cas:Date.now() });
+  if(!FB.db || !FB.uzivatel || !seg) return;
+  FB.db.collection(FB_POP).doc(fbKluc(seg))
+    .set({ data:JSON.stringify(NOTES[seg]||[]), autor:FB.meno, cas:Date.now() });
 }
-/* kto a kedy komentár naposledy upravil */
-var KOM_META={};
+/* kto a kedy naposledy upravil */
 function fbPodpis(kluc){
   var m=KOM_META[kluc]; if(!m||!m.autor) return "";
   var d=new Date(m.cas||0), dnes=new Date();
-  var kedy = (d.toDateString()===dnes.toDateString())
-    ? ("dnes "+String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"))
+  var dv=function(n){ return String(n).padStart(2,"0"); };
+  var kedy=(d.toDateString()===dnes.toDateString())
+    ? ("dnes "+dv(d.getHours())+":"+dv(d.getMinutes()))
     : (d.getDate()+". "+(d.getMonth()+1)+". "+d.getFullYear());
   return '<div class="kom-pop-sign">'+m.autor+' · '+kedy+'</div>';
 }
 function fbBublinuObnov(){
   if(!KOM_POP) return;
   var pole=KOM_POP.querySelector("[data-ptkomtext]"); if(!pole) return;
-  if(document.activeElement===pole) return;         /* práve píše – nerušíme */
+  if(document.activeElement===pole) return;        /* práve píše – nerušíme */
   var kk=pole.getAttribute("data-ptkomtext");
   if(pole.innerHTML!==(KOM[kk]||"")) pole.innerHTML=KOM[kk]||"";
-  var s=KOM_POP.querySelector(".kom-pop-sign");
-  if(s) s.outerHTML=fbPodpis(kk); else if(fbPodpis(kk)) KOM_POP.querySelector(".kom-pop-ft").insertAdjacentHTML("beforebegin", fbPodpis(kk));
+  var st=KOM_POP.querySelector(".kom-pop-sign"), novy=fbPodpis(kk);
+  if(st) st.outerHTML=novy;
+  else if(novy) KOM_POP.querySelector(".kom-pop-ft").insertAdjacentHTML("beforebegin", novy);
 }
 
 /* ---- boot ---- */
