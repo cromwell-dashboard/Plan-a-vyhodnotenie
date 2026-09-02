@@ -1321,10 +1321,13 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .sp-num{font-size:10.5px}
   #nbpr .sp-val,#nbpr .sp-val-in{font-size:10px}
   #nbpr .sp-pl{font-size:10.5px}
-  #nbpr .sp-pane{padding:8px 10px 10px}
+  #nbpr .sp-pane+.sp-pane{border-top:2px solid var(--line);margin-top:14px;padding-top:12px}
+#nbpr .sp-pane{padding:8px 10px 10px}
   #nbpr .sp-notes{gap:8px}
   #nbpr .nw-third,#nbpr .nw-half,#nbpr .nw-full{flex:1 1 100%}
-  #nbpr .sp-note-acts{opacity:1}
+  #nbpr .sp-bold{font-size:11px;line-height:1}
+#nbpr .sp-bold b{font-weight:900}
+#nbpr .sp-note-acts{opacity:1}
   /* import a kontrola */
   #nbpr .imp-grid{gap:10px}
   #nbpr .imp-btn,#nbpr .imp-run{width:100%;text-align:center;display:block}
@@ -1988,8 +1991,10 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .sp-panes{display:flex;flex-direction:column;gap:16px}
 #nbpr .sp-panes-2{flex-direction:row;align-items:flex-start}
 #nbpr .sp-panes-2 .sp-pane{flex:1 1 0;min-width:0}
+#nbpr .sp-pane+.sp-pane{border-top:2px solid var(--line);margin-top:14px;padding-top:12px}
 #nbpr .sp-pane{border:1px solid #e6e9f0;border-radius:10px;padding:10px 12px 12px;background:#fcfdfe}
-#nbpr .sp-pane-head{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:#2f3a52;margin-bottom:6px}
+#nbpr .sp-pane-head{background:#f4f6fa;border-radius:7px;padding:5px 9px;
+  border-left:3px solid var(--primary);display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:800;color:#2f3a52;margin-bottom:6px}
 #nbpr .sp-pane-cnt{font-size:10.5px;font-weight:600;color:#9ca3af;margin-left:auto}
 /* ikonka komentára */
 #nbpr .sp-row{grid-template-columns:22px minmax(110px,1fr) 92px 92px minmax(120px,1.5fr) 54px;position:relative}
@@ -2029,6 +2034,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .sp-note-head{display:flex;align-items:center;gap:8px;padding:7px 10px;border-bottom:1px solid #eceef3}
 #nbpr .sp-note-title{font-size:12.5px;font-weight:800;outline:none;min-width:40px;flex:1 1 auto}
 #nbpr .sp-note-title:focus{background:rgba(255,255,255,.6);border-radius:4px}
+#nbpr .sp-bold{font-size:11px;line-height:1}
+#nbpr .sp-bold b{font-weight:900}
 #nbpr .sp-note-acts{display:flex;align-items:center;gap:3px;opacity:0;transition:opacity .15s ease}
 #nbpr .sp-note:hover .sp-note-acts,#nbpr .sp-note:focus-within .sp-note-acts{opacity:1}
 #nbpr .sp-sw{width:13px;height:13px;border-radius:50%;border:1px solid rgba(0,0,0,.18);cursor:pointer;padding:0}
@@ -6138,7 +6145,8 @@ function segChartGroups(segKey){
   });
   return groups;
 }
-var SP_MAX=12;   /* koľko klientov sa vykreslí v grafe odchýlok */
+var SP_MAX=12;     /* koľko klientov sa vykreslí, ak je zoznam dlhý */
+var SP_LIMIT=30;   /* od koľkých klientov sa zoznam vôbec skracuje */
 function renderSegChart(){
   var host=document.getElementById("sp-chart"); if(!host) return;
   var segId=state.segment, mk=state.segChartMetric||"rev", per=dpPer();
@@ -6154,7 +6162,7 @@ function renderSegChart(){
     /* pri veľkom počte klientov zobrazíme len tých s najväčšou odchýlkou,
        zvyšok sa zhrnie do jedného riadku – inak by bol graf nečitateľný */
     var vsetkych=rows.length, skryte=null;
-    if(rows.length>SP_MAX){
+    if(rows.length>SP_LIMIT){
       rows.sort(function(x,y){ return Math.abs(y.d)-Math.abs(x.d); });
       var zvysok=rows.slice(SP_MAX);
       rows=rows.slice(0,SP_MAX);
@@ -6171,7 +6179,7 @@ function renderSegChart(){
     var minus=rows.filter(function(r){return r.d<0;}).reduce(function(t,r){return t+r.d;},0);
     var net=plus+minus;
     var h='<div class="sp-pane"><div class="sp-pane-head">'+(g.name||'Klienti')+
-      '<span class="sp-pane-cnt">'+(vsetkych>SP_MAX?('najväčších '+SP_MAX+' z '+vsetkych):(vsetkych+' klientov'))+'</span></div>'+
+      '<span class="sp-pane-cnt">'+(vsetkych>SP_LIMIT?('najväčších '+SP_MAX+' z '+vsetkych):(vsetkych+' klientov'))+'</span></div>'+
 
       '<div class="sp-legend">'+
         '<span class="sp-lg sp-lg-pos">nad plánom +'+fmtValFor(plus,mk)+'</span>'+
@@ -6238,6 +6246,7 @@ function renderSegNotes(){
       '<div class="sp-note-head">'+
         '<div class="sp-note-title" contenteditable="true" data-nfield="nadpis" spellcheck="false">'+(b.nadpis||'')+'</div>'+
         '<div class="sp-note-acts">'+
+          '<button class="sp-mv sp-bold" type="button" data-nbold="1" title="Tučné písmo (označte text)"><b>B</b></button>'+
           NOTE_COLORS.map(function(c){ return '<button class="sp-sw sw-'+c+(b.farba===c?' on':'')+'" type="button" data-ncolor="'+c+'" title="Farba"></button>'; }).join('')+
           NOTE_WIDTHS.map(function(w){ return '<button class="sp-wbtn'+((b.sirka||'third')===w[0]?' on':'')+'" type="button" data-nwidth="'+w[0]+'" title="Šírka">'+w[1]+'</button>'; }).join('')+
           '<button class="sp-mv" type="button" data-nmove="-1" title="Posunúť vľavo">◄</button>'+
@@ -6250,12 +6259,31 @@ function renderSegNotes(){
   });
   host.innerHTML=html||'<div class="sp-empty">Žiadne okná — pridajte tlačidlom „+ Pridať okno".</div>';
 }
+/* z poznámky uložíme iba text a tučné písmo – nič iné sa nevlepí */
+function cistiHtml(h){
+  var d=document.createElement('div'); d.innerHTML=String(h||'');
+  (function ocisti(uzol){
+    [].slice.call(uzol.childNodes).forEach(function(n){
+      if(n.nodeType===3) return;
+      if(n.nodeType!==1){ n.remove(); return; }
+      var tag=n.tagName.toLowerCase();
+      ocisti(n);
+      if(tag==='b'||tag==='strong'){
+        while(n.attributes.length) n.removeAttribute(n.attributes[0].name);
+        if(tag==='strong'){ var b=document.createElement('b'); b.innerHTML=n.innerHTML; n.replaceWith(b); }
+      } else {
+        n.replaceWith.apply(n, [].slice.call(n.childNodes));
+      }
+    });
+  })(d);
+  return d.innerHTML.replace(/\s+/g,' ').trim();
+}
 function noteCollectFrom(el){
   var card=el.closest('.sp-note'); if(!card) return;
   var ix=+card.getAttribute('data-nix'), b=notesFor(state.segment)[ix]; if(!b) return;
   var t=card.querySelector('[data-nfield="nadpis"]'), u=card.querySelector('[data-nfield="body"]');
-  if(t) b.nadpis=t.textContent.trim();
-  if(u) b.body=[].map.call(u.querySelectorAll('li'), function(li){ return li.textContent.trim(); })
+  if(t) b.nadpis=cistiHtml(t.innerHTML);
+  if(u) b.body=[].map.call(u.querySelectorAll('li'), function(li){ return cistiHtml(li.innerHTML); })
                  .filter(function(x,i,arr){ return x!=='' || arr.length===1; });
   notesSave();
 }
@@ -6849,6 +6877,18 @@ if(_spg) _spg.addEventListener("click", function(e){
   var card=e.target.closest(".sp-note"); if(!card) return;
   var ix=+card.getAttribute("data-nix"), list=notesFor(seg), b=list[ix]; if(!b) return;
   var c=e.target.closest("[data-ncolor]"); if(c){ b.farba=c.getAttribute("data-ncolor"); notesSave(); renderSegNotes(); return; }
+  var tb=e.target.closest("[data-nbold]");
+  if(tb){
+    e.preventDefault();
+    var karta=tb.closest('.sp-note');
+    var sel=window.getSelection();
+    if(sel && sel.rangeCount && !sel.isCollapsed && karta.contains(sel.anchorNode)){
+      document.execCommand('bold');
+      var pole=sel.anchorNode.parentNode.closest?sel.anchorNode.parentNode.closest('[data-nfield]'):null;
+      if(pole) noteCollectFrom(pole);
+    }
+    return;
+  }
   var w=e.target.closest("[data-nwidth]"); if(w){ b.sirka=w.getAttribute("data-nwidth"); notesSave(); renderSegNotes(); return; }
   var mv=e.target.closest("[data-nmove]"); if(mv){
     var dir=+mv.getAttribute("data-nmove"), j=ix+dir;
