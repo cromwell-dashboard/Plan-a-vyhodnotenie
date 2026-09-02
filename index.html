@@ -1920,7 +1920,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 .kom-b b{font-weight:900}
 .kom-pop-hint{font-size:10px;color:#9aa1ad}
 /* hlavičky rozpadov zostávajú viditeľné pri rolovaní v paneli */
-#nbpr .pt-scroll,#nbpr .cl-scroll{max-height:min(72vh,760px);overflow:auto}
+/* tabuľka rozpadu sa zobrazí celá – posúva sa rolovaním stránky,
+   do strany zostáva vlastné posúvanie kvôli mesiacom */
+#nbpr .pt-scroll,#nbpr .cl-scroll{max-height:none;overflow-x:auto;overflow-y:visible}
 #nbpr .pt-table thead th,#nbpr .pt-cltbl thead th{position:sticky;top:0;z-index:14;
   background:#f2f5fa;box-shadow:inset 0 -1px 0 var(--line)}
 #nbpr .pt-table thead tr:nth-child(2) th,#nbpr .pt-cltbl thead tr:nth-child(2) th{top:var(--pth1,30px)}
