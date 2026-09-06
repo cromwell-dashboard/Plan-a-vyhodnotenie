@@ -1156,12 +1156,13 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters #f-year{margin:0}
 /* jednotná výška ovládacích prvkov – potom sedia aj popisky nad nimi */
 /* všetky prvky lišty majú rovnakú výšku obalu aj rovnako veľké tlačidlá */
-#nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters .reset,
-#nbpr .filters .chart-toggle{height:38px;box-sizing:border-box}
-#nbpr .filters .seg,#nbpr .filters .chart-toggle{display:flex;align-items:center}
-#nbpr .filters .seg-chip,#nbpr .filters .seg button,
-#nbpr .filters .chart-toggle-btn{height:30px;display:inline-flex;align-items:center;box-sizing:border-box}
+#nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters .reset{height:38px;box-sizing:border-box}
+#nbpr .filters .seg{display:flex;align-items:center}
+#nbpr .filters .seg-chip,#nbpr .filters .seg button{height:30px;display:inline-flex;align-items:center;box-sizing:border-box}
 /* rok vyzerá a je veľký ako ostatné tlačidlá */
+#nbpr .fbreak{flex:1 0 100%;height:0;margin:0;padding:0}
+#nbpr .fgroup-rok{flex:0 0 auto}
+#nbpr .months-group{flex:1 1 auto;min-width:0}
 #nbpr .filters .seg-year{padding:0 4px}
 #nbpr .filters #f-year{height:30px;border:0;background:transparent;box-shadow:none;
   padding:0 26px 0 10px;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink-2);
@@ -1206,7 +1207,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .seg-chip[data-seg="all"]{font-weight:700}
 #nbpr .seg-chip[data-seg="zelena"] .tico{color:#3d8a41}
 #nbpr .seg-chip[data-seg="digital"] .tico{color:#35b98c}
-#nbpr .seg-chip[data-seg="baliky"] .tico{color:#2a5fa6}
+#nbpr .seg-chip[data-seg="baliky"] .tico{color:#1d3f80}
 #nbpr .seg-chip[data-seg="tlac"] .tico,#nbpr .seg-chip[data-seg="postove"] .tico{color:#5b70da}
 #nbpr .fgroup{display:flex;flex-direction:column;gap:5px}
 /* štvrťroky a mesiace v jednom rade */
@@ -1253,9 +1254,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 .bub-pop.bf3 .kom-pop-arrow{background:#8a4fb8}
 .bub-pop.bf4 .kom-pop-arrow{background:#12909e}
 .bub-pop.bf5 .kom-pop-arrow{background:#c04a68}
-.bub-upoz{flex:none;margin:10px 14px 0;padding:8px 11px;border-radius:9px;
+.bub-upoz{flex:none;margin:10px 14px 0;transition:opacity .25s ease,transform .25s ease;
+  padding:8px 11px;border-radius:9px;
   background:#fdf7ea;border:1px solid #eeddb4;color:#8a5f08;
   font-size:11px;line-height:1.45}
+.bub-upoz.bub-upoz-skryt{opacity:0;transform:translateY(-4px)}
 .bub-upoz b{color:#6f4c06;font-weight:800;white-space:nowrap}
 .bub-nazov{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:#fff;
   outline:none;border-bottom:1px dashed rgba(255,255,255,.45);padding-bottom:1px;min-width:40px;cursor:text}
@@ -1372,9 +1375,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   /* filtre: Rok a Segment vedľa seba, Obdobie na celú šírku */
   #nbpr .filters{flex-direction:row;align-items:flex-end;gap:8px 10px}
   #nbpr .fgroup{width:auto;min-width:0}
-  #nbpr .fgroup:has(.seg-year){flex:0 0 auto}
-  #nbpr .fgroup-zosk{flex:0 0 auto}
-  #nbpr .fgroup-seg{flex:1 1 0;min-width:0}
+  #nbpr .fgroup-rok{flex:0 0 auto;order:3}
+  /* segment má celý riadok, aby sa dalo pohodlne filtrovať */
+  #nbpr .fgroup-seg{flex:1 1 100%;min-width:0;order:2}
+  #nbpr .reset{order:1}
+  #nbpr .months-group{order:4;flex:1 1 100%}
   #nbpr .months-group{flex:1 1 100%}
   /* graf: jeden stĺpec */
   #nbpr .gbars{grid-template-columns:1fr;gap:10px}
@@ -1397,7 +1402,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .dp-cmp td.dp-metric{padding:5px 4px;text-align:center}
   #nbpr .dp-cmp td.dp-name{padding-left:6px;padding-right:4px}
   #nbpr .dp-cmp td.dp-name .dp-chev{display:none}
-  #nbpr .dp-cmp .dp-total td.dp-name .met-ico,#nbpr .dp-sumtbl .met-ico{color:rgba(255,255,255,.85)}
+  /* na mobile ostáva pôvodné rozloženie, len text je farebný */
+  #nbpr .dp-grp-lbl .pt-hint,#nbpr .dp-cmp td.dp-name .pt-hint{display:none}
+  #nbpr .dp-grp-lbl .pt-iko{width:13px;height:13px}
+  #nbpr .dp-grp-lbl .pt-iko svg{width:13px;height:13px}
+  #nbpr .dp-sumtbl .met-ico{color:#8b93a5}
   #nbpr .pt-subtbl td.pt-met{padding:6px 4px;text-align:center;left:0;min-width:32px}
   #nbpr .pt-subtbl td.pt-subname .dp-chev{display:none}
   #nbpr .pt-cltbl tr.pt-clsub td.pt-cl{padding-left:10px;text-align:center}
@@ -1494,7 +1503,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .reset:hover{background:#c0392b;border-color:#c0392b;color:#fff}
   cursor:pointer;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
 #nbpr .reset:hover{color:var(--ink)}
-#nbpr .filters .months-group{flex-basis:100%}
+#nbpr .filters .months-group{flex:1 1 auto;min-width:0}
 #nbpr .seg.wrap{flex-wrap:wrap;max-width:100%}
 #nbpr .kpis{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 #nbpr .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -1586,8 +1595,21 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .gmet{display:none;font-size:10px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
   color:var(--primary);margin-bottom:5px}
 /* ===== graf: dva vodorovné pruhy (realita / plán) ===== */
-#nbpr .gb-wrap{display:flex;align-items:center;gap:12px;margin-top:7px}
-#nbpr .gb{display:flex;flex-direction:column;gap:5px;flex:1 1 auto;min-width:0}
+#nbpr .gb-wrap{display:flex;align-items:center;gap:12px;margin-top:7px;flex-wrap:nowrap}
+/* tenká linka namiesto dvoch pruhov */
+#nbpr .gb-cis{display:flex;align-items:baseline;gap:8px 16px;flex-wrap:wrap;margin-bottom:5px;min-width:0}
+#nbpr .gb-pol{display:inline-flex;align-items:baseline;gap:6px;min-width:0}
+#nbpr .gb-lbl{font-size:9.5px;font-weight:500;color:#a8aeba;white-space:nowrap}
+#nbpr .gb-val{font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+#nbpr .gb-wrap>.tpct{flex:0 0 auto}
+#nbpr .gb-sed{color:#8b93a5;font-weight:700}
+#nbpr .gb-linka{position:relative;height:3px;background:#eef0f4;border-radius:2px}
+#nbpr .gb-vypln{position:absolute;left:0;top:0;bottom:0;border-radius:2px;
+  transition:width .45s cubic-bezier(.4,0,.2,1)}
+#nbpr .gb-vypln.up{background:#2E9E5F}
+#nbpr .gb-vypln.down{background:#d94a41}
+#nbpr .gb-ryska{position:absolute;top:-4px;bottom:-4px;width:1px;background:#c3c9d6;z-index:3}
+#nbpr .gb{display:flex;flex-direction:column;gap:5px;flex:1 1 0;min-width:0}
 #nbpr .gcell .gb-wrap>.tpct,#nbpr .gseg .gb-wrap>.tpct,#nbpr .gb-wrap>.tpct{
   flex:0 0 auto;min-width:60px;text-align:right;font-size:17px!important;font-weight:800!important;
   letter-spacing:-.01em;line-height:1.1;font-variant-numeric:tabular-nums}
@@ -1676,7 +1698,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .odch-t td{padding:9px 12px;border-top:1px solid #eef0f4;text-align:right;vertical-align:middle}
 #nbpr .odch-t tbody tr:hover td{background:#fafbfd}
 #nbpr .ot-n{text-align:left!important;font-size:12.5px;font-weight:700;color:var(--ink-2);
-  max-width:230px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  max-width:230px;white-space:normal;line-height:1.35}
 #nbpr .ot-v{font-variant-numeric:tabular-nums;font-weight:600;color:#3a4256;white-space:nowrap}
 #nbpr .ot-sed{color:#a8aeba;font-weight:500}
 #nbpr .ot-d{white-space:nowrap;min-width:118px}
@@ -1903,6 +1925,10 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp{min-width:920px;font-size:12px}
 #nbpr .dp-cmp th{position:static}
 /* prilepené prvé dva stĺpce */
+#nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{position:sticky;left:var(--wname,182px);z-index:4;
+  background-color:#fff;box-shadow:1px 0 0 #eceef3}
+#nbpr .dp-sumtbl>thead>tr>th.dp-methead{background-color:transparent}
+#nbpr .dp-sumtbl>tbody>tr>td.dp-metric{background-color:#fff}
 #nbpr .dp-cmp th.dp-rowhead,#nbpr .dp-cmp td.dp-name{position:sticky;left:0;z-index:5;min-width:var(--wname,182px);width:var(--wname,182px);background-color:#fff}
 #nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{position:sticky;left:var(--wname,182px);z-index:5;min-width:var(--wmet,86px);width:var(--wmet,86px);background-color:#fff;box-shadow:1px 0 0 #e5e7eb}
 #nbpr .dp-cmp th.dp-rowhead,#nbpr .dp-cmp th.dp-methead{z-index:8}
@@ -1938,14 +1964,13 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp td.dp-ebitda{color:#6b7280}
 #nbpr .dp-cmp td.dp-note{text-align:left;color:#9ca3af;font-weight:600}
 /* súčtový riadok SPOLU – neutrálny, plynulý prechod cez tri riadky */
-/* SPOLU tabuľka – základný gradient (presné napojenie riadkov dopĺňa JS) */
-#nbpr .dp-sumtbl>thead>tr>th,#nbpr .dp-sumtbl>tbody>tr>td{background-color:transparent;
-  background-image:linear-gradient(180deg,#4d5ecb,#232d78);background-repeat:no-repeat;background-size:100% 100%}
 #nbpr .dp-cmp .dp-total .dp-name,#nbpr .dp-cmp .dp-total .dp-metric{color:#2f3a52}
 #nbpr .dp-cmp .dp-total .dp-chev{color:#8b93a5}
 /* realita: zelená ak plníme, červená ak nie */
-#nbpr .dp-cmp td.dp-ok,#nbpr .pt-table td.pt-ok{color:#1f7a45}
-#nbpr .dp-cmp td.dp-bad,#nbpr .pt-table td.pt-bad{color:#c0392b}
+#nbpr .dp-cmp td.dp-ok,#nbpr .pt-table td.pt-ok,
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-ok{color:#1f7a45}
+#nbpr .dp-cmp td.dp-bad,#nbpr .pt-table td.pt-bad,
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-bad{color:#c0392b}
 #nbpr .dp-cmp td.dp-neu,#nbpr .pt-table td.pt-neu{color:#374151}
 /* posúvacia lišta */
 #nbpr .dp-wrap::-webkit-scrollbar{height:11px}
@@ -1961,7 +1986,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-chev.open{transform:rotate(90deg);color:#4b5563}
 #nbpr .dp-cmp tr.dp-exp>td{padding:0;background:#f7f8fa;border-top:1px solid #e5e7eb}
 /* vnorený rozpad v modrej tabuľke – nesmie zdediť modrý gradient ani biely text */
-#nbpr .dp-sumtbl>tbody>tr.dp-exp>td{background:#eef0f6!important;background-image:none!important;color:#374151;border-top:1px solid rgba(255,255,255,.4)}
+#nbpr .dp-sumtbl>tbody>tr.dp-exp>td{background:#f7f8fa!important;color:#374151;border-top:1px solid var(--line)}
 
 /* ================= Rozpad – gradientová hlavička, telo neutrálne ================= */
 #nbpr .pt-box{margin:8px 0 4px}
@@ -2055,23 +2080,48 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-stack{display:flex;flex-direction:column;gap:10px}
 #nbpr .dp-table.dp-cmp{table-layout:fixed;border-collapse:separate;border-spacing:0}
 /* --- SPOLU: výrazná modrá karta, jeden spoločný gradient --- */
-#nbpr .dp-sumtbl{border-radius:12px;overflow:hidden;box-shadow:0 2px 10px rgba(24,32,72,.18)}
-#nbpr .dp-sumtbl>thead>tr>th,#nbpr .dp-sumtbl>tbody>tr>td{border:none!important;color:#fff}
-#nbpr .dp-sumtbl>thead>tr>th{color:#fff;text-transform:uppercase;letter-spacing:.05em}
-#nbpr .dp-sumtbl>thead>tr>th small{color:#fff}
+/* SPOLU: modrá len v hlavičke, čísla v bielom riadku */
+#nbpr .dp-sumtbl{background:#fff;border:1px solid #d8dcf0;border-radius:12px;
+  box-shadow:0 1px 4px rgba(16,24,40,.06)}
+/* rohy riešime cez krajné bunky, aby tabuľka nemala vlastný overflow
+   (ten by rozbil prilepené stĺpce) */
+#nbpr .dp-sumtbl>thead>tr:first-child>th:first-child{border-top-left-radius:11px}
+#nbpr .dp-sumtbl>thead>tr:first-child>th:last-child{border-top-right-radius:11px}
+#nbpr .dp-sumtbl>tbody>tr:last-child>td:first-child{border-bottom-left-radius:11px}
+#nbpr .dp-sumtbl>tbody>tr:last-child>td:last-child{border-bottom-right-radius:11px}
+#nbpr .dp-sumtbl>thead>tr>th{background-image:linear-gradient(180deg,#4d5ecb,#3948a8);
+  color:#fff;text-transform:uppercase;letter-spacing:.05em;border:none!important}
+#nbpr .dp-sumtbl>thead>tr>th small{color:rgba(255,255,255,.82)}
 #nbpr .dp-sumtbl>thead>tr:nth-child(2)>th{border-bottom:1px solid rgba(255,255,255,.22)!important}
-#nbpr .dp-sumtbl>tbody>tr>td.dp-name,#nbpr .dp-sumtbl>tbody>tr>td.dp-metric{color:#fff;box-shadow:none}
-#nbpr .dp-sumtbl>tbody>tr>td .dp-chev{color:rgba(255,255,255,.5)}
+#nbpr .dp-sumtbl>tbody>tr>td{background:#fff;color:var(--ink-2)}
+#nbpr .dp-sumtbl>tbody>tr>td.dp-name{color:var(--ink);font-weight:800}
+#nbpr .dp-sumtbl>tbody>tr>td.dp-metric{color:var(--muted)}
+#nbpr .dp-sumtbl>tbody>tr>td .dp-chev{color:#9ca3af}
+#nbpr .dp-sumtbl>tbody>tr>td.dp-tot,#nbpr .dp-sumtbl>tbody>tr>td.dp-sum{background:#f6f7fc}
 
 
 
-#nbpr .dp-sumtbl>tbody>tr>td.dp-bstart{box-shadow:inset 1px 0 0 rgba(255,255,255,.16)}
-#nbpr .dp-sumtbl>tbody>tr>td.dp-tot,#nbpr .dp-sumtbl>tbody>tr>td.dp-sum{box-shadow:inset 0 0 0 99px rgba(255,255,255,.09)}
-#nbpr .dp-sumtbl>tbody>tr>td.dp-tot.dp-bstart,#nbpr .dp-sumtbl>tbody>tr>td.dp-sum.dp-bstart{box-shadow:inset 0 0 0 99px rgba(255,255,255,.09),inset 1px 0 0 rgba(255,255,255,.16)}
+#nbpr .dp-sumtbl>tbody>tr>td.dp-bstart{box-shadow:inset 1px 0 0 #e6e9f2}
 /* --- segmenty: každý vlastná karta, vizuálne oddelené --- */
-#nbpr .dp-segtbl{background:#fff;border:1px solid #e3e6ec;border-radius:10px;overflow:hidden;
+#nbpr .dp-headrep>tr>th{background:#f7f9fc;color:var(--muted);border-bottom:1px solid var(--line)}
+#nbpr .dp-headrep>tr>th.dpg{color:var(--primary-navy)}
+/* pri skupine služieb nesie hlavičku každá tabuľka – modrá ako pri ostatných */
+#nbpr .dp-headmain>tr>th{background-color:transparent;color:#fff!important;
+  text-transform:uppercase;letter-spacing:.05em;border:none!important;box-shadow:none!important}
+#nbpr .dp-headmain>tr>th.dp-bstart{box-shadow:inset 1px 0 0 rgba(255,255,255,.16)!important}
+#nbpr .dp-headmain .dp-colbtn{border-color:rgba(255,255,255,.5);color:#fff;background:rgba(255,255,255,.16)}
+#nbpr .dp-headmain .dp-colbtn:hover{background:rgba(255,255,255,.3)}
+#nbpr .dp-headmain>tr>th.dpg{color:#fff!important}
+#nbpr .dp-headmain>tr>th small{color:rgba(255,255,255,.82)!important}
+#nbpr .dp-headmain>tr:nth-child(2)>th{border-bottom:1px solid rgba(255,255,255,.22)}
+#nbpr .dp-segtbl{background:#fff;border:1px solid #e3e6ec;border-radius:10px;
   box-shadow:0 1px 3px rgba(16,24,40,.05)}
-#nbpr .dp-segtbl td.dp-name{background-color:#f7f8fb;border-right:1px solid #eceef3}
+#nbpr .dp-segtbl>thead>tr:first-child>th:first-child{border-top-left-radius:9px}
+#nbpr .dp-segtbl>thead>tr:first-child>th:last-child{border-top-right-radius:9px}
+#nbpr .dp-segtbl>tbody>tr:first-child>td:first-child{border-top-left-radius:9px}
+#nbpr .dp-segtbl>tbody>tr:last-child>td:first-child{border-bottom-left-radius:9px}
+#nbpr .dp-segtbl>tbody>tr:last-child>td:last-child{border-bottom-right-radius:9px}
+#nbpr .dp-segtbl td.dp-name{background-color:#fff;border-right:1px solid #eceef3}
 #nbpr .dp-segtbl tr.dp-cmpfirst td{border-top:none}
 #nbpr .dp-segtbl tr.dp-cmprow td{border-top:1px solid #f2f3f6}
 #nbpr .dp-segtbl tr:first-child td{border-top:none}
@@ -2081,6 +2131,61 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   position:sticky;left:172px;background:#fff;box-shadow:1px 0 0 #e5e7eb}
 #nbpr .pt-subtbl thead th.pt-n{min-width:172px}
 #nbpr .pt-subtbl td.pt-subname{min-width:172px;font-weight:700;color:#1f2937}
+/* názvy v rozpade: farba podľa firmy, ikonka a náznak kliknutia */
+#nbpr .pt-nm{display:inline-flex;align-items:center;gap:6px;min-width:0}
+#nbpr .pt-iko{display:inline-flex;width:15px;height:15px;flex:none}
+#nbpr .pt-iko svg{width:15px;height:15px}
+#nbpr .pt-txt{font-weight:800;letter-spacing:-.01em;min-width:0}
+#nbpr .pt-hint{font-size:9px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  border-radius:999px;padding:2px 7px;white-space:nowrap;opacity:.75;transition:opacity .12s ease}
+#nbpr .pt-otvor{cursor:pointer}
+/* klikateľný názov: po prejdení sa podčiarkne, po otvorení zostane podčiarknutý */
+#nbpr .dp-expandable .pt-txt,#nbpr .pt-otvor .pt-txt{
+  text-decoration:underline;text-decoration-style:dotted;text-decoration-color:transparent;
+  text-underline-offset:3px;transition:text-decoration-color .12s ease}
+#nbpr tr:hover>.dp-expandable .pt-txt,#nbpr tr:hover>.pt-otvor .pt-txt{text-decoration-color:currentColor}
+#nbpr .dp-open .pt-txt,#nbpr tr.pt-subfirst.pt-open .pt-txt{text-decoration-color:currentColor;
+  text-decoration-style:solid}
+/* Cromwell, Adresné, Neadresné, Tlač – modrá */
+#nbpr .rz-cr .pt-txt,#nbpr .rz-cr .pt-iko,#nbpr .rz-cr .dp-chev{color:#3d4eb8}
+#nbpr .rz-cr .pt-hint{background:#eef1fb;color:#3948a8}
+#nbpr .dp-grp-lbl.rz-cr{color:#3d4eb8}
+/* Zelená pošta a ZPC Group – zelená */
+#nbpr .rz-zp .pt-txt,#nbpr .rz-zp .pt-iko,#nbpr .rz-zp .dp-chev{color:#1f7a45}
+#nbpr .rz-zp .pt-hint{background:#eef8f2;color:#1a6b3c}
+#nbpr .dp-grp-lbl.rz-zp{color:#1f7a45}
+/* Kolos a Balíky – jantárová */
+#nbpr .rz-ko .pt-txt,#nbpr .rz-ko .pt-iko,#nbpr .rz-ko .dp-chev{color:#a5710f}
+#nbpr .rz-ko .pt-hint{background:#fdf7ea;color:#8a5f08}
+#nbpr .dp-grp-lbl.rz-ko{color:#a5710f}
+/* služby – rovnaké farby ako dlaždice vo filtri */
+#nbpr .rz-s-tlac .pt-txt,#nbpr .rz-s-tlac .pt-iko,#nbpr .rz-s-tlac .dp-chev{color:#5b70da}
+#nbpr .rz-s-tlac .pt-hint{background:#eef1fb;color:#3948a8}
+#nbpr .dp-grp-lbl.rz-s-tlac{color:#5b70da}
+#nbpr .rz-s-post .pt-txt,#nbpr .rz-s-post .pt-iko,#nbpr .rz-s-post .dp-chev{color:#5b70da}
+#nbpr .rz-s-post .pt-hint{background:#eef1fb;color:#3948a8}
+#nbpr .dp-grp-lbl.rz-s-post{color:#5b70da}
+#nbpr .rz-s-zel .pt-txt,#nbpr .rz-s-zel .pt-iko,#nbpr .rz-s-zel .dp-chev{color:#3d8a41}
+#nbpr .rz-s-zel .pt-hint{background:#eef8f0;color:#2f6d33}
+#nbpr .dp-grp-lbl.rz-s-zel{color:#3d8a41}
+#nbpr .rz-s-bal .pt-txt,#nbpr .rz-s-bal .pt-iko,#nbpr .rz-s-bal .dp-chev{color:#1d3f80}
+#nbpr .rz-s-bal .pt-hint{background:#eaf0f9;color:#1d3f80}
+#nbpr .dp-grp-lbl.rz-s-bal{color:#1d3f80}
+#nbpr .rz-s-dig .pt-txt,#nbpr .rz-s-dig .pt-iko,#nbpr .rz-s-dig .dp-chev{color:#35b98c}
+#nbpr .rz-s-dig .pt-hint{background:#eefaf5;color:#1f8f68}
+#nbpr .dp-grp-lbl.rz-s-dig{color:#35b98c}
+#nbpr .dp-grp-lbl .pt-iko{margin-right:6px;vertical-align:-3px}
+/* názvy v Detailnom prehľade – rovnaké farby ako v rozpade */
+#nbpr .dp-cmp td.dp-name .pt-nm{gap:7px}
+#nbpr .dp-cmp td.dp-name .pt-iko svg{width:14px;height:14px}
+#nbpr .dp-cmp td.dp-name .pt-txt{font-size:12.5px;white-space:normal;overflow:visible;
+  text-overflow:clip;line-height:1.3}
+#nbpr .dp-cmp td.dp-name .pt-nm{align-items:flex-start}
+#nbpr .dp-cmp td.dp-name .pt-iko,#nbpr .dp-cmp td.dp-name .dp-chev{margin-top:1px}
+#nbpr .dp-cmp td.dp-name{white-space:normal}
+#nbpr .dp-cmp tr:hover>td.dp-name .pt-hint{opacity:1}
+#nbpr .dp-sumtbl td.dp-name .pt-txt{color:var(--ink)}
+#nbpr .dp-sumtbl td.dp-name .pt-iko{color:var(--muted-2)}
 /* komentár k firme v rozpade */
 #nbpr .dp-noplan,#nbpr .pt-noplan{opacity:.85}
 #nbpr .pt-kom{margin-left:7px;border:1px solid #d7dbe4;background:#fff;border-radius:6px;padding:2px 5px;
@@ -2353,21 +2458,28 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-bB,
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-bC,
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-neu,
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-note,
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-name,
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-metric{color:#fff}
-#nbpr .dp-sumtbl>thead>tr>th{color:#fff}
-#nbpr .dp-sumtbl>thead>tr>th small{color:rgba(255,255,255,.85)}
-#nbpr .dp-sumtbl>tbody>tr>td.dp-metric{color:#fff}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-note{color:var(--ink-2)}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-name{color:var(--ink)}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-metric{color:var(--muted)}
+#nbpr .dp-sumtbl>thead>tr>th{color:#fff!important}
+#nbpr .dp-sumtbl>thead>tr>th small{color:rgba(255,255,255,.85)!important}
+#nbpr .dp-sumtbl>tbody>tr>td.dp-metric{color:var(--muted)}
 /* riadok Kusy – bez jednotky, menej výrazne ===== */
 #nbpr .dp-cmp tbody tr.dp-cntrow td.dp-cell{color:#9ca3af}
+/* v bielej sumárnej tabuľke musia byť kusy čitateľné */
+#nbpr .dp-sumtbl tbody tr.dp-cntrow td.dp-cell{color:#6b7280}
+#nbpr .dp-sumtbl tbody tr.dp-cntrow td.dp-metric{color:#8b93a5}
+#nbpr .dp-sumtbl tbody tr.dp-cntrow td.dp-cell.dp-ok{color:#3f9a68}
+#nbpr .dp-sumtbl tbody tr.dp-cntrow td.dp-cell.dp-bad{color:#c76a62}
 #nbpr .dp-cmp tbody tr.dp-cntrow td.dp-metric{color:#9ca3af}
 #nbpr .dp-cmp tbody tr.dp-cntrow td.dp-cell.dp-ok{color:#7bb894}
 #nbpr .dp-cmp tbody tr.dp-cntrow td.dp-cell.dp-bad{color:#d59a94}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell,
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-metric{color:rgba(255,255,255,.68)}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-ok{color:#a9e8c4}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bad{color:#f5c3bd}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell{color:#6b7280}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-metric{color:#8b93a5}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-ok{color:#3f9a68}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bad{color:#c76a62}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-ok{color:#3f9a68}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bad{color:#c76a62}
 #nbpr .pt-table tbody tr.pt-cntrow td.pt-c,#nbpr .pt-table tbody tr.pt-cntrow td.pt-met{color:#9ca3af}
 #nbpr .pt-table tbody tr.pt-cntrow td.pt-c.pt-ok{color:#7bb894}
 #nbpr .pt-table tbody tr.pt-cntrow td.pt-c.pt-bad{color:#d59a94}
@@ -2385,7 +2497,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-cell.dp-neu,
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-cell.dp-note,
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-name,
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-metric{color:#fff}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr>td.dp-metric{color:var(--ink-2)}
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-ok{color:#5fe39b}
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-bad{color:#ff9e93}
 /* Kusy v sumárnej – menej výrazne */
@@ -2394,9 +2506,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bB,
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bC,
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-neu,
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-metric{color:rgba(255,255,255,.66)}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-ok{color:#a9e8c4}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bad{color:#f5c3bd}
+
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-ok{color:#3f9a68}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-cntrow>td.dp-cell.dp-bad{color:#c76a62}
 /* skupinová hlavička sa môže zlomiť do dvoch riadkov, aby nič nepresahovalo */
 #nbpr .dp-cmp thead th.dpg{white-space:normal;line-height:1.25}
 /* ===== sumárna (modrá) tabuľka: hlavička bielou a výraznejšie ===== */
@@ -2416,8 +2528,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* farby v modrej SPOLU tabuľke (najvyššia priorita) */
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-ok{color:#5fe39b}
 #nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-bad{color:#ff9e93}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-neu{color:#fff}
-#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-name,#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-metric{color:#fff}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-cell.dp-neu{color:var(--ink-2)}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-name{color:var(--ink);font-weight:800}
+#nbpr .dp-cmp.dp-sumtbl>tbody>tr.dp-total>td.dp-metric{color:var(--muted)}
 /* rovnaká šírka ako segmentové tabuľky (tie majú 1px rámik) */
 #nbpr .dp-sumtbl{border:1px solid transparent}
 /* súčtový riadok – bledý podklad, farby ako v tele */
@@ -2647,10 +2760,8 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
 @media (max-width:680px){
   /* pevná výška patrí len na počítač – na mobile by orezala zalomené mesiace */
   /* rovnaká výška aj na mobile */
-  #nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters .reset,
-  #nbpr .filters .chart-toggle{height:36px}
-  #nbpr .filters .seg-chip,#nbpr .filters .seg button,
-  #nbpr .filters .chart-toggle-btn,#nbpr .filters #f-year{height:28px}
+  #nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters .reset{height:36px}
+  #nbpr .filters .seg-chip,#nbpr .filters .seg button,#nbpr .filters #f-year{height:28px}
   #nbpr .filters #f-year{font-size:12.5px;padding:0 24px 0 9px}
   #nbpr .seg.wrap{flex-wrap:nowrap!important;max-width:none}
   #nbpr .filters .seg{display:inline-flex;align-items:center;flex:0 0 auto}
@@ -2698,7 +2809,8 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   /* zvislé posúvanie stránky, vodorovné len vnútri tabuliek a líšt */
   html,body{max-width:100%;overflow-x:hidden}
   #nbpr{touch-action:pan-y}
-  #nbpr .dp-wrap,#nbpr .pt-scroll,#nbpr .cl-scroll,#nbpr .seg-chips,#nbpr #f-month{touch-action:pan-x pan-y}
+  #nbpr .dp-wrap,#nbpr .pt-scroll,#nbpr .cl-scroll,#nbpr .seg-chips,#nbpr #f-month,
+  #nbpr .odch{touch-action:pan-x pan-y}
   /* tabuľky nesmú mať vlastný overflow – inak sa prilepené bunky naviažu na ne
      a nedržia sa pri posúvaní do boku */
   #nbpr .dp-sumtbl,#nbpr .dp-segtbl,#nbpr .pt-table,#nbpr .pt-subtbl,#nbpr .pt-cltbl{
@@ -2716,8 +2828,8 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   #nbpr .dp-grp-click{cursor:pointer}
   #nbpr .dp-grp-ch.open{transform:rotate(90deg)}
   /* v modrej sumárnej tabuľke je pruh svetlý na tmavom */
-  #nbpr .dp-sumtbl .dp-grp>td{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.22)}
-  #nbpr .dp-sumtbl .dp-grp-lbl{color:#fff;background:#3a49a8}
+  #nbpr .dp-sumtbl .dp-grp>td{background:#eef1f7;border-color:#dfe3ec}
+  #nbpr .dp-sumtbl .dp-grp-lbl{color:var(--ink);background:#eef1f7}
   /* prvý stĺpec je teraz metrika – tá sa drží vľavo */
   #nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{left:0}
   #nbpr .pt-subtbl td.pt-met{left:0}
@@ -2799,23 +2911,18 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   </div>
 
   <div class="filters">
-    <div class="fgroup">
-      <div class="flabel">Rok</div>
-      <div class="seg seg-year"><select id="f-year" aria-label="Rok"></select></div>
-    </div>
     <div class="fgroup fgroup-seg">
       <div class="flabel">Segment</div>
       <div class="seg-chips" id="f-segment" role="group" aria-label="Segment"></div>
     </div>
-    <div class="fgroup fgroup-zosk">
-      <div class="flabel">Zoskupenie</div>
-      <div class="chart-toggle" id="graph-toggle" role="group" aria-label="Zoskupenie">
-        <button class="chart-toggle-btn" type="button" data-mode="plnenie" aria-pressed="true">Po segmentoch</button>
-        <button class="chart-toggle-btn" type="button" data-mode="firma" aria-pressed="false">Po firmách</button>
-      </div>
-    </div>
+
     <div class="spacer"></div>
     <button class="reset" id="f-reset" type="button">Vyčistiť filtre</button>
+    <div class="fbreak"></div>
+    <div class="fgroup fgroup-rok">
+      <div class="flabel">Rok</div>
+      <div class="seg seg-year"><select id="f-year" aria-label="Rok"></select></div>
+    </div>
     <div class="fgroup months-group">
       <div class="flabel">Obdobie</div>
       <div class="obdobie">
@@ -2840,6 +2947,12 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
       <div class="gbh"><h2>Kusy</h2><div class="csub gsub" id="gsub-cnt"></div></div>
     </div>
     <div class="gbars" id="gbars"></div>
+    <div class="graph-groupby">
+      <div class="chart-toggle" id="graph-toggle" role="group" aria-label="Zoskupenie">
+        <button class="chart-toggle-btn" type="button" data-mode="plnenie" aria-pressed="true">Po segmentoch</button>
+        <button class="chart-toggle-btn" type="button" data-mode="firma" aria-pressed="false">Po firmách</button>
+      </div>
+    </div>
   </div>
 
   <div class="card" style="margin-bottom:16px">
@@ -2854,22 +2967,6 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
     <div class="dp-wrap" id="dp-wrap"></div>
   </div>
 
-  <div class="card plan-analysis-card" id="plan-analysis"></div>
-
-  <div id="seg-page" style="display:none">
-    <div class="sp-bar"><span class="sp-bar-label" id="sp-title">Segment</span>
-      <div class="chart-toggle sp-metric" id="sp-metric" role="group" aria-label="Metrika">
-        <button class="chart-toggle-btn" type="button" data-spm="rev" aria-pressed="true">Výnos</button>
-        <button class="chart-toggle-btn" type="button" data-spm="mar" aria-pressed="false">Marža</button>
-        <button class="chart-toggle-btn" type="button" data-spm="cnt" aria-pressed="false">Kusy</button>
-      </div>
-    </div>
-    <div class="card sp-card">
-      <h2>Odchýlka od plánu po klientoch</h2>
-      <div class="csub" id="sp-sub"></div>
-      <div class="sp-chart" id="sp-chart"></div>
-    </div>
-  </div>
 
   <div class="card imp-card" id="imp-card">
     <h2>Import výsledkov z XLS</h2>
@@ -5993,9 +6090,18 @@ function renderGraphs(){
         '<div class="gb-row gb-plain"><b>'+fmtValFor(c.a,metric)+'</b></div>'+
         '<div class="gb-row gb-noplan">plán nezadaný</div></div>'+pct+'</div>';
     }
-    var zero=zeroFor(c);
-    var body='<div class="gb">'+bar('gb-fill '+(up?'up':'down'), c.a, c.p, metric,false,'Realita '+CY, zero);
-    body+=bar('gb-plan', c.p, c.p, metric, true, 'Plán '+CY, zero);
+    /* jedna tenká linka: výplň podľa plnenia, svetlá ryska = 100 % plánu */
+    var w=Math.max(0, Math.min(pl, MAXR*100))/(MAXR*100)*100;
+    var ryska=(1/MAXR)*100;
+    var body='<div class="gb">'+
+      '<div class="gb-cis">'+
+        '<span class="gb-pol"><span class="gb-lbl">Realita</span>'+
+          '<span class="gb-val '+(up?"kv-ok":"kv-bad")+'">'+fmtValFor(c.a,metric)+'</span></span>'+
+        '<span class="gb-pol"><span class="gb-lbl">Plán</span>'+
+          '<span class="gb-val gb-sed">'+fmtValFor(c.p,metric)+'</span></span>'+
+      '</div>'+
+      '<div class="gb-linka"><div class="gb-vypln '+(up?"up":"down")+'" style="width:'+w.toFixed(2)+'%"></div>'+
+        '<div class="gb-ryska" style="left:'+ryska.toFixed(2)+'%"></div></div>';
     return head+'<div class="gb-wrap">'+body+'</div>'+pct+'</div>'+rokPole(k, metric);
   }
   var uzke=(window.innerWidth<=680);
@@ -6239,13 +6345,16 @@ function subsDetailHtml(id, isF){
         if(uzke){
           var labN=Math.min(3,ncol);
           body+='<tr class="pt-fgrp'+(hasCl?' dp-grp-click':'')+'"'+attr+'>'+
-            '<td class="dp-grp-lbl" colspan="'+labN+'">'+(sCY.name||k)+
-              (hasCl?('<i class="dp-grp-ch'+(openK?' open':'')+'">▸</i>'):'')+ptKomBtn(id,k,(sCY.name||k))+'</td>'+
+            '<td class="dp-grp-lbl '+rozpadTrieda(k)+'" colspan="'+labN+'">'+
+              '<span class="pt-iko">'+IKO_FIRMA+'</span>'+(sCY.name||k)+
+              '</td>'+
             (ncol>labN?('<td class="dp-grp-fill" colspan="'+(ncol-labN)+'"></td>'):'')+'</tr>';
         } else {
-          nameTd='<td class="pt-n pt-subname" rowspan="'+mk.length+'">'+
-            (hasCl?('<span class="dp-chev'+(openK?' open':'')+'">▸</span>'):'<span class="dp-chev dp-chev-off"></span>')+
-            (sCY.name||k)+ptKomBtn(id,k,(sCY.name||k))+'</td>';
+          nameTd='<td class="pt-n pt-subname '+rozpadTrieda(k)+(hasCl?' pt-otvor':'')+'" rowspan="'+mk.length+'">'+
+            '<span class="pt-nm">'+
+              '<span class="pt-iko">'+IKO_FIRMA+'</span>'+
+              '<span class="pt-txt">'+(sCY.name||k)+'</span>'+
+            '</span>'+'</td>';
         }
       }
       body+='<tr class="'+cls+'"'+attr+'>'+nameTd+
@@ -6348,7 +6457,7 @@ function clientsTableHtml(sCY, sPY, hasPY, label, rowId, komSeg, komFirma){
       .replace(/class="dpg/g,'class="pt-g dpg').replace(/class="dp-sum/g,'class="pt-g dp-sum')
       .replace(/class="dp-b([ABC]) /g,'class="pt-b$1 ').replace(/class="dp-tot"/g,'class="pt-toth"');
   /* rovnaký komentár ako pri firme v rozpade – je to tá istá poznámka */
-  var komBtn = komSeg ? ptKomBtn(komSeg, komFirma, label) : '';
+  var komBtn = '';
   return '<div class="cl-box"><div class="cl-head">Klienti — '+label+komBtn+' <span>'+order.length+' klientov</span>'+
     '<button class="cl-close" type="button" data-subclose="1" title="Zavrieť">✕</button></div>'+
     '<div class="cl-scroll"><table class="pt-table pt-cltbl"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div></div>';
@@ -6686,6 +6795,14 @@ function komUloz(pole){
     komUloz(pole);
   }, true);
 })();
+/* farebné odlíšenie názvov v rozpade – firma alebo časť segmentu */
+/* služby majú vlastné farby (rovnaké ako dlaždice filtra), firmy svoje */
+var ROZPAD_FARBA = {
+  /* firmy */      cromwell:"cr", kolos:"ko", zpc:"zp",
+  /* služby */     tlac:"s-tlac", postove:"s-post", adresne:"s-post", neadresne:"s-post",
+                   zelena:"s-zel", baliky:"s-bal", digital:"s-dig" };
+var IKO_FIRMA = '<svg viewBox="0 0 16 16" aria-hidden="true"><rect x="2.2" y="3" width="7" height="10.5" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.4"/><rect x="9.2" y="6.5" width="4.6" height="7" rx="1.2" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M4.3 5.6h2.8M4.3 8h2.8M4.3 10.4h2.8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>';
+function rozpadTrieda(kluc){ return "rz-"+(ROZPAD_FARBA[kluc]||"ne"); }
 function ptKomKey(segId, firma){ return "rozpad|"+segId+"|"+firma; }
 function ptKomBtn(segId, firma, nazov){
   var kk=ptKomKey(segId,firma), txt=String(KOM[kk]||"").replace(/<[^>]*>/g,"").trim();
@@ -6866,7 +6983,6 @@ function renderSegPage(){
   var page=document.getElementById("seg-page"); if(!page) return;
   var one=(state.segment!=="all");
   page.style.display= one ? "" : "none";
-  var grp=[document.getElementById("plan-analysis")];
   if(!one) return;
   var t=document.getElementById("sp-title");
   if(t) t.textContent="Segment: "+segNazov(state.segment);
@@ -7000,13 +7116,16 @@ function renderTable(){
         if(uzke){
           var tot=ncell+1, lab=Math.min(3,tot);
           html+='<tr class="dp-grp'+(can?' dp-grp-click':'')+'"'+trAttr+'>'+
-            '<td class="dp-grp-lbl" colspan="'+lab+'">'+name+
-              (can?('<i class="dp-grp-ch'+(open?' open':'')+'">▸</i>'):'')+'</td>'+
+            '<td class="dp-grp-lbl'+(rowId?' '+rozpadTrieda(rowId):'')+'" colspan="'+lab+'">'+
+              (rowId?('<span class="pt-iko">'+(isF?IKO_FIRMA:icoHtml(rowId))+'</span>'):'')+name+'</td>'+
             (tot>lab?('<td class="dp-grp-fill" colspan="'+(tot-lab)+'"></td>'):'')+'</tr>';
         } else {
-          nameTd='<td class="dp-name'+(can?' dp-expandable':'')+'" rowspan="'+n+'">'+
-            (can?('<span class="dp-chev'+(open?' open':'')+'">▸</span>')
-                :'<span class="dp-chev dp-chev-off"></span>')+name+'</td>';
+          nameTd='<td class="dp-name'+(can?' dp-expandable':'')+(rowId?' '+rozpadTrieda(rowId):'')+
+            '" rowspan="'+n+'">'+
+            '<span class="pt-nm">'+
+              (rowId?('<span class="pt-iko">'+(isF?IKO_FIRMA:icoHtml(rowId))+'</span>'):'')+
+              '<span class="pt-txt">'+name+'</span>'+
+            '</span></td>';
         }
       }
       var metCls='dp-metric'+((mkp[0]==='ebitda'||mkp[0]==='marS')?' dp-ebitda':'');
@@ -7035,11 +7154,18 @@ function renderTable(){
     '</tbody></table>';
   sumTbl+=legendaZ(sumTbl);
 
+
   /* ---- 2) každý riadok vo vlastnej tabuľke (pri jedinom riadku sa vynechá) ---- */
   var segTbls='';
   /* na úzkom displeji si každá tabuľka nesie vlastnú hlavičku, aby bolo pri
      posúvaní stále vidieť, ktorý mesiac je ktorý */
-  var headSeg = uzke ? ('<thead class="dp-headrep">'+head.replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'')+'</thead>') : '';
+  /* pri skupine služieb (Poštové služby) sa sumárna tabuľka nezobrazuje,
+     takže hlavičku musí niesť každá segmentová tabuľka */
+  var jeSkupina = !isF && !!SEG_SKUPINY[state.segment];
+  var headSeg = jeSkupina
+    ? ('<thead class="dp-headmain">'+head+'</thead>')            /* plnohodnotná hlavička aj s +/− */
+    : (uzke ? ('<thead class="dp-headrep">'+
+        head.replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'')+'</thead>') : '');
   if(!single) rows.forEach(function(id){
     var nm=isF?((firmObj(id)&&firmObj(id).name)||id):((segObj(id)&&segObj(id).name)||id);
     var t1='<table class="dp-table dp-cmp dp-segtbl" style="width:'+TOTW+'px">'+COLG+headSeg+'<tbody>'+
@@ -7048,12 +7174,13 @@ function renderTable(){
     segTbls+=t1+legendaZ(t1);
   });
 
-  wrap.innerHTML='<div class="dp-stack" style="width:'+TOTW+'px">'+sumTbl+segTbls+'</div>';
+  wrap.innerHTML='<div class="dp-stack" style="width:'+TOTW+'px">'+(jeSkupina?'':sumTbl)+segTbls+'</div>';
   (function(){ var host=wrap.closest('.scrollwrap')||wrap;
     var st=host.parentNode.querySelector(':scope > .dp-legenda'); if(st) st.remove(); })();
   wrap.style.setProperty('--wname', W_NAME+'px');
   wrap.style.setProperty('--wmet', W_MET+'px');
   dpPaintSumGradient(wrap.querySelector('.dp-sumtbl'));
+  wrap.querySelectorAll('.dp-headmain').forEach(function(th){ dpPaintHead(th); });
   document.querySelectorAll('#dp-toggle button').forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-dpv")===(mon?"mesiace":"spolu")); });
   var ts=document.getElementById("table-sub");
   if(ts) ts.textContent=periodLabel()+" · "+CY+(hasPY?(" vs "+PY):"")+" · "+(mon?"po mesiacoch a spolu":"len súčet za zvolené obdobie");
@@ -7061,15 +7188,30 @@ function renderTable(){
 /* jeden spoločný gradient pre celú tabuľku SPOLU – prechádza plynulo medzi riadkami.
    Každej bunke nastavíme výrez podľa jej pozície v tabuľke, takže napojenie je presné
    bez ohľadu na rôzne výšky riadkov. */
-function dpPaintSumGradient(tbl){
-  if(!tbl) return;
-  var H=tbl.offsetHeight; if(!H) return;
-  var top0=tbl.getBoundingClientRect().top;
-  [].forEach.call(tbl.rows, function(tr){
-    if(tr.classList.contains('dp-exp')) return;
+/* súvislý gradient naprieč riadkami hlavičky – bez svetlých medzier */
+function dpPaintHead(th){
+  if(!th) return;
+  var H=th.offsetHeight; if(!H) return;
+  var top0=th.getBoundingClientRect().top;
+  [].forEach.call(th.rows, function(tr){
     var off=Math.round(tr.getBoundingClientRect().top-top0);
     [].forEach.call(tr.cells, function(c){
-      c.style.setProperty('background-image','linear-gradient(180deg,#4d5ecb,#232d78)','important');
+      c.style.setProperty('background-image','linear-gradient(180deg,#4d5ecb,#3948a8)','important');
+      c.style.setProperty('background-repeat','no-repeat','important');
+      c.style.setProperty('background-size','100% '+H+'px','important');
+      c.style.setProperty('background-position','0 -'+off+'px','important');
+    });
+  });
+}
+function dpPaintSumGradient(tbl){
+  if(!tbl || !tbl.tHead) return;
+  /* modrá patrí len hlavičke – telo tabuľky zostáva biele */
+  var th=tbl.tHead, H=th.offsetHeight; if(!H) return;
+  var top0=th.getBoundingClientRect().top;
+  [].forEach.call(th.rows, function(tr){
+    var off=Math.round(tr.getBoundingClientRect().top-top0);
+    [].forEach.call(tr.cells, function(c){
+      c.style.setProperty('background-image','linear-gradient(180deg,#4d5ecb,#3948a8)','important');
       c.style.setProperty('background-repeat','no-repeat','important');
       c.style.setProperty('background-size','100% '+H+'px','important');
       c.style.setProperty('background-position','0 -'+off+'px','important');
@@ -7281,7 +7423,7 @@ function renderAnalysis(){
   html+='<div class="pa-summary">'+sum+'</div>';
   host.innerHTML=html;
 }
-function renderAll(){ renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail(); renderAnalysis(); try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ ptHeadOffset(); }catch(e){} try{ bubZmenaObdobia(); }catch(e){} try{ scrollCues(); }catch(e){} }
+function renderAll(){ renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail();  try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ ptHeadOffset(); }catch(e){} try{ bubZmenaObdobia(); }catch(e){} try{ scrollCues(); }catch(e){} }
 
 /* ---- events ---- */
 _EL("f-year").addEventListener("change", function(e){ state.year=e.target.value; renderAll(); });
@@ -7422,6 +7564,7 @@ try{ kpiAutofit(); }catch(e){}
   var now=(window.innerWidth<=680);
   if(now!==_wasNarrow){ _wasNarrow=now; renderAll(); return; }
   var t=document.querySelector("#dp-wrap .dp-sumtbl"); if(t) dpPaintSumGradient(t);
+  document.querySelectorAll("#dp-wrap .dp-headmain").forEach(function(th){ dpPaintHead(th); });
 },180); });
 /* ---- segmentová stránka: obsluha ---- */
 var _spm=document.getElementById("sp-metric");
@@ -8215,6 +8358,7 @@ function fbBublinuObnov(){
    Text sa ukladá do spoločnej databázy rovnako ako ostatné komentáre,
    poloha okna zostáva len v tomto prehliadači. */
 var BUB_OTVORENE = {};                 /* id -> prvok na obrazovke */
+var BUB_NOVE = {};                     /* poznámky založené práve teraz – ukáže sa im upozornenie */
 var BUB_POZ = (function(){ try{ return JSON.parse(localStorage.getItem("cg_bublina_poz")||"{}"); }catch(e){ return {}; } })();
 function bubPozUloz(){ try{ localStorage.setItem("cg_bublina_poz", JSON.stringify(BUB_POZ)); }catch(e){} }
 
@@ -8278,6 +8422,7 @@ function bubPridaj(){
   if(nazov===null) return;
   KOM[bubKlucNazov(id)]=nazov.trim()||"Poznámka";
   KOM[bubKlucText(id)]="";
+  BUB_NOVE[id]=1;
   komSave();
   try{ fbZapisKomentar(bubKlucNazov(id), KOM[bubKlucNazov(id)]); }catch(e){}
   bubListaVykresli();
@@ -8300,8 +8445,8 @@ function bubOtvor(id){
         String(KOM[kn]||"Poznámka").replace(/</g,"&lt;")+'</span>'+
       '<span class="bub-obd">'+bubObdobiePopis()+'</span>'+
       '<button class="kom-pop-x" type="button" data-bubzavri="'+id+'" title="Zavrieť">✕</button></div>'+
-    '<div class="bub-upoz">Skontroluj si, či zapisuješ komentár do správneho obdobia.'+
-      ' Zapisuješ do — <b>'+bubObdobiePopis()+'</b></div>'+
+    (BUB_NOVE[id] ? ('<div class="bub-upoz">Skontroluj si, či zapisuješ komentár do správneho obdobia.'+
+      ' Zapisuješ do — <b>'+bubObdobiePopis()+'</b></div>') : '')+
     '<div class="kom-pop-t" contenteditable="true" spellcheck="false" data-ptkomtext="'+kt+'" data-ph="Napíšte poznámku…"></div>'+
     '<div class="kom-pop-ft">'+
       '<button class="kom-b" type="button" data-kombold="1" title="Tučné písmo — označte text"><b>B</b></button>'+
@@ -8319,6 +8464,18 @@ function bubOtvor(id){
   bubDrag(p, id);
   bubPrisposob(p);
   bubListaVykresli();
+  /* upozornenie na obdobie zhasne po chvíli alebo len čo sa začne písať */
+  var upoz=p.querySelector(".bub-upoz");
+  if(upoz){
+    var skry=function(){
+      var el=upoz; if(!el) return;
+      upoz=null; delete BUB_NOVE[id];
+      el.classList.add("bub-upoz-skryt");
+      setTimeout(function(){ if(el.parentNode) el.remove(); bubPrisposob(p); }, 280);
+    };
+    setTimeout(skry, 6000);
+    p.addEventListener("input", skry, {once:true});
+  }
   var pole=p.querySelector("[data-ptkomtext]");
   try{ pole.focus({preventScroll:true}); }catch(e){ pole.focus(); }
 }
