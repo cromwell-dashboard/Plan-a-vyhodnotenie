@@ -1449,10 +1449,15 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .pt-subtbl td.pt-met{left:var(--wname,116px)}
   #nbpr .pt-cltbl td.pt-cl{min-width:150px}
   #nbpr .gexp-title{font-size:12px}
-  /* odchýlky na mobile: tabuľka sa posúva do strany */
+  /* odchýlky na mobile: prvý stĺpec drží, zvyšok sa posúva */
   #nbpr .odch{overflow-x:auto}
-  #nbpr .odch-t{min-width:640px}
-  #nbpr .ot-n{max-width:150px}
+  #nbpr .odch-t{min-width:660px}
+  #nbpr .ot-n{max-width:none;width:132px;min-width:132px}
+  #nbpr .odch-t th:first-child,#nbpr .odch-t td.ot-n{position:sticky;left:0;z-index:6;
+    background:#fff;box-shadow:1px 0 0 var(--line)}
+  #nbpr .odch-t thead th:first-child{background:#f7f9fc;z-index:7}
+  #nbpr .odch-t tbody tr:hover td.ot-n{background:#fafbfd}
+  /* rozpad: obal nesmie byť vlastným posúvačom, inak sa prvý stĺpec neprilepí */
   #nbpr .odch-tog{margin-left:auto}
   /* pôvodné rozloženie (nepoužité) */
         #nbpr .odch-c::before{content:attr(data-m);font-size:9px;font-weight:800;letter-spacing:.06em;
@@ -2320,6 +2325,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* tabuľka rozpadu sa zobrazí celá – posúva sa rolovaním stránky,
    do strany zostáva vlastné posúvanie kvôli mesiacom */
 #nbpr .pt-scroll,#nbpr .cl-scroll{max-height:none;overflow-x:auto;overflow-y:visible}
+/* na mobile sa posúva celá tabuľka Detailného prehľadu,
+   preto obal nesmie byť vlastným posúvačom – inak sa prvý stĺpec neprilepí */
+@media (max-width:680px){
+  #nbpr .pt-scroll,#nbpr .cl-scroll{overflow:visible!important}
+}
 #nbpr .pt-table thead th,#nbpr .pt-cltbl thead th{position:sticky;top:0;z-index:14;
   background:#f2f5fa;box-shadow:inset 0 -1px 0 var(--line)}
 #nbpr .pt-table thead tr:nth-child(2) th,#nbpr .pt-cltbl thead tr:nth-child(2) th{top:var(--pth1,30px)}
