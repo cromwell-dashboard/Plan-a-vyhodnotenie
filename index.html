@@ -2450,10 +2450,6 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .fgroup-kom{flex:1 1 100%;min-width:0}
 #nbpr .kom-riadok{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
 #nbpr .kom-riadok .bub-lista{margin:0}
-#nbpr .bub-oddel{display:inline-flex;align-items:center;height:38px;padding:0 4px 0 10px;
-  font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:#a8aeba}
-#nbpr .bub-zahrn{opacity:.85;border-style:dashed}
-#nbpr .bub-zahrn i{font-style:normal;margin-left:6px;font-size:9.5px;opacity:.75}
 #nbpr .bub-vyzva{display:inline-flex;align-items:center;gap:8px;height:38px;
   font-size:12px;color:var(--muted-2)}
 #nbpr .bub-vyzva-i{display:inline-flex;align-items:center;justify-content:center;flex:none;
@@ -9488,7 +9484,6 @@ function bubListaVykresli(){
     return;
   }
   var zoz=bubZoznam();
-  var zahrnute=bubZahrnute();          /* komentáre k obdobiam vnútri výberu */
   host.innerHTML =
     '<button class="bub-add" type="button" data-bubadd="1" title="Pridať poznámku k tomuto obdobiu">'+KOM_ICON+'</button>' +
     zoz.map(function(b,i){
@@ -9496,34 +9491,8 @@ function bubListaVykresli(){
       return '<button class="bub-chip bf'+(i%6)+(BUB_OTVORENE[b.id]?" on":"")+'" type="button" data-bub="'+b.id+'" '+
         'title="'+(text? text.replace(/"/g,"&quot;").slice(0,90) : "Prázdna poznámka")+'">'+
         b.nazov.replace(/</g,"&lt;")+'</button>';
-    }).join("") +
-    (zahrnute.length ? ('<span class="bub-oddel">Komentáre k zahrnutým obdobiam</span>'+
-      zahrnute.map(function(b){
-        return '<button class="bub-chip bub-zahrn'+(BUB_OTVORENE[b.id]?" on":"")+'" type="button" '+
-          'data-bub="'+b.id+'" data-bubkod="'+b.kod+'" title="Komentár bol vytvorený pre '+b.popis+'">'+
-          b.nazov.replace(/</g,"&lt;")+'<i>'+b.popis+'</i></button>'; }).join("")) : "");
+    }).join("");
 }
-/* komentáre uložené pre užšie obdobia, ktoré sú súčasťou aktuálneho výberu.
-   Zobrazujú sa oddelene a s pôvodným obdobím, aby sa nezamieňali s komentármi
-   vytvorenými presne pre aktuálnu kombináciu. */
-function bubZahrnute(){
-  var akt=bubObdobie(), m=state.months.slice().sort(function(a,b){return a-b;});
-  if(m.length<2 || state.segment==="all") return [];
-  var pref="listaNaz|"+state.segment+"|", von=[];
-  Object.keys(KOM).forEach(function(nk){
-    if(nk.indexOf(pref)!==0) return;
-    var zvysok=nk.slice(pref.length), i=zvysok.indexOf("|");
-    if(i<0) return;
-    var kod=zvysok.slice(0,i), id=zvysok.slice(i+1);
-    if(kod===akt) return;                       /* presná zhoda je vyššie */
-    var o=obdobieZKodu(kod); if(!o || !o.mesiace || !o.mesiace.length) return;
-    var vnutri=o.mesiace.every(function(x){ return m.indexOf(x)>=0; });
-    if(!vnutri || o.mesiace.length>=m.length) return;
-    von.push({ id:id, kod:kod, nazov:KOM[nk]||"Poznámka", popis:obdobiePopis(o) });
-  });
-  return von;
-}
-/* ---- vytvorenie a zobrazenie bubliny ---- */
 function bubPridaj(){ bubVyberKategoriu(); }
 /* pred založením komentára ukážeme, ku ktorému výberu sa priradí */
 function bubVyberKategoriu(){
