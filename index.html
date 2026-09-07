@@ -1142,7 +1142,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   color:var(--ink); background:var(--panel); line-height:1.45; -webkit-font-smoothing:antialiased;
   font-variant-numeric:tabular-nums; padding:22px; min-height:100%;
 }
-#nbpr .top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:14px}
+#nbpr .top{display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:10px}
 /* logo je súčasťou prilepenej lišty s filtrami */
 #nbpr .filters .brand{flex:0 0 auto;align-self:flex-end;padding-right:18px;margin-right:2px;
   border-right:1px solid var(--line)}
@@ -1151,7 +1151,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .scrollwrap{position:relative;min-width:0}
 /* všetky ovládacie prvky lišty na jednej línii */
 #nbpr .filters{align-items:flex-end}
-#nbpr .fgroup{display:flex;flex-direction:column;justify-content:flex-end;gap:6px}
+#nbpr .fgroup{display:flex;flex-direction:column;justify-content:flex-end;gap:4px}
 #nbpr .flabel{line-height:1.1;margin:0}
 #nbpr .filters .seg,#nbpr .filters .seg-chips,#nbpr .filters #f-year{margin:0}
 /* jednotná výška ovládacích prvkov – potom sedia aj popisky nad nimi */
@@ -1162,7 +1162,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* rok vyzerá a je veľký ako ostatné tlačidlá */
 #nbpr .fbreak{flex:1 0 100%;height:0;margin:0;padding:0}
 #nbpr .fgroup-rok{flex:0 0 auto}
-#nbpr .months-group{flex:1 1 auto;min-width:0}
+/* rok, obdobie aj akcie musia zostať v jednom riadku – lišta mesiacov sa v prípade
+   potreby zalomí dovnútra, nie do ďalšieho riadku filtrov */
+#nbpr .months-group{flex:1 1 0;min-width:0}
+#nbpr .months-group .obdobie{min-width:0}
+#nbpr .months-group #f-month{flex-wrap:wrap;min-width:0}
 #nbpr .filters .seg-year{padding:0 4px}
 #nbpr .filters #f-year{height:30px;border:0;background:transparent;box-shadow:none;
   padding:0 26px 0 10px;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink-2);
@@ -1188,10 +1192,85 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   background:#fbf1de;border:1px solid #f0dcb0;padding:4px 10px;border-radius:999px;letter-spacing:.03em}
 #nbpr .demo-tag b{font-weight:800}
 /* lišta s filtrami zostáva viditeľná počas rolovania */
-#nbpr .filters{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;
+#nbpr .filters{display:flex;gap:8px 10px;flex-wrap:wrap;align-items:flex-end;
   position:sticky;top:0;z-index:60;background:var(--panel);
-  margin:0 -22px 18px;padding:12px 22px 12px;
-  border-bottom:1px solid transparent;transition:box-shadow .15s ease,border-color .15s ease}
+  margin:0 -22px 14px;padding:9px 22px 10px;
+  border-bottom:1px solid transparent;
+  transition:box-shadow .15s ease,border-color .15s ease,padding .18s ease}
+
+/* pri nízkom okne šetríme výšku aj v plnom režime */
+@media (max-height:800px){
+  #nbpr .filters{padding-top:7px;padding-bottom:8px;gap:6px 10px;margin-bottom:10px}
+  #nbpr .fgroup{gap:3px}
+  #nbpr .flabel{font-size:9.5px}
+}
+@media (max-height:700px){
+  #nbpr .filters{padding-top:6px;padding-bottom:6px}
+  #nbpr .flabel{display:none}
+}
+/* ---------- súhrn filtrov (viditeľný len v kompaktnom režime) ---------- */
+#nbpr .fsuhrn{display:none;align-items:center;gap:8px;height:34px;flex:0 1 auto;min-width:0;
+  border:1px solid var(--line);background:var(--card);border-radius:10px;padding:0 12px;cursor:pointer;
+  font-family:inherit;font-size:12.5px;font-weight:700;color:var(--ink-2);box-shadow:var(--shadow)}
+#nbpr .fsuhrn:hover{border-color:#c3cdee;background:#fbfcff}
+#nbpr .fsuhrn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+#nbpr .fsuhrn-txt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#nbpr .fsuhrn-ch{width:13px;height:13px;flex:none;color:var(--muted-2);transition:transform .15s ease}
+
+/* ---------- kompaktný režim po odrolovaní ---------- */
+#nbpr.kompakt .filters{padding-top:7px;padding-bottom:7px;gap:8px;flex-wrap:nowrap;align-items:center}
+#nbpr.kompakt .fsuhrn,#nbpr.filtre-otvorene .fsuhrn{display:inline-flex}
+#nbpr.filtre-otvorene .fsuhrn{order:-1;flex:0 0 auto;max-width:none}
+#nbpr.filtre-otvorene .fsuhrn .fsuhrn-ch{transform:rotate(180deg)}
+#nbpr.filtre-otvorene .filters{padding-top:8px;padding-bottom:8px}
+#nbpr.kompakt .flabel{display:none}
+#nbpr.kompakt .fgroup-seg,#nbpr.kompakt .fgroup-rok,
+#nbpr.kompakt .fgroup-kom,#nbpr.kompakt .spacer,#nbpr.kompakt .fbreak{display:none}
+/* zo skupiny obdobia zostanú v kompaktnom režime len akčné tlačidlá */
+#nbpr.kompakt .months-group{display:flex;flex:0 0 auto;margin-left:auto}
+#nbpr.kompakt .months-group #f-quarter,#nbpr.kompakt .months-group #f-month,
+#nbpr.kompakt .months-group .obd-sep{display:none}
+#nbpr.kompakt .months-group .obdobie{gap:0;min-width:0}
+#nbpr.kompakt .lista-akcie{margin-left:0}
+#nbpr.kompakt .brand{gap:9px}
+#nbpr.kompakt .brand .logo{width:30px;height:30px;border-radius:9px}
+#nbpr.kompakt .brand h1{font-size:15px}
+#nbpr.kompakt .brand .eyebrow{display:none}
+#nbpr.kompakt .lista-akcie{display:flex;margin-left:auto;align-self:center}
+#nbpr.kompakt .akcia{height:34px;padding:0 12px}
+#nbpr.kompakt .kom-kompakt{display:inline-flex}
+
+/* tlačidlá na komentáre a akcie v kompaktnom režime */
+#nbpr .kom-kompakt{display:none;align-items:center;gap:7px;height:34px;flex:none;
+  border:1px solid #bfe0cc;background:#f1f9f4;border-radius:10px;padding:0 12px;cursor:pointer;
+  font-family:inherit;font-size:12.5px;font-weight:700;color:#1a6b3c}
+#nbpr .kom-kompakt:hover{background:#e3f4ea}
+#nbpr .kom-kompakt svg{width:14px;height:14px}
+#nbpr .kom-kompakt:focus-visible,#nbpr .akcia:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+#nbpr .akcia-iko{display:none}
+
+/* v kompaktnom režime sa komentáre otvoria pod lištou */
+#nbpr.kompakt.kom-otvorene .fgroup-kom{display:flex;flex:1 1 100%;order:9}
+#nbpr.kompakt.kom-otvorene .filters{flex-wrap:wrap}
+#nbpr.kompakt.kom-otvorene .fgroup-kom .flabel{display:none}
+
+/* ---------- stredné obrazovky: kratšie popisy akcií ---------- */
+@media (max-width:1500px){
+  #nbpr .akcia{padding:0 12px;gap:6px}
+}
+@media (max-width:1330px){
+  #nbpr .akcia .akcia-txt{display:none}
+  #nbpr .akcia-iko{display:block}
+  #nbpr .akcia{padding:0 11px;width:38px;justify-content:center}
+  #nbpr .akcia svg{width:15px;height:15px}
+}
+/* ---------- úzke obrazovky: komentáre do jedného tlačidla ---------- */
+@media (max-width:1180px){
+  #nbpr .fgroup-kom{display:none}
+  #nbpr .kom-kompakt{display:inline-flex}
+  #nbpr.kom-otvorene .fgroup-kom{display:flex;flex:1 1 100%}
+  #nbpr.kom-otvorene .fgroup-kom .flabel{display:none}
+}
 #nbpr .filters.is-stuck{border-bottom-color:var(--line);box-shadow:0 6px 16px rgba(16,24,40,.08)}
 /* dlaždice na výber segmentu */
 #nbpr .fgroup-seg{flex:1 1 auto;min-width:0}
@@ -1514,7 +1593,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .reset:hover{background:#c0392b;border-color:#c0392b;color:#fff}
   cursor:pointer;padding:8px 4px;text-decoration:underline;text-underline-offset:3px}
 #nbpr .reset:hover{color:var(--ink)}
-#nbpr .filters .months-group{flex:1 1 auto;min-width:0}
+#nbpr .filters .months-group{flex:1 1 0;min-width:0}
 #nbpr .seg.wrap{flex-wrap:wrap;max-width:100%}
 #nbpr .kpis{display:flex;flex-direction:column;gap:12px;margin-bottom:16px}
 #nbpr .kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
@@ -3179,6 +3258,12 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   </div>
 
   <div class="filters">
+    <button class="fsuhrn" id="f-suhrn" type="button" aria-expanded="false"
+            title="Zobraziť všetky filtre">
+      <span class="fsuhrn-txt" id="f-suhrn-txt"></span>
+      <svg class="fsuhrn-ch" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.6 6.4 8 9.8l3.4-3.4"
+        fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
     <div class="fgroup fgroup-seg">
       <div class="flabel">Segment</div>
       <div class="seg-chips" id="f-segment" role="group" aria-label="Segment"></div>
@@ -3197,10 +3282,19 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
         <span class="obd-sep"></span>
         <div class="seg wrap" id="f-month" role="group" aria-label="Mesiace"></div>
         <div class="lista-akcie">
-          <button class="akcia akcia-modra" id="f-reset" type="button">Vyčistiť filtre</button>
+          <button class="kom-kompakt" id="kom-kompakt" type="button" aria-expanded="false"
+                  title="Komentáre k zvolenej službe a obdobiu">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 3.2h10.8v7.4H7.4L4.6 12.7v-2.1H2.6z"
+              fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            <span id="kom-kompakt-txt">Komentáre</span></button>
+          <button class="akcia akcia-modra" id="f-reset" type="button">
+            <span class="akcia-txt">Vyčistiť filtre</span>
+            <svg class="akcia-iko" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"
+              fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/></svg></button>
           <button class="akcia akcia-zel" id="pos-fab" type="button" title="Napíšte postreh, podnet alebo návrh">
             <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 3.2h10.8v7.4H7.4L4.6 12.7v-2.1H2.6z" fill="none"
-              stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Postreh, podnet, návrh</button>
+              stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+            <span class="akcia-txt">Postreh, podnet, návrh</span></button>
         </div>
       </div>
     </div>
@@ -8050,7 +8144,8 @@ function renderAnalysis(){
   html+='<div class="pa-summary">'+sum+'</div>';
   host.innerHTML=html;
 }
-function renderAll(){ renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail();  try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ ptHeadOffset(); }catch(e){} try{ bubZmenaObdobia(); }catch(e){} try{ scrollCues(); }catch(e){} }
+function renderAll(){
+  try{ renderSuhrn(); }catch(e){} renderKPIs(); renderGraphs(); renderTable(); renderMgmt(); renderActivities(); renderSegDetail();  try{ renderSegPage(); }catch(e){ console.error(e); } try{ renderDataCheck(); }catch(e){} try{ kpiAutofit(); }catch(e){} try{ ptHeadOffset(); }catch(e){} try{ bubZmenaObdobia(); }catch(e){} try{ scrollCues(); }catch(e){} }
 
 /* ---- events ---- */
 _EL("f-year").addEventListener("change", function(e){ state.year=e.target.value; renderAll(); });
@@ -8806,6 +8901,70 @@ function scrollCues(){
   }
 }
 /* výška prilepenej lišty – aby sa pod ňu dala prilepiť hlavička tabuľky */
+/* ===================== KOMPAKTNÁ UKOTVENÁ LIŠTA =====================
+   Pri hornej pozícii stránky je lišta plná, po odrolovaní sa zmenší
+   na jeden riadok so súhrnom filtrov. Kliknutím na súhrn sa opäť rozbalí. */
+function suhrnFiltrov(){
+  var von=[];
+  von.push(segNazov(state.segment)||"Všetko");
+  von.push(String(state.year));
+  var m=state.months.slice().sort(function(a,b){return a-b;});
+  var o=bubObdobie();
+  if(o==="rok") von.push("celý rok");
+  else if(o.charAt(0)==="q") von.push("Q"+o.slice(1));
+  else if(m.length===1) von.push(MONTHS[m[0]-1]);
+  else if(m.length){
+    var suvisle=m.every(function(x,i){ return i===0 || x===m[i-1]+1; });
+    von.push(suvisle ? (MONTHS[m[0]-1]+"–"+MONTHS[m[m.length-1]-1])
+                     : (m.length+" mesiacov"));
+  }
+  return von.join(" · ");
+}
+function renderSuhrn(){
+  var t=document.getElementById("f-suhrn-txt"); if(!t) return;
+  t.textContent=suhrnFiltrov();
+}
+var KOMPAKT=false, FILTRE_OTVORENE=false;
+function obnovListu(){
+  var n=document.getElementById("nbpr"); if(!n) return;
+  n.classList.toggle("kompakt", KOMPAKT && !FILTRE_OTVORENE);
+  n.classList.toggle("filtre-otvorene", KOMPAKT && FILTRE_OTVORENE);
+  var b=document.getElementById("f-suhrn");
+  if(b) b.setAttribute("aria-expanded", String(KOMPAKT && FILTRE_OTVORENE));
+  stickyTop();
+}
+function nastavKompakt(chce){
+  if(chce===KOMPAKT) return;
+  KOMPAKT=chce;
+  if(!chce) FILTRE_OTVORENE=false;     /* hore je lišta plná, rozbalenie nemá zmysel */
+  obnovListu();
+}
+function prepniFiltre(){
+  FILTRE_OTVORENE=!FILTRE_OTVORENE;
+  obnovListu();
+}
+(function(){
+  var caka=false;
+  function skontroluj(){
+    caka=false;
+    var y=window.pageYOffset||document.documentElement.scrollTop||0;
+    nastavKompakt(y>56);
+  }
+  window.addEventListener("scroll", function(){
+    if(caka) return; caka=true; requestAnimationFrame(skontroluj);
+  }, {passive:true});
+  document.addEventListener("click", function(e){
+    if(e.target.closest("#f-suhrn")){ e.preventDefault(); prepniFiltre(); return; }
+    if(e.target.closest("#kom-kompakt")){
+      e.preventDefault();
+      var n=document.getElementById("nbpr");
+      n.classList.toggle("kom-otvorene");
+      var b=document.getElementById("kom-kompakt");
+      if(b) b.setAttribute("aria-expanded", String(n.classList.contains("kom-otvorene")));
+      stickyTop();
+    }
+  }, true);
+})();
 function stickyTop(){
   var f=document.querySelector("#nbpr .filters");
   if(f) document.getElementById("nbpr").style.setProperty("--stickytop", Math.round(f.getBoundingClientRect().height)+"px");
@@ -9534,7 +9693,7 @@ try{ fbStart(); }catch(e){}
 try{ renderPostrehy(); }catch(e){}
 try{ placeBrand(); placeKpis(); }catch(e){}
 renderFilters();
-try{ stickyTop(); scrollCues(); }catch(e){}
+try{ stickyTop(); scrollCues(); renderSuhrn(); }catch(e){}
 renderAll();
 })();
 </script>
