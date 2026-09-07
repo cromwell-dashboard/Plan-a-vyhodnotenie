@@ -1603,19 +1603,19 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   color:var(--primary);margin-bottom:5px}
 /* ===== graf: dva vodorovné pruhy (realita / plán) ===== */
 #nbpr .gb-wrap{display:flex;align-items:center;gap:12px;margin-top:7px;flex-wrap:nowrap}
-/* tenká linka namiesto dvoch pruhov */
-#nbpr .gb-cis{display:flex;align-items:baseline;gap:8px 16px;flex-wrap:wrap;margin-bottom:5px;min-width:0}
-#nbpr .gb-pol{display:inline-flex;align-items:baseline;gap:6px;min-width:0}
-#nbpr .gb-lbl{font-size:9.5px;font-weight:500;color:#a8aeba;white-space:nowrap}
-#nbpr .gb-val{font-size:12.5px;font-weight:800;font-variant-numeric:tabular-nums;white-space:nowrap}
+/* jeden pruh s číslami vnútri */
 #nbpr .gb-wrap>.tpct{flex:0 0 auto}
-#nbpr .gb-sed{color:#8b93a5;font-weight:700}
-#nbpr .gb-linka{position:relative;height:3px;background:#eef0f4;border-radius:2px}
-#nbpr .gb-vypln{position:absolute;left:0;top:0;bottom:0;border-radius:2px;
+#nbpr .gb-linka{position:relative;height:13px;background:#e8eaf1;border-radius:4px}
+#nbpr .gb-vypln{position:absolute;left:0;top:0;bottom:0;border-radius:4px;
   transition:width .45s cubic-bezier(.4,0,.2,1)}
 #nbpr .gb-vypln.up{background:#2E9E5F}
 #nbpr .gb-vypln.down{background:#d94a41}
-#nbpr .gb-ryska{position:absolute;top:-4px;bottom:-4px;width:1px;background:#c3c9d6;z-index:3}
+#nbpr .gb-ryska{position:absolute;top:-5px;bottom:-5px;width:2px;background:#4a5060;border-radius:1px;z-index:4}
+#nbpr .gb-r{position:absolute;left:9px;top:50%;transform:translateY(-50%);z-index:3;
+  font-size:10px;font-weight:800;color:#fff;white-space:nowrap;font-variant-numeric:tabular-nums}
+#nbpr .gb-r.gb-von{left:auto;color:#1f2a4a}
+#nbpr .gb-p{position:absolute;right:9px;top:50%;transform:translateY(-50%);z-index:3;
+  font-size:10px;font-weight:700;color:#1f2a4a;white-space:nowrap;font-variant-numeric:tabular-nums}
 #nbpr .gb{display:flex;flex-direction:column;gap:5px;flex:1 1 0;min-width:0}
 #nbpr .gcell .gb-wrap>.tpct,#nbpr .gseg .gb-wrap>.tpct,#nbpr .gb-wrap>.tpct{
   flex:0 0 auto;min-width:60px;text-align:right;font-size:17px!important;font-weight:800!important;
@@ -6180,17 +6180,16 @@ function renderGraphs(){
         '<div class="gb-row gb-plain"><b>'+fmtValFor(c.a,metric)+'</b></div>'+
         '<div class="gb-row gb-noplan">plán nezadaný</div></div>'+pct+'</div>';
     }
-    /* jedna tenká linka: výplň podľa plnenia, svetlá ryska = 100 % plánu */
+    /* jeden pruh: realita bielym vnútri, plán tmavým v sivom, ryska = 100 % plánu */
     var w=Math.max(0, Math.min(pl, MAXR*100))/(MAXR*100)*100;
     var ryska=(1/MAXR)*100;
+    var rTxt=fmtValFor(c.a,metric), pTxt=fmtValFor(c.p,metric);
+    var rLab = (w>26)
+      ? ('<span class="gb-r">'+rTxt+'</span>')
+      : ('<span class="gb-r gb-von" style="left:calc('+w.toFixed(2)+'% + 8px)">'+rTxt+'</span>');
     var body='<div class="gb">'+
-      '<div class="gb-cis">'+
-        '<span class="gb-pol"><span class="gb-lbl">Realita</span>'+
-          '<span class="gb-val '+(up?"kv-ok":"kv-bad")+'">'+fmtValFor(c.a,metric)+'</span></span>'+
-        '<span class="gb-pol"><span class="gb-lbl">Plán</span>'+
-          '<span class="gb-val gb-sed">'+fmtValFor(c.p,metric)+'</span></span>'+
-      '</div>'+
       '<div class="gb-linka"><div class="gb-vypln '+(up?"up":"down")+'" style="width:'+w.toFixed(2)+'%"></div>'+
+        rLab+'<span class="gb-p">'+pTxt+'</span>'+
         '<div class="gb-ryska" style="left:'+ryska.toFixed(2)+'%"></div></div>';
     return head+'<div class="gb-wrap">'+body+'</div>'+pct+'</div>'+rokPole(k, metric);
   }
