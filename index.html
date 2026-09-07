@@ -2280,13 +2280,10 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pt-subtbl td.pt-met{text-align:right;padding:7px 10px;font-size:12px;font-weight:600;color:#6b7280;white-space:nowrap;
   position:sticky;left:172px;background:#fff;box-shadow:1px 0 0 #e5e7eb}
 #nbpr .pt-subtbl thead th.pt-n{min-width:172px}
-/* riadok s výnosom sivý, ostatné biele – vrátane súčtových stĺpcov */
-#nbpr .pt-subtbl tr.pt-subfirst>td,
-#nbpr .pt-subtbl tr.pt-subfirst>td.pt-tot,
-#nbpr .pt-subtbl tr.pt-subfirst>td.pt-sum{background-color:#f1f2f5!important}
-#nbpr .pt-subtbl tr:not(.pt-subfirst)>td,
-#nbpr .pt-subtbl tr:not(.pt-subfirst)>td.pt-tot,
-#nbpr .pt-subtbl tr:not(.pt-subfirst)>td.pt-sum{background-color:#fff!important}
+/* rozpad na firmy a krajiny je celý biely – sivá patrí len rozpisu klientov */
+#nbpr .pt-subtbl tbody>tr>td,
+#nbpr .pt-subtbl tbody>tr>td.pt-tot,
+#nbpr .pt-subtbl tbody>tr>td.pt-sum{background-color:#fff!important}
 /* to isté v klientskych tabuľkách */
 #nbpr .pt-cltbl tr.pt-clrev:not(.pt-clmoved):not(.pt-clres)>td,
 #nbpr .pt-cltbl tr.pt-clrev:not(.pt-clmoved):not(.pt-clres)>td.pt-tot,
@@ -2370,6 +2367,83 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pt-kom:hover{border-color:var(--primary);color:var(--primary)}
 #nbpr .pt-kom.on{color:#2E9E5F;border-color:#bfe0cc;background:#f2faf5}
 #nbpr .pt-kom.act{color:#fff;background:var(--primary);border-color:var(--primary)}
+/* akčné tlačidlá vpravo v riadku s obdobím – výrazné, s bielym textom */
+#nbpr .fgroup-kom{flex:1 1 100%;min-width:0}
+#nbpr .kom-riadok{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+#nbpr .kom-riadok .bub-lista{margin:0}
+#nbpr .bub-vyzva{display:inline-flex;align-items:center;gap:8px;height:38px;
+  font-size:12px;color:var(--muted-2)}
+#nbpr .bub-vyzva-i{display:inline-flex;align-items:center;justify-content:center;flex:none;
+  width:26px;height:26px;border-radius:8px;border:1px dashed #cbd2de;color:#a8aeba;background:#fbfcfe}
+#nbpr .bub-vyzva-i svg{width:14px;height:14px}
+#nbpr .lista-akcie{display:flex;align-items:center;gap:8px;margin-left:12px;flex:none}
+#nbpr .akcia{display:inline-flex;align-items:center;gap:7px;height:38px;box-sizing:border-box;
+  border:0;border-radius:9px;padding:0 15px;cursor:pointer;white-space:nowrap;
+  font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;
+  box-shadow:0 1px 3px rgba(16,24,40,.16);transition:filter .12s ease}
+#nbpr .akcia:hover{filter:brightness(1.07)}
+#nbpr .akcia svg{width:14px;height:14px;flex:none}
+#nbpr .akcia-zel{background:linear-gradient(100deg,#2E9E5F,#2f8f6a)}
+#nbpr .akcia-modra{background:linear-gradient(100deg,#5b70da,#3948a8)}
+.pos-modal{position:fixed;inset:0;z-index:10002;display:flex;align-items:center;justify-content:center;
+  background:rgba(31,42,74,.45);backdrop-filter:blur(3px);padding:18px}
+.pos-box{width:460px;max-width:calc(100vw - 36px);background:#fff;border-radius:16px;overflow:hidden;
+  box-shadow:0 24px 60px rgba(16,24,40,.32);font-family:'Inter',system-ui,sans-serif}
+.pos-hd{display:flex;align-items:center;padding:13px 16px;font-size:13px;font-weight:800;color:#fff;
+  background:linear-gradient(100deg,#2E9E5F,#2f8f6a)}
+.pos-x{margin-left:auto;border:0;background:rgba(255,255,255,.2);border-radius:7px;width:24px;height:24px;
+  color:#fff;cursor:pointer;font-size:12px;line-height:1}
+.pos-x:hover{background:rgba(255,255,255,.34)}
+.pos-sub{padding:12px 16px 0;font-size:12px;color:#6b7280;line-height:1.55}
+.pos-ta{display:block;box-sizing:border-box;width:calc(100% - 32px);margin:14px 16px 0;padding:10px 12px;
+  font-family:inherit;font-size:13px;line-height:1.5;color:#2f3b5c;border:1px solid #e2e5ec;
+  border-radius:10px;resize:vertical;background:#fbfcfe}
+.pos-ta:focus{outline:none;border-color:#2E9E5F;background:#fff;box-shadow:0 0 0 3px rgba(46,158,95,.14)}
+.pos-ft{display:flex;align-items:center;gap:12px;padding:12px 16px 16px}
+.pos-kto{font-size:10.5px;color:#9aa1ad}
+.pos-send{margin-left:auto;border:0;border-radius:9px;padding:9px 18px;cursor:pointer;font-family:inherit;
+  font-size:13px;font-weight:700;color:#fff;background:linear-gradient(100deg,#2E9E5F,#2f8f6a)}
+.pos-send:hover{filter:brightness(1.06)}
+#nbpr .pos-head h2{display:flex;align-items:center;gap:8px}
+#nbpr .pos-admin{font-size:9.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;
+  color:#1a6b3c;background:#eef8f2;border:1px solid #bfe0cc;border-radius:999px;padding:2px 8px}
+#nbpr .pos-filtre{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 12px}
+#nbpr .pos-pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;cursor:pointer;
+  font-family:inherit;font-size:11.5px;font-weight:600;color:var(--muted)}
+#nbpr .pos-pill b{font-weight:800;color:var(--ink-2)}
+#nbpr .pos-pill:hover{background:#f7f9fc}
+#nbpr .pos-pill.on{background:#eef8f2;border-color:#bfe0cc;color:#1a6b3c}
+#nbpr .pos-pill.on b{color:#1a6b3c}
+#nbpr .pos-list{display:flex;flex-direction:column;gap:10px}
+#nbpr .pos-item{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:#fff}
+#nbpr .pos-hotovo{background:#fbfcfd;border-color:#e6e9f0}
+#nbpr .pos-meta{display:flex;align-items:center;gap:8px;margin-bottom:7px;flex-wrap:wrap}
+#nbpr .pos-avt{width:22px;height:22px;border-radius:50%;background:#2E9E5F;color:#fff;font-size:11px;
+  font-weight:800;display:inline-flex;align-items:center;justify-content:center;flex:none}
+#nbpr .pos-autor{font-size:12.5px;font-weight:800;color:var(--ink)}
+#nbpr .pos-cas{font-size:10.5px;color:var(--muted-2)}
+#nbpr .pos-stav{margin-left:auto;font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  border-radius:999px;padding:2px 9px}
+#nbpr .pos-stav.nie{color:#8a5f08;background:#fdf7ea;border:1px solid #eeddb4}
+#nbpr .pos-stav.je{color:#1a6b3c;background:#eef8f2;border:1px solid #bfe0cc}
+#nbpr .pos-text{font-size:13px;line-height:1.6;color:var(--ink-2);white-space:normal}
+#nbpr .pos-odp{margin-top:10px;padding:9px 12px;border-left:3px solid #2E9E5F;background:#f6fbf8;border-radius:0 9px 9px 0}
+#nbpr .pos-odp-l{font-size:9.5px;font-weight:700;color:#1a6b3c;letter-spacing:.03em}
+#nbpr .pos-odp-t{font-size:12.5px;line-height:1.55;color:var(--ink-2);margin-top:3px}
+#nbpr .pos-akcie{margin-top:10px;padding-top:10px;border-top:1px dashed var(--line)}
+#nbpr .pos-odp-in{width:100%;box-sizing:border-box;padding:8px 10px;font-family:inherit;font-size:12.5px;
+  border:1px solid var(--line);border-radius:9px;resize:vertical;color:var(--ink-2);background:#fbfcfe}
+#nbpr .pos-odp-in:focus{outline:none;border-color:#2E9E5F;background:#fff}
+#nbpr .pos-akcie-r{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+#nbpr .pos-btn{border:1px solid var(--line);background:#fff;border-radius:8px;padding:6px 12px;cursor:pointer;
+  font-family:inherit;font-size:11.5px;font-weight:700;color:var(--ink-2)}
+#nbpr .pos-btn:hover{background:#f7f9fc}
+#nbpr .pos-btn-ok{border-color:#bfe0cc;color:#1a6b3c;background:#f4fbf7}
+#nbpr .pos-btn-ok:hover{background:#e7f6ee}
+#nbpr .pos-btn-off{border-color:#eeddb4;color:#8a5f08;background:#fdf9f0}
+#nbpr .pos-btn-del{margin-left:auto;border-color:transparent;color:#b6bcc9}
+#nbpr .pos-btn-del:hover{color:#b3342a;background:#fdf2f0}
+#nbpr .pos-prazdne{padding:22px;text-align:center;font-size:12.5px;color:var(--muted)}
 /* plávajúca bublina s komentárom */
 .kom-pop{position:fixed;z-index:9999;width:340px;height:270px;
   min-width:260px;min-height:190px;max-width:94vw;max-height:88vh;
@@ -2400,6 +2474,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 .kom-pop-t:focus{outline:none}
 .kom-pop-t:empty::before{content:attr(data-ph);color:#aab2c4}
 .kom-pop-t b{font-weight:800;color:#1f2a4a}
+.kom-pop-t a,.bub-pop a,#nbpr .kom-odkaz{color:#3d4eb8;cursor:pointer;text-decoration:underline;text-underline-offset:2px;word-break:break-all}
+#nbpr .kom-odkaz:hover{color:#2f3b7a}
 .kom-pop-t ul,.kom-pop-t ol{margin:4px 0 4px 18px;padding:0}
 .kom-pop-t li{margin:2px 0}
 .kom-pop-t div{min-height:1.6em}
@@ -3105,7 +3181,6 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
     </div>
 
     <div class="spacer"></div>
-    <button class="reset" id="f-reset" type="button">Vyčistiť filtre</button>
     <div class="fbreak"></div>
     <div class="fgroup fgroup-rok">
       <div class="flabel">Rok</div>
@@ -3117,6 +3192,18 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
         <div class="seg" id="f-quarter" role="group" aria-label="Štvrťrok"></div>
         <span class="obd-sep"></span>
         <div class="seg wrap" id="f-month" role="group" aria-label="Mesiace"></div>
+        <div class="lista-akcie">
+          <button class="akcia akcia-modra" id="f-reset" type="button">Vyčistiť filtre</button>
+          <button class="akcia akcia-zel" id="pos-fab" type="button" title="Napíšte postreh, podnet alebo návrh">
+            <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 3.2h10.8v7.4H7.4L4.6 12.7v-2.1H2.6z" fill="none"
+              stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>Postreh, podnet, návrh</button>
+        </div>
+      </div>
+    </div>
+    <div class="fbreak"></div>
+    <div class="fgroup fgroup-kom" id="kom-group">
+      <div class="flabel">Komentáre</div>
+      <div class="kom-riadok">
         <div class="bub-lista" id="bub-lista"></div>
       </div>
     </div>
@@ -3176,6 +3263,8 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   </div>
 
   <div class="card chk-card" id="chk-card"></div>
+
+  <div class="card pos-card" id="pos-card"></div>
 
   <div class="foot">
     <span>Výsledky · Cromwell Group · Výnosy · Marža · EBITDA · Kusy, po segmentoch aj po firmách. Čísla dopĺňate v bloku <b>MASKA → polozky</b> na začiatku súboru.</span>
@@ -6858,20 +6947,20 @@ function odchylkyHtml(id, isF){
 
   function bunkyMetriky(c,k){
     var d=c[k].a-c[k].p, up=d>=0;
-    var pl=(c[k].p>0)?Math.round(c[k].a/c[k].p*100):null;
+    var pl=pomer(c[k].a, c[k].p);
     var dy=c[k].a-c[k].py, uy=dy>=0;
-    var py=(c[k].py>0)?Math.round(c[k].a/c[k].py*100):null;
+    var py=pomer(c[k].a, c[k].py);
     var prazdna=(Math.abs(c[k].a)<0.5 && Math.abs(c[k].p)<0.5 && Math.abs(c[k].py)<0.5);
     if(prazdna) return '<td class="ot-v ot-nic">—</td><td class="ot-v ot-nic">—</td>'+
       '<td class="ot-d ot-nic">—</td><td class="ot-v ot-nic">—</td><td class="ot-d ot-nic">—</td>';
     return '<td class="ot-v">'+fmtValFor(c[k].a,k)+'</td>'+
       '<td class="ot-v ot-sed">'+fmtValFor(c[k].p,k)+'</td>'+
       '<td class="ot-d"><span class="ot-c '+(up?"kv-ok":"kv-bad")+'">'+(up?"+":"−")+fmtValFor(Math.abs(d),k)+'</span>'+
-        '<span class="ot-p">'+(pl===null?"—":fmtNum(pl)+"\u00A0%")+'</span></td>'+
+        '<span class="ot-p">'+pomerTxt(pl)+'</span></td>'+
       '<td class="ot-v ot-sed">'+(Math.abs(c[k].py)<0.5?"—":fmtValFor(c[k].py,k))+'</td>'+
       '<td class="ot-d">'+(Math.abs(c[k].py)<0.5?'<span class="ot-nic">—</span>':
         ('<span class="ot-c '+(uy?"kv-ok":"kv-bad")+'">'+(uy?"+":"−")+fmtValFor(Math.abs(dy),k)+'</span>'+
-         '<span class="ot-p">'+(py===null?"—":fmtNum(py)+"\u00A0%")+'</span>'))+'</td>';
+         '<span class="ot-p">'+pomerTxt(py)+'</span>'))+'</td>';
   }
   var MET=[["rev","Výnos"],["mar","Marža"],["cnt","Kusy"]];
   function riadokKlienta(c, poradie){
@@ -6894,7 +6983,7 @@ function odchylkyHtml(id, isF){
           '<span class="okom-obsah">'+
             '<b class="okom-nadpis" data-odchnadpis="'+kk+'"'+(nadp?'':' style="display:none"')+'>'+
               nadp.replace(/</g,"&lt;")+'</b>'+
-            '<span class="okom-txt" data-odchtext="'+kk+'">'+telo+'</span>'+
+            '<span class="okom-txt" data-odchtext="'+kk+'">'+odkazy(telo)+'</span>'+
           '</span></td>';
       }
       return '<tr class="ot-r'+(i===0?' ot-first':'')+(m[0]==="cnt"?' ot-cnt':'')+
@@ -7107,7 +7196,7 @@ function komPopOtvor(btn){
       '<span class="kom-pop-hint">B zvýrazní, bodka zapne či vypne odrážky</span>'+
       '<button class="kom-del" type="button" data-komzmaz="'+kk+'" title="Zmazať celý komentár">Zmazať</button></div>';
   document.body.appendChild(p);
-  p.querySelector('[data-ptkomtext]').innerHTML = KOM[kk]||'';
+  p.querySelector('[data-ptkomtext]').innerHTML = odkazy(KOM[kk]||'');
   p.querySelector('[data-ptkomnadpis]').value = KOM[kk+'|nadpis']||'';
   KOM_POP=p; KOM_POP_T=Date.now(); komPopDrag(p);
   var r=btn.getBoundingClientRect(), w=p.offsetWidth, h=p.offsetHeight;
@@ -7145,6 +7234,27 @@ function komUlozNadpis(pole){
     b.title = (txt||v) ? 'Upraviť komentár' : 'Pridať komentár';
   });
 }
+/* z holého odkazu spraví klikateľný odkaz – použije sa len pri zobrazení */
+function odkazy(html){
+  return String(html==null?"":html).replace(
+    /(^|[\s>(])((?:https?:\/\/|www\.)[^\s<)]+)/g,
+    function(cele, pred, url){
+      var href = /^www\./i.test(url) ? ("https://"+url) : url;
+      var koniec="";
+      var m=url.match(/[),.;:]+$/);
+      if(m){ koniec=m[0]; url=url.slice(0,-koniec.length); href=href.slice(0,-koniec.length); }
+      return pred+'<a class="kom-odkaz" href="'+href+'" target="_blank" rel="noopener noreferrer">'+url+'</a>'+koniec;
+    });
+}
+/* v poli s komentárom premení holé adresy na odkazy – po dopísaní, nie počas písania */
+function odkazyVPoli(pole){
+  if(!pole) return;
+  var pred=pole.innerHTML, po=odkazy(pred);
+  if(po!==pred){
+    pole.innerHTML=po;
+    if(pole.getAttribute("data-ptkomtext")) komUloz(pole);
+  }
+}
 function komUloz(pole){
   var kk=pole.getAttribute("data-ptkomtext");
   var html=cistiHtml(pole.innerHTML), txt=pole.textContent.trim();
@@ -7158,7 +7268,7 @@ function komUloz(pole){
     b.classList.toggle('ma', !!(txt||nad));
     b.title = (txt||nad) ? 'Upraviť komentár' : 'Pridať komentár';
   });
-  document.querySelectorAll('[data-odchtext="'+kk+'"]').forEach(function(el){ el.innerHTML=html; });
+  document.querySelectorAll('[data-odchtext="'+kk+'"]').forEach(function(el){ el.innerHTML=odkazy(html); });
 }
 /* obsluha bubliny: otvorenie, zavretie a priebežné ukladanie */
 (function(){
@@ -7180,6 +7290,17 @@ function komUloz(pole){
   document.addEventListener("keydown", function(e){ if(e.key==="Escape") komPopZavri(); });
   /* pri zmene veľkosti okna bublinu len vrátime do viditeľnej plochy */
   window.addEventListener("resize", function(){ if(KOM_POP) komPopDoOkna(); });
+  document.addEventListener("blur", function(e){
+    var p=e.target && e.target.closest && e.target.closest("[data-ptkomtext]");
+    if(p) odkazyVPoli(p);
+  }, true);
+  /* odkaz v poli sa dá otvoriť kliknutím, hoci sa doň dá aj písať */
+  document.addEventListener("click", function(e){
+    var a=e.target.closest && e.target.closest(".kom-pop-t a, .bub-pop a");
+    if(!a || !a.href) return;
+    e.preventDefault();
+    window.open(a.href, "_blank", "noopener");
+  }, true);
   document.addEventListener("input", function(e){
     var t=e.target.closest && e.target.closest("[data-ptkomtext]");
     if(t){ komUloz(t); return; }
@@ -7238,6 +7359,13 @@ function jeCesky(nazov){ var n=klNorm(nazov); return !!(CZ_SET[n] || CZ_SET[n.re
 function krajinaKlienta(nazov){ return jeCesky(nazov) ? "CZ" : "SK"; }
 
 /* komentár ku klientovi v odchýlkach – viazaný na službu, obdobie a klienta */
+/* pri zanedbateľnom základe je percento nezmyselné – radšej ho neukazujeme */
+function pomer(a, zaklad){
+  if(!(Math.abs(zaklad)>0.5)) return null;
+  var p=Math.round(a/zaklad*100);
+  return (Math.abs(p)>999) ? "vyše" : p;
+}
+function pomerTxt(p){ return (p===null) ? "—" : (p==="vyše" ? "&gt;999\u00A0%" : (fmtNum(p)+"\u00A0%")); }
 function odchKomKluc(id, klient){ return "odch|"+id+"|"+bubObdobie()+"|"+klient; }
 var IKO_KOM_KRUH = '<svg viewBox="0 0 16 16" aria-hidden="true">'+
   '<path d="M2.6 3.2h10.8v7.4H7.4L4.6 12.7v-2.1H2.6z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>';
@@ -7389,7 +7517,7 @@ function renderSegNotes(){
 /* z poznámky uložíme text, tučné písmo a členenie na riadky/odrážky */
 function cistiHtml(h){
   var d=document.createElement('div'); d.innerHTML=String(h||'');
-  var POVOLENE={B:'b', STRONG:'b', BR:'br', DIV:'div', P:'div', UL:'ul', OL:'ol', LI:'li'};
+  var POVOLENE={B:'b', STRONG:'b', BR:'br', DIV:'div', P:'div', UL:'ul', OL:'ol', LI:'li', A:'a'};
   (function ocisti(uzol){
     [].slice.call(uzol.childNodes).forEach(function(n){
       if(n.nodeType===3) return;                 /* text ponechať */
@@ -7397,7 +7525,9 @@ function cistiHtml(h){
       ocisti(n);
       var nova=POVOLENE[n.tagName];
       if(!nova){ n.replaceWith.apply(n, [].slice.call(n.childNodes)); return; }
+      var href=(n.tagName==="A") ? n.getAttribute("href") : null;
       while(n.attributes.length) n.removeAttribute(n.attributes[0].name);
+      if(href && /^https?:\/\//i.test(href)){ n.setAttribute("href",href); n.setAttribute("target","_blank"); n.setAttribute("rel","noopener noreferrer"); }
       if(nova!==n.tagName.toLowerCase()){
         var e=document.createElement(nova);
         while(n.firstChild) e.appendChild(n.firstChild);
@@ -8749,6 +8879,8 @@ function fbPoPrihlaseni(){
      a až potom začneme počúvať databázu. Opačne by prázdna databáza
      prepísala lokálne komentáre skôr, než by sa stihli uložiť. */
   fbPresunLokalne().then(fbSleduj).catch(fbSleduj);
+  try{ posSleduj(); }catch(e){}
+  try{ renderPostrehy(); }catch(e){}
 }
 function fbKluc(k){ return String(k).replace(/\//g,"~"); }
 /* jednorazovo nahrá to, čo má človek zapísané v prehliadači */
@@ -8861,17 +8993,26 @@ function bubObdobie(){
   var m=state.months.slice().sort(function(a,b){return a-b;});
   if(!m.length) return "rok";
   if(m.length===12) return "rok";
+  /* YTD ostáva viazané na posledný mesiac – tak sme sa dohodli */
+  var y=(typeof ytdMesiace==="function" ? ytdMesiace() : []).slice().sort(function(a,b){return a-b;});
+  if(y.length && m.length===y.length && m.every(function(x,i){ return x===y[i]; })) return "m"+m[m.length-1];
   if(m.length===1) return "m"+m[0];
   for(var q=1;q<=4;q++){
     var qm=QUARTERS[q];
     if(m.length===qm.length && qm.every(function(x){ return m.indexOf(x)>=0; })) return "q"+q;
   }
-  return "m"+m[m.length-1];            /* YTD aj vlastný výber → posledný mesiac */
+  return "v"+m.join("-");              /* vlastná kombinácia, napr. Q1+Q2 */
 }
 function bubObdobiePopis(){
   var o=bubObdobie();
   if(o==="rok") return "celý rok "+state.year;
   if(o.charAt(0)==="q") return "Q"+o.slice(1)+" "+state.year;
+  if(o.charAt(0)==="v"){
+    var m=o.slice(1).split("-").map(Number);
+    var suvisle=m.every(function(x,i){ return i===0 || x===m[i-1]+1; });
+    return (suvisle ? (MONTHS[m[0]-1]+"–"+MONTHS[m[m.length-1]-1])
+                    : m.map(function(x){ return MONTHS[x-1]; }).join(", "))+" "+state.year;
+  }
   return MONTHS[parseInt(o.slice(1),10)-1]+" "+state.year;
 }
 function bubKlucText(id){ return "lista|"+state.segment+"|"+bubObdobie()+"|"+id; }
@@ -8897,8 +9038,14 @@ function bubZmenaObdobia(){
 /* ---- lišta s tlačidlami ---- */
 function bubListaVykresli(){
   var host=document.getElementById("bub-lista"); if(!host) return;
-  if(state.segment==="all"){ host.style.display="none"; host.innerHTML=""; return; }
   host.style.display="flex";
+  if(state.segment==="all"){
+    /* pri pohľade Všetko sa komentáre neviažu na konkrétnu službu */
+    host.innerHTML='<span class="bub-vyzva">'+
+      '<span class="bub-vyzva-i">'+KOM_ICON+'</span>'+
+      'Pre zobrazenie komentárov zvoľte službu a obdobie</span>';
+    return;
+  }
   var zoz=bubZoznam();
   host.innerHTML =
     '<button class="bub-add" type="button" data-bubadd="1" title="Pridať poznámku k tomuto obdobiu">'+KOM_ICON+'</button>' +
@@ -9194,10 +9341,160 @@ function zapVloz(){
   }, true);
 })();
 
+/* ===================== POSTREHY OD POUŽÍVATEĽOV =====================
+   Každý môže poslať postreh, podnet alebo návrh. Admin ich vidí všetky,
+   môže odpísať a označiť za vybavené. Ukladá sa do Firestore, aby to
+   videli všetci; bez pripojenia sa drží v prehliadači. */
+var POS_KOL="resultsFeedback";
+var POS_ADMIN=["miroslava.stalmaskova@cromwell.sk"];
+var POSTREHY=(function(){ try{ return JSON.parse(localStorage.getItem("cg_postrehy_v1")||"[]")||[]; }catch(e){ return []; } })();
+var POS_FILTER="nove";
+function posUloz(){ try{ localStorage.setItem("cg_postrehy_v1", JSON.stringify(POSTREHY)); }catch(e){} }
+function jeAdmin(){
+  var mail=(FB.uzivatel && FB.uzivatel.email || "").toLowerCase();
+  return POS_ADMIN.indexOf(mail)>=0;
+}
+function posMojKluc(){ return (FB.uzivatel && FB.uzivatel.email || "").toLowerCase(); }
+function posDatum(ms){
+  var d=new Date(ms||0), dv=function(n){ return String(n).padStart(2,"0"); };
+  return d.getDate()+". "+(d.getMonth()+1)+". "+d.getFullYear()+" "+dv(d.getHours())+":"+dv(d.getMinutes());
+}
+/* ---- odoslanie ---- */
+function posOtvorFormular(){
+  if(document.getElementById("pos-modal")) return;
+  var d=document.createElement("div");
+  d.id="pos-modal"; d.className="pos-modal";
+  d.innerHTML='<div class="pos-box">'+
+    '<div class="pos-hd">Postreh, podnet alebo návrh'+
+      '<button class="pos-x" type="button" data-poszavri="1" title="Zavrieť">✕</button></div>'+
+    '<textarea class="pos-ta" id="pos-text" rows="5" placeholder="Napríklad: pri Balíkoch by sa mi zišlo…"></textarea>'+
+    '<div class="pos-ft"><span class="pos-kto" id="pos-kto"></span>'+
+      '<button class="pos-send" type="button" data-posodosli="1">Odoslať</button></div>'+
+  '</div>';
+  document.body.appendChild(d);
+  var kto=document.getElementById("pos-kto");
+  kto.textContent = FB.uzivatel ? ("odosiela "+(FB.meno||FB.uzivatel.email)) : "bez prihlásenia sa postreh uloží len do tohto prehliadača";
+  setTimeout(function(){ var t=document.getElementById("pos-text"); if(t) t.focus(); }, 40);
+}
+function posZavriFormular(){ var d=document.getElementById("pos-modal"); if(d) d.remove(); }
+function posOdosli(){
+  var t=document.getElementById("pos-text"); if(!t) return;
+  var txt=t.value.trim();
+  if(!txt){ t.focus(); return; }
+  var zaznam={ id:"p"+Date.now()+Math.floor(Math.random()*900),
+    text:txt, autor:(FB.meno||"neprihlásený"), autorKey:posMojKluc(), cas:Date.now(),
+    stav:"nove", odpoved:"", odpovedKto:"", odpovedCas:0 };
+  POSTREHY.push(zaznam); posUloz();
+  if(FB.db && FB.uzivatel){
+    try{ FB.db.collection(POS_KOL).doc(zaznam.id).set(zaznam); }catch(e){}
+  }
+  posZavriFormular();
+  renderPostrehy();
+  var c=document.getElementById("pos-card"); if(c) c.scrollIntoView({behavior:"smooth", block:"start"});
+}
+/* ---- výpis ---- */
+function posViditelne(){
+  var admin=jeAdmin(), moj=posMojKluc();
+  return POSTREHY.filter(function(z){ return admin || (z.autorKey||"")===moj; })
+    .sort(function(a,b){ return (b.cas||0)-(a.cas||0); });
+}
+function renderPostrehy(){
+  var host=document.getElementById("pos-card"); if(!host) return;
+  var admin=jeAdmin();
+  var vsetky=posViditelne();
+  var nove=vsetky.filter(function(z){ return z.stav!=="vybavene"; });
+  var hotove=vsetky.filter(function(z){ return z.stav==="vybavene"; });
+  var zoznam=(POS_FILTER==="vybavene")?hotove:(POS_FILTER==="vsetky"?vsetky:nove);
+  if(!vsetky.length && !admin){ host.style.display="none"; return; }
+  host.style.display="";
+  var pilulky='<div class="pos-filtre">'+
+    [["nove","Nevybavené",nove.length],["vybavene","Vybavené",hotove.length],["vsetky","Všetky",vsetky.length]]
+    .map(function(f){ return '<button class="pos-pill'+(POS_FILTER===f[0]?" on":"")+'" type="button" data-posfilter="'+f[0]+'">'+
+      f[1]+' <b>'+f[2]+'</b></button>'; }).join("")+'</div>';
+  var telo = zoznam.length ? zoznam.map(function(z){
+    var odp = z.odpoved ? ('<div class="pos-odp"><span class="pos-odp-l">Odpoveď · '+
+        (z.odpovedKto||"")+' · '+posDatum(z.odpovedCas)+'</span>'+
+        '<div class="pos-odp-t">'+String(z.text?z.odpoved:"").replace(/</g,"&lt;").replace(/\n/g,"<br>")+'</div></div>') : '';
+    var nastroje = admin ? ('<div class="pos-akcie">'+
+        '<textarea class="pos-odp-in" data-posodp="'+z.id+'" rows="2" placeholder="Napíšte odpoveď…">'+
+          String(z.odpoved||"").replace(/</g,"&lt;")+'</textarea>'+
+        '<div class="pos-akcie-r">'+
+          '<button class="pos-btn" type="button" data-posulozodp="'+z.id+'">Uložiť odpoveď</button>'+
+          '<button class="pos-btn '+(z.stav==="vybavene"?"pos-btn-off":"pos-btn-ok")+'" type="button" data-posstav="'+z.id+'">'+
+            (z.stav==="vybavene"?"Vrátiť medzi nevybavené":"Označiť ako vybavené")+'</button>'+
+          '<button class="pos-btn pos-btn-del" type="button" data-poszmaz="'+z.id+'">Zmazať</button>'+
+        '</div></div>') : '';
+    return '<div class="pos-item'+(z.stav==="vybavene"?" pos-hotovo":"")+'">'+
+      '<div class="pos-meta"><span class="pos-avt">'+String(z.autor||"?").slice(0,1).toUpperCase()+'</span>'+
+        '<span class="pos-autor">'+String(z.autor||"neznámy").replace(/</g,"&lt;")+'</span>'+
+        '<span class="pos-cas">'+posDatum(z.cas)+'</span>'+
+        '<span class="pos-stav '+(z.stav==="vybavene"?"je":"nie")+'">'+(z.stav==="vybavene"?"vybavené":"nevybavené")+'</span></div>'+
+      '<div class="pos-text">'+String(z.text||"").replace(/</g,"&lt;").replace(/\n/g,"<br>")+'</div>'+
+      odp+nastroje+'</div>';
+  }).join("") : '<div class="pos-prazdne">'+(POS_FILTER==="vybavene"?"Zatiaľ nič vybavené.":"Zatiaľ žiadne postrehy.")+'</div>';
+  host.innerHTML='<div class="pos-head"><h2>Postrehy'+(admin?' <span class="pos-admin">admin</span>':'')+'</h2>'+
+      '<div class="csub">'+(admin?"podnety a návrhy od používateľov":"vaše podnety a moje odpovede")+'</div></div>'+
+    pilulky+'<div class="pos-list">'+telo+'</div>';
+}
+/* ---- živé sledovanie ---- */
+function posSleduj(){
+  if(!FB.db) return;
+  FB.db.collection(POS_KOL).onSnapshot(function(sn){
+    var von=[], mam={};
+    sn.forEach(function(doc){ var z=doc.data(); if(z&&z.text){ von.push(z); mam[z.id]=1; } });
+    /* čo je zatiaľ len v prehliadači, sa nezahodí – naopak, nahrá sa hore */
+    POSTREHY.forEach(function(z){
+      if(z && z.text && !mam[z.id]){
+        von.push(z);
+        if(FB.uzivatel){ try{ FB.db.collection(POS_KOL).doc(z.id).set(z); }catch(e){} }
+      }
+    });
+    POSTREHY=von; posUloz(); renderPostrehy();
+  }, function(){});
+}
+/* ---- obsluha ---- */
+(function(){
+  document.addEventListener("click", function(e){
+    if(e.target.closest("#pos-fab")){ e.preventDefault(); posOtvorFormular(); return; }
+    if(e.target.closest("[data-poszavri]")){ e.preventDefault(); posZavriFormular(); return; }
+    if(e.target.closest("[data-posodosli]")){ e.preventDefault(); posOdosli(); return; }
+    var f=e.target.closest("[data-posfilter]");
+    if(f){ e.preventDefault(); POS_FILTER=f.getAttribute("data-posfilter"); renderPostrehy(); return; }
+    var u=e.target.closest("[data-posulozodp]");
+    if(u){ e.preventDefault();
+      var id=u.getAttribute("data-posulozodp");
+      var ta=document.querySelector('[data-posodp="'+id+'"]'); if(!ta) return;
+      posZmen(id, { odpoved:ta.value.trim(), odpovedKto:(FB.meno||"admin"), odpovedCas:Date.now() });
+      return; }
+    var st=e.target.closest("[data-posstav]");
+    if(st){ e.preventDefault();
+      var id2=st.getAttribute("data-posstav");
+      var z=POSTREHY.filter(function(x){ return x.id===id2; })[0]; if(!z) return;
+      posZmen(id2, { stav: z.stav==="vybavene" ? "nove" : "vybavene" });
+      return; }
+    var zm=e.target.closest("[data-poszmaz]");
+    if(zm){ e.preventDefault();
+      var id3=zm.getAttribute("data-poszmaz");
+      if(!confirm("Naozaj zmazať tento postreh?")) return;
+      POSTREHY=POSTREHY.filter(function(x){ return x.id!==id3; }); posUloz();
+      if(FB.db && FB.uzivatel){ try{ FB.db.collection(POS_KOL).doc(id3).delete(); }catch(err){} }
+      renderPostrehy();
+    }
+  }, true);
+  document.addEventListener("keydown", function(e){ if(e.key==="Escape") posZavriFormular(); });
+})();
+function posZmen(id, zmeny){
+  POSTREHY.forEach(function(z){ if(z.id===id) for(var k in zmeny) z[k]=zmeny[k]; });
+  posUloz();
+  if(FB.db && FB.uzivatel){ try{ FB.db.collection(POS_KOL).doc(id).set(zmeny, {merge:true}); }catch(e){} }
+  renderPostrehy();
+}
+
 /* ---- boot ---- */
 try{ state.months=defaultMonths(); }catch(e){}
 try{ BUB_STAV=""; }catch(e){}
 try{ fbStart(); }catch(e){}
+try{ renderPostrehy(); }catch(e){}
 try{ placeBrand(); placeKpis(); }catch(e){}
 renderFilters();
 try{ stickyTop(); scrollCues(); }catch(e){}
