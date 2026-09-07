@@ -2376,7 +2376,11 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .bub-vyzva-i{display:inline-flex;align-items:center;justify-content:center;flex:none;
   width:26px;height:26px;border-radius:8px;border:1px dashed #cbd2de;color:#a8aeba;background:#fbfcfe}
 #nbpr .bub-vyzva-i svg{width:14px;height:14px}
-#nbpr .lista-akcie{display:flex;align-items:center;gap:8px;margin-left:12px;flex:none}
+/* akcie zostávajú v riadku s obdobím – nesmú prepadnúť pod lištu */
+#nbpr .obdobie{flex-wrap:nowrap}
+#nbpr .obdobie #f-month{min-width:0;flex:1 1 auto}
+#nbpr .lista-akcie{display:flex;align-items:center;gap:8px;margin-left:12px;flex:0 0 auto;align-self:flex-start}
+#nbpr .akcia{align-self:flex-start}
 #nbpr .akcia{display:inline-flex;align-items:center;gap:7px;height:38px;box-sizing:border-box;
   border:0;border-radius:9px;padding:0 15px;cursor:pointer;white-space:nowrap;
   font-family:inherit;font-size:12.5px;font-weight:700;color:#fff;
@@ -7290,6 +7294,24 @@ function komUloz(pole){
   document.addEventListener("keydown", function(e){ if(e.key==="Escape") komPopZavri(); });
   /* pri zmene veľkosti okna bublinu len vrátime do viditeľnej plochy */
   window.addEventListener("resize", function(){ if(KOM_POP) komPopDoOkna(); });
+  /* pri vložení zo schránky si necháme tučné, kurzívu, odrážky aj číslovanie */
+  document.addEventListener("paste", function(e){
+    var pole=e.target && e.target.closest && e.target.closest("[data-ptkomtext]");
+    if(!pole) return;
+    var dt=e.clipboardData; if(!dt) return;
+    var html=dt.getData("text/html"), txt=dt.getData("text/plain");
+    e.preventDefault();
+    var vlozit;
+    if(html){ vlozit=cistiHtml(html); }
+    else {
+      vlozit=String(txt||"").split(/\r?\n/).map(function(r){
+        return "<div>"+r.replace(/&/g,"&amp;").replace(/</g,"&lt;")+"</div>"; }).join("");
+    }
+    vlozit=odkazy(vlozit);
+    try{ document.execCommand("insertHTML", false, vlozit); }
+    catch(err){ pole.innerHTML += vlozit; }
+    komUloz(pole);
+  }, true);
   document.addEventListener("blur", function(e){
     var p=e.target && e.target.closest && e.target.closest("[data-ptkomtext]");
     if(p) odkazyVPoli(p);
@@ -7517,7 +7539,22 @@ function renderSegNotes(){
 /* z poznámky uložíme text, tučné písmo a členenie na riadky/odrážky */
 function cistiHtml(h){
   var d=document.createElement('div'); d.innerHTML=String(h||'');
-  var POVOLENE={B:'b', STRONG:'b', BR:'br', DIV:'div', P:'div', UL:'ul', OL:'ol', LI:'li', A:'a'};
+  var POVOLENE={B:'b', STRONG:'b', I:'i', EM:'i', U:'u', BR:'br', DIV:'div', P:'div',
+                UL:'ul', OL:'ol', LI:'li', A:'a',
+                H1:'b', H2:'b', H3:'b', H4:'b', H5:'b', H6:'b'};
+  /* Word a Outlook posielajú formát cez štýly – prepíšeme ho na značky */
+  [].slice.call(d.querySelectorAll('*')).forEach(function(n){
+    var st=n.getAttribute && n.getAttribute('style'); if(!st) return;
+    var s2=st.toLowerCase(), obal=null;
+    if(/font-weight\s*:\s*(bold|[6-9]00)/.test(s2)) obal='b';
+    else if(/font-style\s*:\s*italic/.test(s2)) obal='i';
+    else if(/text-decoration[^;]*underline/.test(s2)) obal='u';
+    if(obal && !POVOLENE[n.tagName]){
+      var w=document.createElement(obal);
+      while(n.firstChild) w.appendChild(n.firstChild);
+      n.appendChild(w);
+    }
+  });
   (function ocisti(uzol){
     [].slice.call(uzol.childNodes).forEach(function(n){
       if(n.nodeType===3) return;                 /* text ponechať */
