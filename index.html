@@ -1196,7 +1196,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   position:sticky;top:0;z-index:60;background:var(--panel);
   margin:0 -22px 14px;padding:9px 22px 10px;
   border-bottom:1px solid transparent;
-  transition:box-shadow .15s ease,border-color .15s ease,padding .18s ease}
+  transition:box-shadow .15s ease,border-color .15s ease;will-change:padding}
 
 /* pri nízkom okne šetríme výšku aj v plnom režime */
 @media (max-height:800px){
@@ -1522,7 +1522,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .dp-cmp td.dp-note,#nbpr .pt-table td.pt-note2{font-size:9.5px}
   #nbpr .dp-cmp thead th.dpg{font-size:10.5px}
   #nbpr .dp-cmp.dp-sumtbl>thead>tr>th.dpg{font-size:11px}
-  #nbpr .dp-stack{gap:8px}
+  #nbpr .dp-stack{width:100%;gap:8px}
   /* rozpad a klienti */
   #nbpr .pt-scroll,#nbpr .cl-scroll{-webkit-overflow-scrolling:touch}
   #nbpr .pt-subtbl td.pt-met{left:var(--wname,116px)}
@@ -1569,7 +1569,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .chk-list li{padding:8px 10px 8px 26px;font-size:12px}
   #nbpr .chk-list{max-height:none}
   /* pätička */
-  #nbpr .foot{font-size:11px}
+  #nbpr{padding-bottom:28px}
+#nbpr .foot{font-size:11px}
 }
 @media (max-width:400px){
   #nbpr .kpis{grid-template-columns:1fr}
@@ -2255,7 +2256,13 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp tbody td:first-child,#nbpr .pt-table tbody td:first-child{font-weight:600}
 #nbpr .dp-cmp tbody td.dp-name,#nbpr .pt-table tbody td.pt-n{font-weight:600}
 /* ================= samostatné tabuľky: SPOLU navrchu + segmenty ================= */
-#nbpr .dp-stack{display:flex;flex-direction:column;gap:10px}
+#nbpr .dp-stack{width:100%;display:flex;flex-direction:column;gap:10px;align-items:stretch}
+/* tabuľky vypĺňajú celú šírku dashboardu; keď sa nezmestia, posúvajú sa do boku.
+   Bez align-self by sa v stĺpcovom flexe zmrštili na šírku svojich stĺpcov. */
+#nbpr .dp-stack>table,#nbpr .dp-stack>.pt-box,#nbpr .dp-stack>.gxbox{width:100%!important;align-self:stretch}
+#nbpr .dp-stack>table{table-layout:auto}
+#nbpr .dp-stack>table colgroup col:last-child{width:auto}
+#nbpr .pt-box .pt-table,#nbpr .pt-box .pt-cltbl,#nbpr .cl-box .pt-cltbl{width:100%}
 #nbpr .dp-table.dp-cmp{table-layout:fixed;border-collapse:separate;border-spacing:0}
 /* --- SPOLU: výrazná modrá karta, jeden spoločný gradient --- */
 /* SPOLU: modrá len v hlavičke, čísla v bielom riadku */
@@ -3218,6 +3225,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .fact{display:flex;gap:9px;align-items:flex-start}
 #nbpr .fact .dot{width:7px;height:7px;border-radius:50%;background:var(--green);margin-top:5px;flex:none}
 #nbpr .fact b{font-weight:700}
+#nbpr{padding-bottom:28px}
 #nbpr .foot{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--muted-2);
   border-top:1px solid var(--line);margin-top:18px;padding-top:14px}
 #nbpr .foot code{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:1px 6px;font-size:11px;color:var(--muted)}
@@ -8089,7 +8097,7 @@ function renderTable(){
     segTbls+=t1+legendaZ(t1);
   });
 
-  wrap.innerHTML='<div class="dp-stack" style="width:'+TOTW+'px">'+(jeSkupina?'':sumTbl)+segTbls+'</div>';
+  wrap.innerHTML='<div class="dp-stack" style="min-width:'+TOTW+'px;width:100%">'+(jeSkupina?'':sumTbl)+segTbls+'</div>';
   (function(){ var host=wrap.closest('.scrollwrap')||wrap;
     var st=host.parentNode.querySelector(':scope > .dp-legenda'); if(st) st.remove(); })();
   wrap.style.setProperty('--wname', W_NAME+'px');
@@ -9146,14 +9154,31 @@ function renderSuhrn(){
   var t=document.getElementById("f-suhrn-txt"); if(!t) return;
   t.textContent=suhrnFiltrov();
 }
-var KOMPAKT=false, FILTRE_OTVORENE=false;
+var KOMPAKT=false, FILTRE_OTVORENE=false, PRESKOC_SLEDOVANIE=false;
+/* Prah zapnutia musí byť väčší než rozdiel výšok lišty, inak by sa po zbalení
+   stránka vrátila pod prah a režim by kmital. Vypnutie je nižšie – hysterézia. */
+var KOMPAKT_ZAP=240, KOMPAKT_VYP=90;
 function obnovListu(){
   var n=document.getElementById("nbpr"); if(!n) return;
+  var f=document.querySelector("#nbpr .filters");
+  var predV=f?f.getBoundingClientRect().height:0;
+  var predY=window.pageYOffset||document.documentElement.scrollTop||0;
   n.classList.toggle("kompakt", KOMPAKT && !FILTRE_OTVORENE);
   n.classList.toggle("filtre-otvorene", KOMPAKT && FILTRE_OTVORENE);
   var b=document.getElementById("f-suhrn");
   if(b) b.setAttribute("aria-expanded", String(KOMPAKT && FILTRE_OTVORENE));
   stickyTop();
+  /* zmena výšky lišty by posunula obsah – rozdiel hneď vyrovnáme,
+     inak by stránka poskočila a prepínanie by sa zacyklilo */
+  if(f){
+    var poV=f.getBoundingClientRect().height;
+    var rozdiel=Math.round(predV-poV);
+    if(rozdiel && predY>0){
+      PRESKOC_SLEDOVANIE=true;
+      window.scrollTo(0, Math.max(0, Math.round(predY-rozdiel)));
+      requestAnimationFrame(function(){ PRESKOC_SLEDOVANIE=false; });
+    }
+  }
 }
 function nastavKompakt(chce){
   if(chce===KOMPAKT) return;
@@ -9169,8 +9194,10 @@ function prepniFiltre(){
   var caka=false;
   function skontroluj(){
     caka=false;
+    if(PRESKOC_SLEDOVANIE) return;
     var y=window.pageYOffset||document.documentElement.scrollTop||0;
-    nastavKompakt(y>56);
+    if(!KOMPAKT && y>KOMPAKT_ZAP) nastavKompakt(true);
+    else if(KOMPAKT && y<KOMPAKT_VYP) nastavKompakt(false);
   }
   window.addEventListener("scroll", function(){
     if(caka) return; caka=true; requestAnimationFrame(skontroluj);
