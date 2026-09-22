@@ -1845,6 +1845,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   border-top:1px solid var(--line);background:#f7f9fc}
 /* variant C: čistá tabuľka, odchýlka podčiarknutá */
 #nbpr .odch-tog{margin-left:12px}
+#nbpr .odch-prah{margin-left:auto}
+#nbpr .odch-prah button{min-width:44px}
 /* prepínač v hlavičke rozpadu */
 #nbpr .pt-hlavprep{padding:6px 10px}
 #nbpr .pt-hlavprep .rz-tog{margin:0;display:inline-flex}
@@ -1906,7 +1908,17 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   letter-spacing:.07em;text-transform:uppercase;color:#1f7a45;text-align:left;border-top:1px solid var(--line)}
 #nbpr .ot-sek-m>td{color:#c0392b}
 #nbpr .odch-t3 td.ot-n{vertical-align:middle}
-#nbpr .odch-t3 td.ot-kom{vertical-align:top;padding-top:9px}
+/* komentár nesmie brať priestor číslam – dostane pevnú šírku a zalomí sa.
+   Text je vybratý z toku, inak by celú výšku pripísal prvému riadku
+   a čísla by sa nakopili dole. */
+#nbpr .odch-t3 td.ot-kom{vertical-align:top;padding:9px 12px;position:relative;
+  width:300px;max-width:300px;white-space:normal;word-break:break-word}
+#nbpr .odch-t3 td.ot-kom>.okom-btn{position:relative;z-index:2}
+#nbpr .odch-t3 td.ot-kom>.okom-obsah{position:absolute;left:44px;right:12px;top:11px}
+#nbpr .odch-t3 th.ot-komh{width:300px;max-width:300px}
+#nbpr .odch-t3 td.ot-kom .okom-obsah{max-width:100%;min-width:0}
+#nbpr .odch-t3 td.ot-kom .okom-txt{overflow-wrap:anywhere}
+#nbpr .odch-t3 td.ot-kom .okom-txt ul{margin:2px 0 0 14px}
 #nbpr .ot-nic{color:#a8aeba;font-size:11px}
 @media (max-width:680px){
   /* odchýlky na mobile: kompaktnejšie písmo, ikonky namiesto názvov metrík
@@ -2905,6 +2917,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .imp-btn:hover{background:#e2e8f9}
 #nbpr .imp-modes{display:flex;gap:16px;flex-wrap:wrap}
 #nbpr .imp-modes label{display:flex;align-items:center;gap:6px;font-size:12.5px;color:#374151;cursor:pointer}
+#nbpr .imp-modes small{color:#8b93a5;font-size:11px}
 #nbpr .imp-run{margin-left:auto;border:none;background:var(--primary);color:#fff;border-radius:9px;
   padding:9px 20px;font-family:inherit;font-size:13px;font-weight:700;cursor:pointer}
 #nbpr .imp-run:disabled{background:#c3c9d6;cursor:default}
@@ -3635,7 +3648,7 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
         <span class="imp-btn">Vybrať súbor XLSX</span>
       </label>
       <div class="imp-modes">
-        <label><input type="radio" name="imp-mode" value="chybajuce" checked> Doplniť len chýbajúce mesiace</label>
+        <label title="Skutočnosť sa dopĺňa po mesiacoch, plán sa vždy prevezme celý zo súboru"><input type="radio" name="imp-mode" value="chybajuce" checked> Doplniť len chýbajúce mesiace <small>(plán sa prevezme celý)</small></label>
         <label><input type="radio" name="imp-mode" value="vsetko"> Prepísať všetko</label>
       </div>
       <button class="imp-run" id="imp-run" type="button" disabled>Importovať</button>
@@ -6287,7 +6300,7 @@ var MANUAL = {};
 var MANUAL_CANEDIT = false;
 var MGMT = {m:[],st:{},ob:{},kat:{}};
 var state = { year: defaultYear(), months: [1,2,3], segment: "all", expanded: {}, segExpanded: null,
-              graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", marGlobal: "mar", odchFirma: null, rozpadRezim: "firmy", komOpen: null, ptKomOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
+              graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", marGlobal: "mar", odchFirma: null, rozpadRezim: "firmy", odchPrah: "10", komOpen: null, ptKomOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
 
 
 /* --- bezpečný prístup k DOM (v maske sú niektoré bloky odstránené) --- */
@@ -6946,6 +6959,7 @@ function renderGraphs(){
   });
   gb.innerHTML=html;
   document.querySelectorAll('#graph-toggle button').forEach(function(b){ b.setAttribute("aria-pressed", b.dataset.mode===state.graphMode); });
+  try{ odchZarovnajRiadky(); }catch(e){}
 }
 
 
@@ -7300,7 +7314,35 @@ var PARTS_AKO_KLIENTI=8;
    Poradie určuje odchýlka výnosu a pre ostatné metriky sa zachová.
    Prepnutím na false sa vráti pôvodný rozpad. */
 var ODCHYLKY_V_GRAFE = true;
-var ODCH_POCET = 3;                 /* koľko klientov v pluse a koľko v mínuse sa vypíše */
+/* Klient sa do odchýlok dostane, keď v niektorej veličine prekročí prah plnenia
+   a zároveň ide o dosť veľký rozdiel – inak by zoznam zaplavili drobní klienti
+   s vysokými percentami z malých čísel. Prah sa dá prepnúť priamo v paneli. */
+var ODCH_PRAHY=[
+  {id:"5",  pct:5,  eur:1500,  nazov:"5 %"},
+  {id:"10", pct:10, eur:2500,  nazov:"10 %"},
+  {id:"20", pct:20, eur:5000,  nazov:"20 %"},
+  {id:"30", pct:30, eur:5000,  nazov:"30 %"}
+];
+var ODCH_STROP = 25;                /* poistka proti neúmerne dlhému zoznamu */
+function odchPrah(){
+  var id=state.odchPrah||"20";
+  for(var i=0;i<ODCH_PRAHY.length;i++) if(ODCH_PRAHY[i].id===id) return ODCH_PRAHY[i];
+  return ODCH_PRAHY[1];
+}
+/* prekročil klient prah aspoň v jednej veličine? */
+function odchVyrazny(c){
+  var p=odchPrah();
+  var veliciny=[["rev",p.eur],["mar",p.eur],["cnt",p.eur*30]];
+  for(var i=0;i<veliciny.length;i++){
+    var k=veliciny[i][0], minRozdiel=veliciny[i][1];
+    var v=c[k]; if(!v || Math.abs(v.p)<0.5) continue;
+    var plnenie=v.a/v.p*100;
+    if(Math.abs(plnenie-100)<p.pct) continue;
+    if(Math.abs(v.a-v.p)<minRozdiel) continue;
+    return true;
+  }
+  return false;
+}
 
 /* zoznam klientov segmentu, voliteľne len za jednu firmu */
 function odchFirmy(id, isF){
@@ -7357,7 +7399,12 @@ function odchylkyHtml(id, isF){
     }).join('')+'</span>';
   }
 
-  var hd='<div class="odch-hd"><span>Najväčšie odchýlky — '+nm+'</span>'+ftog+tog+
+  var ptog='<span class="mtog odch-tog odch-prah" title="Ukáže klientov, ktorí sa v niektorej veličine '+
+      'odchýlili od plánu aspoň o toľko percent">'+
+    ODCH_PRAHY.map(function(p){
+      return '<button type="button" data-odchprah="'+p.id+'" class="'+(odchPrah().id===p.id?"on":"")+'">'+
+        p.nazov+'</button>'; }).join('')+'</span>';
+  var hd='<div class="odch-hd"><span>Odchýlky od plánu — '+nm+'</span>'+ptog+ftog+tog+
     '<button class="odch-viac" type="button" data-odchviac="'+id+'">Zobraziť celý rozpad</button>'+
     '<button class="gexp-close" type="button" data-close="1" title="Zavrieť">✕</button></div>';
 
@@ -7384,8 +7431,13 @@ function odchylkyHtml(id, isF){
 
   /* päť najväčších plusov a päť najväčších mínusov podľa odchýlky výnosu */
   var zoradene=vsetci.slice().sort(function(a,b){ return (b.rev.a-b.rev.p)-(a.rev.a-a.rev.p); });
-  var plusy=zoradene.filter(function(c){ return (c.rev.a-c.rev.p)>0.5; }).slice(0,ODCH_POCET);
-  var minusy=zoradene.filter(function(c){ return (c.rev.a-c.rev.p)<-0.5; }).slice(-ODCH_POCET).reverse();
+  var vyrazne=zoradene.filter(odchVyrazny);
+  /* keď prah neprekročí nikto, ukážeme aspoň tri najväčšie na každú stranu,
+     nech panel nezostane prázdny */
+  var zaloha=!vyrazne.length;
+  if(zaloha) vyrazne=zoradene;
+  var plusy=vyrazne.filter(function(c){ return (c.rev.a-c.rev.p)>0.5; }).slice(0, zaloha?3:ODCH_STROP);
+  var minusy=vyrazne.filter(function(c){ return (c.rev.a-c.rev.p)<-0.5; }).slice(zaloha?-3:-ODCH_STROP).reverse();
   var zvysok=vsetci.length-plusy.length-minusy.length;
 
   function bunkyMetriky(c,k){
@@ -7456,7 +7508,10 @@ function odchylkyHtml(id, isF){
       '<tbody>'+telo+'</tbody></table>'+
     '<div class="odch-zv">'+
       (zvysok>0? ('<button class="odch-odkaz" type="button" data-odchviac="'+id+'">a ďalších '+zvysok+' klientov</button> · ') : '')+
-      'zoradené podľa odchýlky výnosu voči plánu</div></div>';
+      (zaloha
+        ? ('prah '+odchPrah().pct+' % neprekročil nikto – zobrazené sú tri najväčšie odchýlky')
+        : ('zobrazení sú klienti s odchýlkou aspoň '+odchPrah().pct+' % vo výnose, marži alebo kusoch'))+
+      ' · zoradené podľa odchýlky výnosu</div></div>';
 }
 
 /* odkaz do Detailného prehľadu – rozbalí segment a odroluje k nemu */
@@ -7719,6 +7774,7 @@ function komUloz(pole){
     b.title = (txt||nad) ? 'Upraviť komentár' : 'Pridať komentár';
   });
   document.querySelectorAll('[data-odchtext="'+kk+'"]').forEach(function(el){ el.innerHTML=odkazy(html); });
+  try{ odchZarovnajRiadky(); }catch(e){}
 }
 /* obsluha bubliny: otvorenie, zavretie a priebežné ukladanie */
 (function(){
@@ -8583,6 +8639,16 @@ document.addEventListener("click", function(e){
   e.preventDefault(); e.stopPropagation();
   marPrepni(sw.getAttribute("data-marsw"));
 }, true);
+/* prepínač prahu odchýlky */
+document.addEventListener("click", function(e){
+  var pb=e.target.closest("[data-odchprah]");
+  if(!pb) return;
+  e.preventDefault(); e.stopPropagation();
+  state.odchPrah=pb.getAttribute("data-odchprah");
+  try{ localStorage.setItem("cg_odch_prah", state.odchPrah); }catch(err){}
+  try{ renderGraphs(); }catch(err){}
+}, true);
+(function(){ try{ var u=localStorage.getItem("cg_odch_prah"); if(u) state.odchPrah=u; }catch(e){} })();
 /* prepínač firmy v paneli odchýlok */
 document.addEventListener("click", function(e){
   var fb=e.target.closest("[data-odchfirma]");
@@ -8991,7 +9057,12 @@ function impMerge(mode, nove){
       if(!rec[Y]) return;
       for(var f in rec[Y]){
         var neu=rec[Y][f].slice();
-        if(mode==="chybajuce"){
+        /* Režim „doplniť len chýbajúce mesiace" sa vzťahuje na skutočnosť –
+           tam sa mesiace pribaľujú postupne. Plán je celoročná veličina a keď
+           sa zmení, musí sa prebrať celý, inak by v dashboarde zostali staré
+           čísla z predošlého podkladu. */
+        var jePlan = /^plan/.test(f);
+        if(mode==="chybajuce" && !jePlan){
           var old=cur(polozka,cast,Y,f);
           if(old) neu=neu.map(function(x,i){
             var o=(typeof old[i]==="number")?old[i]:0;
@@ -10466,6 +10537,37 @@ function renderKomentare(){
       (v.length-zobraz.length)+')</button></div>';
   }
   host.innerHTML=h;
+}
+/* Komentár je vysoký cez tri riadky, no prehliadač jeho výšku pripíše len
+   prvému. Riadky preto dorovnáme, nech čísla sedia vedľa textu. */
+function odchZarovnajRiadky(){
+  document.querySelectorAll(".odch-t3 tbody").forEach(function(tb){
+    var skupina=[];
+    function dorovnaj(){
+      if(skupina.length!==3) { skupina=[]; return; }
+      skupina.forEach(function(r){ r.style.height=""; });
+      var kom=skupina[0].querySelector("td.ot-kom");
+      var vysky=skupina.map(function(r){ return r.getBoundingClientRect().height; });
+      var prirodzena=vysky[0]+vysky[1]+vysky[2];
+      var obsah=kom ? kom.querySelector(".okom-obsah") : null;
+      var potrebna=obsah ? (obsah.getBoundingClientRect().height+22) : 0;
+      var celkom=Math.max(prirodzena, potrebna);
+      /* rovnomerne rozdelíme aj vtedy, keď celková výška sedí, ale prehliadač
+         ju pripísal jedinému riadku */
+      var nerovnomerne=(Math.max.apply(null,vysky)-Math.min.apply(null,vysky))>6;
+      if(celkom>prirodzena+1 || nerovnomerne){
+        var v=Math.ceil(celkom/3);
+        skupina.forEach(function(r){ r.style.height=v+"px"; });
+      }
+      skupina=[];
+    }
+    [].slice.call(tb.children).forEach(function(tr){
+      if(tr.classList.contains("ot-sek")) { dorovnaj(); return; }
+      if(tr.classList.contains("ot-first")) dorovnaj();
+      skupina.push(tr);
+    });
+    dorovnaj();
+  });
 }
 /* ---- otvorenie komentára v dashboarde ---- */
 function kcOtvorVDashboarde(kluc){
