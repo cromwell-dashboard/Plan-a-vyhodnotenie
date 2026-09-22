@@ -1846,7 +1846,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* variant C: čistá tabuľka, odchýlka podčiarknutá */
 #nbpr .odch-tog{margin-left:12px}
 #nbpr .odch-prah{margin-left:auto}
-#nbpr .odch-prah button{min-width:44px}
+#nbpr .odch-prah button{min-width:42px}
+#nbpr .odch-prah button[data-odchprah="vsetci"]{min-width:56px}
 /* prepínač v hlavičke rozpadu */
 #nbpr .pt-hlavprep{padding:6px 10px}
 #nbpr .pt-hlavprep .rz-tog{margin:0;display:inline-flex}
@@ -1907,6 +1908,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .ot-sek>td{padding:7px 12px;background:#f2f5fa;font-size:9.5px;font-weight:800;
   letter-spacing:.07em;text-transform:uppercase;color:#1f7a45;text-align:left;border-top:1px solid var(--line)}
 #nbpr .ot-sek-m>td{color:#c0392b}
+#nbpr .ot-sek-n>td{color:#6b7280}
 #nbpr .odch-t3 td.ot-n{vertical-align:middle}
 /* komentár nesmie brať priestor číslam – dostane pevnú šírku a zalomí sa.
    Text je vybratý z toku, inak by celú výšku pripísal prvému riadku
@@ -7318,6 +7320,7 @@ var ODCHYLKY_V_GRAFE = true;
    a zároveň ide o dosť veľký rozdiel – inak by zoznam zaplavili drobní klienti
    s vysokými percentami z malých čísel. Prah sa dá prepnúť priamo v paneli. */
 var ODCH_PRAHY=[
+  {id:"vsetci", pct:0, eur:0, nazov:"Všetci", vsetci:true},
   {id:"5",  pct:5,  eur:1500,  nazov:"5 %"},
   {id:"10", pct:10, eur:2500,  nazov:"10 %"},
   {id:"20", pct:20, eur:5000,  nazov:"20 %"},
@@ -7327,11 +7330,12 @@ var ODCH_STROP = 25;                /* poistka proti neúmerne dlhému zoznamu *
 function odchPrah(){
   var id=state.odchPrah||"20";
   for(var i=0;i<ODCH_PRAHY.length;i++) if(ODCH_PRAHY[i].id===id) return ODCH_PRAHY[i];
-  return ODCH_PRAHY[1];
+  return ODCH_PRAHY[2];
 }
 /* prekročil klient prah aspoň v jednej veličine? */
 function odchVyrazny(c){
   var p=odchPrah();
+  if(p.vsetci) return true;                  /* bez filtrovania – všetci klienti */
   var veliciny=[["rev",p.eur],["mar",p.eur],["cnt",p.eur*30]];
   for(var i=0;i<veliciny.length;i++){
     var k=veliciny[i][0], minRozdiel=veliciny[i][1];
@@ -7431,13 +7435,20 @@ function odchylkyHtml(id, isF){
 
   /* päť najväčších plusov a päť najväčších mínusov podľa odchýlky výnosu */
   var zoradene=vsetci.slice().sort(function(a,b){ return (b.rev.a-b.rev.p)-(a.rev.a-a.rev.p); });
+  var vsetciRezim=odchPrah().vsetci;
   var vyrazne=zoradene.filter(odchVyrazny);
   /* keď prah neprekročí nikto, ukážeme aspoň tri najväčšie na každú stranu,
      nech panel nezostane prázdny */
-  var zaloha=!vyrazne.length;
+  var zaloha=(!vyrazne.length && !vsetciRezim);
   if(zaloha) vyrazne=zoradene;
-  var plusy=vyrazne.filter(function(c){ return (c.rev.a-c.rev.p)>0.5; }).slice(0, zaloha?3:ODCH_STROP);
-  var minusy=vyrazne.filter(function(c){ return (c.rev.a-c.rev.p)<-0.5; }).slice(zaloha?-3:-ODCH_STROP).reverse();
+  var strop=vsetciRezim ? 999 : ODCH_STROP;
+  var plusy=vyrazne.filter(function(c){ return (c.rev.a-c.rev.p)>0.5; }).slice(0, zaloha?3:strop);
+  var minusy=vyrazne.filter(function(c){ return (c.rev.a-c.rev.p)<-0.5; }).slice(zaloha?-3:-strop).reverse();
+  /* v režime „Všetci" ukážeme aj klientov, ktorí sedia presne na pláne –
+     inak by z ich pohľadu zoznam nebol úplný */
+  var bezOdchylky = vsetciRezim
+    ? vyrazne.filter(function(c){ return Math.abs(c.rev.a-c.rev.p)<=0.5; })
+    : [];
   var zvysok=vsetci.length-plusy.length-minusy.length;
 
   function bunkyMetriky(c,k){
@@ -7495,6 +7506,9 @@ function odchylkyHtml(id, isF){
     plusy.map(function(c){ return riadokKlienta(c, por++); }).join("");
   if(minusy.length) telo+='<tr class="ot-sek ot-sek-m"><td colspan="12"><span>Najväčšie mínusy</span></td></tr>'+
     minusy.map(function(c){ return riadokKlienta(c, por++); }).join("");
+  if(bezOdchylky.length) telo+='<tr class="ot-sek ot-sek-n"><td colspan="12"><span>Presne na pláne ('+
+    bezOdchylky.length+')</span></td></tr>'+
+    bezOdchylky.map(function(c){ return riadokKlienta(c, por++); }).join("");
 
   var CY=String(state.year), PY=prevYear();
   return '<div class="odch">'+hd+
@@ -7510,7 +7524,9 @@ function odchylkyHtml(id, isF){
       (zvysok>0? ('<button class="odch-odkaz" type="button" data-odchviac="'+id+'">a ďalších '+zvysok+' klientov</button> · ') : '')+
       (zaloha
         ? ('prah '+odchPrah().pct+' % neprekročil nikto – zobrazené sú tri najväčšie odchýlky')
-        : ('zobrazení sú klienti s odchýlkou aspoň '+odchPrah().pct+' % vo výnose, marži alebo kusoch'))+
+        : (vsetciRezim
+            ? 'zobrazení sú všetci klienti s pohybom v období'
+            : ('zobrazení sú klienti s odchýlkou aspoň '+odchPrah().pct+' % vo výnose, marži alebo kusoch')))+
       ' · zoradené podľa odchýlky výnosu</div></div>';
 }
 
