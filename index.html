@@ -5490,7 +5490,7 @@ var MASKA = {
     { nazov: "Neadresné doručovanie – Cromwell", segment: "neadresne", firma: "cromwell",
       "2026": { planVynos: [546614.33,620253.53,691749.98,755876.56,588780.92,724188.82,571587.50,510638.28,799446.94,646964.70,714214.94,668791.23],
                 planMarza: [178843.58,209066.85,230047.29,251010.38,191997.13,264152.02,176547.98,150912.41,261844.68,196652.98,236086.65,224639.77],
-                planMarzaS: [178843.58,209066.85,230047.29,251010.38,191997.13,264152.02,201909.9,182614.81,287206.6,222014.9,267789.05,243661.21],
+                planMarzaS: [178843.58,209066.85,230047.29,251010.38,191997.13,264152.02,176547.98,150912.41,261844.68,196652.98,236086.65,224639.77],
                 planPocet: [36998895,41883981,45166066,51335376,39536606,46730793,43010716,36550157,55100716,44273402,47582351,44903546],
                 realVynos: [522349.92,632681.19,810516.19,624450.02,575719.49,761254.89,474897.58,0,0,0,0,0],
                 realMarza: [160545.21,209536.61,247156.52,198179.31,171617.13,255755.14,140435.57,0,0,0,0,0],
@@ -5616,7 +5616,7 @@ var MASKA = {
         { nazov: "Biedronka  - obrat",
           "2026": { planVynos: [28795.12,28795.12,35993.91,23138.94,38564.90,30851.92,0,0,0,0,0,0],
                     planMarza: [23671.12,23671.12,29588.91,19021.44,31702.40,25361.92,0,0,0,0,0,0],
-                    planMarzaS: [23671.12,23671.12,29588.91,19021.44,31702.4,25361.92,25361.92,31702.4,25361.92,25361.92,31702.4,19021.44],
+                    planMarzaS: [23671.12,23671.12,29588.91,19021.44,31702.40,25361.92,0,0,0,0,0,0],
                     planPocet: [560000,560000,700000,450000,750000,600000,0,0,0,0,0,0],
                     realVynos: [30555.76,30555.76,38194.7,30770.22,22916.82,7638.94,247.18,0,0,0,0,0],
                     realMarza: [12372.02,12372.02,15465.02,12546.71,9279.01,3093,201.34,0,0,0,0,0],
@@ -6112,10 +6112,51 @@ async function xlsxRead(buf){
 /* ---- prekrytie masky importovanými dátami ---- */
 var IMP_KEY="cg_import_v1";
 function impLoad(){ try{ var r=localStorage.getItem(IMP_KEY); return r?(JSON.parse(r)||{}):{}; }catch(e){ return {}; } }
-function impSave(o){ try{ localStorage.setItem(IMP_KEY, JSON.stringify(o)); }catch(e){ alert("Dáta sa nepodarilo uložiť v prehliadači."); } }
+function impSave(o){
+  try{ localStorage.setItem(IMP_KEY, JSON.stringify(o)); }
+  catch(e){ alert("Dáta sa nepodarilo uložiť v prehliadači."); }
+  return impDoFirestore(o);   /* a hlavne nahor, nech ich vidia všetci */
+}
+/* ===================== ZDIEĽANÝ IMPORT =====================
+   Naimportované výsledky patria všetkým používateľom, nie len tomu,
+   kto import spustil. Ukladajú sa preto do Firestore; prehliadač si
+   drží len kópiu pre prípad, že spojenie nie je k dispozícii. */
+var FB_IMPORT="resultsImport";
+var IMP_CAS=0;                 /* čas naposledy použitého importu */
+function impDoFirestore(o){
+  if(!FB.db || !FB.uzivatel){
+    return Promise.reject(new Error("Nie ste prihlásená, výsledky by zostali len v tomto prehliadači."));
+  }
+  var zaznam={ data:JSON.stringify(o||{}), autor:FB.meno||"", cas:Date.now() };
+  IMP_CAS=zaznam.cas;
+  try{
+    return FB.db.collection(FB_IMPORT).doc("aktualny").set(zaznam);
+  }catch(e){ return Promise.reject(e); }
+}
+function impZmazFirestore(){
+  if(!FB.db || !FB.uzivatel) return;
+  try{ FB.db.collection(FB_IMPORT).doc("aktualny").delete(); }catch(e){}
+}
+function impSleduj(){
+  if(!FB.db) return;
+  FB.db.collection(FB_IMPORT).doc("aktualny").onSnapshot(function(doc){
+    if(!doc.exists) return;
+    var z=doc.data()||{};
+    if(!z.data || (z.cas||0)<=IMP_CAS) return;      /* už ho máme */
+    IMP_CAS=z.cas||Date.now();
+    var ov;
+    try{ ov=JSON.parse(z.data); }catch(e){ return; }
+    try{ localStorage.setItem(IMP_KEY, z.data); }catch(e){}
+    prestavZImportu(ov);
+    if(z.autor) fbStav("výsledky aktualizoval "+z.autor,"ok");
+  }, function(){});
+}
 /* aplikuje uložené prekrytie na MASKA (volá sa pred zostavením DATA) */
-(function applyImport(){
-  var ov=impLoad(); if(!ov || !ov.polozky) return;
+/* pôvodná maska sa odkladá nedotknutá, aby sa dal import kedykoľvek
+   nanovo aplikovať (napríklad keď príde novší z Firestore) */
+var MASKA_ORIG = JSON.parse(JSON.stringify(MASKA));
+function aplikujImport(ov){
+  if(!ov || !ov.polozky) return;
   (MASKA.polozky||[]).forEach(function(o){
     var src=ov.polozky[o.nazov]; if(!src) return;
     ["2026","2025"].forEach(function(Y){
@@ -6128,9 +6169,10 @@ function impSave(o){ try{ localStorage.setItem(IMP_KEY, JSON.stringify(o)); }cat
         for(var f in cs[Y]) c[Y][f]=cs[Y][f].slice(); });
     });
   });
-})();
+}
+aplikujImport(impLoad());
 
-var DATA = (function(){
+function budujDATA(){
   var mesiace=[1,2,3,4,5,6,7,8,9,10,11,12];
   function num(arr,ix){ var v=(arr&&arr[ix]); v=Number(v); return isFinite(v)?v:0; }
   function emptyMonths(){ var m={}; mesiace.forEach(function(mo){ m[mo]={all:{
@@ -6202,7 +6244,18 @@ var DATA = (function(){
   window.__MASKA_ORDER=segOrder;
   window.__FIRM_ORDER=firmOrder;
   return {currency:"€", years:years};
-})();
+}
+var DATA = budujDATA();
+/* prestavia dáta po príchode nového importu (z Firestore alebo z prehliadača) */
+function prestavZImportu(ov){
+  MASKA = JSON.parse(JSON.stringify(MASKA_ORIG));
+  aplikujImport(ov||{});
+  DATA = budujDATA();
+  try{ renderFilters(); }catch(e){}
+  try{ renderAll(); }catch(e){}
+  try{ renderImportInfo(); }catch(e){}
+  try{ renderDataCheck(); }catch(e){}
+}
 
 var SEG_ORDER = (window.__MASKA_ORDER||[]).slice();
 var FIRM_ORDER = (window.__FIRM_ORDER||[]).slice();
@@ -8955,7 +9008,8 @@ function impMerge(mode, nove){
     for(var cst in (nove[pol].casti||{})) put(pol, cst, nove[pol].casti[cst]);
   }
   ov.kedy=new Date().toISOString().slice(0,16).replace("T"," ");
-  impSave(ov);
+  ov.kto=(FB.meno||"");
+  return impSave(ov);          /* sľub, na ktorý sa dá počkať pred obnovením */
 }
 var IMP_STATE={cells:null, key:null, upTo:null, nazov:""};
 function impStatus(html, cls){
@@ -9031,14 +9085,25 @@ function impRun(){
   var mode=(document.querySelector('input[name="imp-mode"]:checked')||{}).value||"vsetko";
   try{
     var nove=impBuild(IMP_STATE.cells, IMP_STATE.key, IMP_STATE.upTo);
-    impMerge(mode, nove);
-    impStatus("Hotovo – dáta uložené. Stránka sa obnoví…","ok");
-    setTimeout(function(){ location.reload(); },700);
+    var ulozenie=impMerge(mode, nove);
+    impStatus("Nahrávam výsledky pre všetkých používateľov…","ok");
+    /* Stránku obnovíme až po potvrdení zápisu. Skoršie obnovenie by zápis
+       prerušilo a výsledky by zostali len v tomto prehliadači. */
+    Promise.resolve(ulozenie).then(function(){
+      impStatus("Hotovo – výsledky vidia všetci prihlásení. Stránka sa obnoví…","ok");
+      setTimeout(function(){ location.reload(); }, 900);
+    }).catch(function(err){
+      impStatus("Výsledky sú uložené len v tomto prehliadači – ostatní ich neuvidia. "+
+        (err&&err.message?err.message:"")+" Skontrolujte prihlásenie a pravidlá Firestore "+
+        "pre kolekciu resultsImport.","bad");
+    });
   }catch(err){ impStatus("Import zlyhal: "+(err&&err.message?err.message:err),"bad"); }
 }
 function impReset(){
   if(!confirm("Zmazať všetky importované dáta a vrátiť sa k číslam zapísaným v súbore?")) return;
   try{ localStorage.removeItem(IMP_KEY); }catch(e){}
+  impZmazFirestore();
+  IMP_CAS=Date.now();
   location.reload();
 }
 function impExport(){
@@ -9450,6 +9515,7 @@ function fbPoPrihlaseni(){
      prepísala lokálne komentáre skôr, než by sa stihli uložiť. */
   fbPresunLokalne().then(fbSleduj).catch(fbSleduj);
   try{ posSleduj(); }catch(e){}
+  try{ impSleduj(); }catch(e){}
   try{ renderPostrehy(); }catch(e){}
   try{ presenceStart(); }catch(e){}
   try{ renderAvatar(); }catch(e){}
