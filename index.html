@@ -1560,7 +1560,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
   #nbpr .dp-stack{width:100%;gap:8px}
   /* rozpad a klienti */
   #nbpr .pt-scroll,#nbpr .cl-scroll{-webkit-overflow-scrolling:touch}
-  #nbpr .pt-subtbl td.pt-met{left:var(--wname,116px)}
+  #nbpr .pt-subtbl td.pt-met{left:var(--wname,148px)}
   #nbpr .pt-cltbl td.pt-cl{min-width:150px}
   #nbpr .gexp-title{font-size:12px}
 
@@ -1645,6 +1645,21 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .kpi-blok{padding:13px 16px 14px}
 
 #nbpr .kv-rad{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;align-items:end}
+/* Šesť čísel vedľa seba sa vojde len na širokú obrazovku. Užšiemu oknu
+   sa najprv zmenší písmo a potom sa hodnoty preskladajú do dvoch riadkov,
+   nech sa sumy neorezávajú a nelepia na seba. */
+@media (max-width:1560px){
+  #nbpr .kv-rad{gap:8px}
+  #nbpr .kv-v{font-size:16px}
+}
+@media (max-width:1440px){
+  #nbpr .kv-rad{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px}
+  #nbpr .kv-v{font-size:17px}
+}
+@media (max-width:1180px){
+  #nbpr .kv-v{font-size:15.5px}
+  #nbpr .kv-rad{gap:9px 12px}
+}
 #nbpr .kv-py{color:#8b93a5;font-weight:700}
 #nbpr .kv{min-width:0;position:relative}
 /* jemné zvislé oddelenie medzi hodnotami */
@@ -2202,12 +2217,12 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-cmp{min-width:920px;font-size:12px}
 #nbpr .dp-cmp th{position:static}
 /* prilepené prvé dva stĺpce */
-#nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{position:sticky;left:var(--wname,124px);z-index:4;
+#nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{position:sticky;left:var(--wname,148px);z-index:4;
   background-color:#fff;box-shadow:1px 0 0 #eceef3}
 #nbpr .dp-sumtbl>thead>tr>th.dp-methead{background-color:transparent}
 #nbpr .dp-sumtbl>tbody>tr>td.dp-metric{background-color:#fff}
-#nbpr .dp-cmp th.dp-rowhead,#nbpr .dp-cmp td.dp-name{position:sticky;left:0;z-index:5;min-width:var(--wname,124px);width:var(--wname,124px);background-color:#fff;padding-right:6px}
-#nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{position:sticky;left:var(--wname,124px);z-index:5;min-width:var(--wmet,58px);width:var(--wmet,58px);background-color:#fff;box-shadow:1px 0 0 #e5e7eb}
+#nbpr .dp-cmp th.dp-rowhead,#nbpr .dp-cmp td.dp-name{position:sticky;left:0;z-index:5;min-width:var(--wname,148px);width:var(--wname,148px);background-color:#fff;padding-right:6px}
+#nbpr .dp-cmp th.dp-methead,#nbpr .dp-cmp td.dp-metric{position:sticky;left:var(--wname,148px);z-index:5;min-width:var(--wmet,58px);width:var(--wmet,58px);background-color:#fff;box-shadow:1px 0 0 #e5e7eb}
 #nbpr .dp-cmp th.dp-rowhead,#nbpr .dp-cmp th.dp-methead{z-index:8}
 /* hlavičky – jednotná svetlá sivá */
 #nbpr .dp-cmp thead th{min-width:70px;font-size:10px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#6b7280;background:#f7f8fa;border-bottom:1px solid #e5e7eb;padding:7px 10px;text-align:right}
@@ -2259,6 +2274,25 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .gcell-click:hover{background:rgba(0,0,0,.025)}
 #nbpr .dp-cmp tr.dp-clickrow{cursor:pointer}
 #nbpr .dp-chev{display:inline-block;width:11px;margin-right:4px;font-size:9px;color:#9ca3af;transition:transform .15s ease}
+/* percento nesie hlavnú informáciu a je tučné; absolútny rozdiel je pod ním
+   ako drobný doplnok, aby neuberal pozornosť */
+#nbpr td.dp-sum,#nbpr td.pt-pl{font-weight:800!important;font-size:12.5px}
+/* Absolútny rozdiel sa ukáže po nabehnutí myšou priamo v bunke namiesto
+   percenta – bublina nad tabuľkou by sa orezala o okraj posúvacej oblasti. */
+#nbpr td.dp-sum,#nbpr td.pt-pl{position:relative}
+#nbpr .dp-tip{position:absolute;inset:0;display:flex;align-items:center;justify-content:flex-end;
+  padding:0 10px;background:#1f2a4a;color:#fff;border-radius:6px;
+  font-size:11.5px;font-weight:700;letter-spacing:0;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity .12s ease}
+#nbpr .dp-tip::after{content:attr(data-rozdiel)}
+#nbpr td.dp-sum:hover .dp-tip,#nbpr td.pt-pl:hover .dp-tip{opacity:1}
+#nbpr td.dp-sum:hover,#nbpr td.pt-pl:hover{cursor:help}
+/* Riadky držia jednu výšku v celom detaile – tabuľka služby, rozpad firiem
+   aj rozpis klientov. Odsadenie a riadkovanie preto nastavujeme spoločne. */
+#nbpr .dp-cmp td.dp-cell,#nbpr .dp-cmp td.dp-name,#nbpr .dp-cmp td.dp-metric{padding-top:4px;padding-bottom:4px}
+#nbpr .pt-box td,#nbpr .pt-box th{padding-top:4px!important;padding-bottom:4px!important;line-height:1.25!important}
+#nbpr .pt-box .pt-grp td,#nbpr .pt-box .cl-head{padding-top:3px!important;padding-bottom:3px!important}
+#nbpr td.dp-sum,#nbpr td.pt-pl{line-height:1.15}
 #nbpr .dp-chev-off{visibility:hidden}
 #nbpr .dp-chev.open{transform:rotate(90deg);color:#4b5563}
 #nbpr .dp-cmp tr.dp-exp>td{padding:0;background:#f7f8fa;border-top:1px solid #e5e7eb}
@@ -2308,7 +2342,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .gx-neutral .pt-table thead th.pt-n{background-size:100% 100%;background-position:0 0;border-bottom:1px solid #c8ccd6}
 #nbpr .gx-neutral .pt-table thead th small{color:#767d8c}
 #nbpr .pt-table th.pt-toth{background:#eef0f3;color:#374151}
-#nbpr .pt-table th.pt-n,#nbpr .pt-table td.pt-n{text-align:left;position:sticky;left:0;min-width:172px;background:#fff;box-shadow:1px 0 0 #e5e7eb}
+#nbpr .pt-table th.pt-n,#nbpr .pt-table td.pt-n{text-align:left;position:sticky;left:0;
+  min-width:var(--wname,148px);width:var(--wname,148px);background:#fff;box-shadow:1px 0 0 #e5e7eb}
+#nbpr .pt-subtbl thead th.pt-n{min-width:var(--wname,148px)!important;width:var(--wname,148px)!important}
 #nbpr .pt-table th.pt-n{background:#f7f8fa}
 #nbpr .pt-table td.pt-n{font-size:12px;font-weight:600;color:#374151;padding:7px 10px}
 #nbpr .pt-table td.pt-c{text-align:right;padding:7px 10px;color:#374151;font-size:12px;font-weight:600;font-variant-numeric:tabular-nums}
@@ -2460,9 +2496,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .dp-segtbl tr:first-child td{border-top:none}
 #nbpr .dp-segtbl tr.dp-clickrow:hover td.dp-cell{background-color:#fafbfd}
 /* ===== dvojúrovňový rozpad: firmy v segmente + klienti ===== */
-#nbpr .pt-subtbl td.pt-met{text-align:right;padding:7px 10px;font-size:12px;font-weight:600;color:#6b7280;white-space:nowrap;
+#nbpr .pt-subtbl td.pt-met{width:var(--wmet,58px);min-width:var(--wmet,58px);text-align:right;padding:7px 10px;font-size:12px;font-weight:600;color:#6b7280;white-space:nowrap;
   position:sticky;left:172px;background:#fff;box-shadow:1px 0 0 #e5e7eb}
-#nbpr .pt-subtbl thead th.pt-n{min-width:172px}
+
 /* rozpad na firmy a krajiny je celý biely – sivá patrí len rozpisu klientov */
 #nbpr .pt-subtbl tbody>tr>td,
 #nbpr .pt-subtbl tbody>tr>td.pt-tot,
@@ -2479,7 +2515,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pt-cltbl tr.pt-clmoved>td.pt-sum{background-color:#f7f8fa!important}
 #nbpr .pt-cltbl tr.pt-clres>td,#nbpr .pt-cltbl tr.pt-clres>td.pt-tot,
 #nbpr .pt-cltbl tr.pt-clres>td.pt-sum{background-color:#fbfbfc!important}
-#nbpr .pt-subtbl td.pt-subname{min-width:0;width:var(--wname,124px);padding-right:6px;font-weight:700;color:#1f2937}
+#nbpr .pt-subtbl td.pt-subname{min-width:var(--wname,148px);width:var(--wname,148px);padding-right:6px;font-weight:700;color:#1f2937}
 /* názvy v rozpade: farba podľa firmy, ikonka a náznak kliknutia */
 #nbpr .pt-nm{display:inline-flex;align-items:center;gap:6px;min-width:0}
 #nbpr .pt-iko{display:inline-flex;width:15px;height:15px;flex:none}
@@ -2720,6 +2756,83 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pohlad-nadpis h2{margin:0;font-size:17px}
 #nbpr .pohlad-telo>.card{margin-bottom:0}
 
+/* rozpad zdieľa šírky s tabuľkou služby – odsadenie sa musí počítať dovnútra,
+   inak by stĺpce vyšli širšie a rozišli sa */
+#nbpr .pt-subtbl td.pt-met,#nbpr .pt-subtbl th.pt-methead,
+#nbpr .pt-subtbl td.pt-subname,#nbpr .pt-subtbl th.pt-n,
+#nbpr .pt-cltbl td.pt-met,#nbpr .pt-cltbl th.pt-methead{box-sizing:border-box}
+#nbpr .pt-subtbl td.pt-met,#nbpr .pt-subtbl th.pt-methead{
+  width:var(--wmet,58px)!important;min-width:var(--wmet,58px)!important;
+  max-width:var(--wmet,58px)!important;padding-left:4px!important;padding-right:8px!important;
+  left:var(--wname,148px)!important}
+#nbpr .pt-subtbl td.pt-subname,#nbpr .pt-subtbl th.pt-n{left:0!important}
+/* rozpad sa roztiahne rovnako ako tabuľka služby, nech stĺpce sedia aj na širokej obrazovke */
+#nbpr .pt-box{width:100%}
+#nbpr .pt-box .pt-scroll{width:100%}
+/* Rozbalená služba tvorí jeden celok: tabuľka služby a jej rozpad sú
+   spoločne orámované modrou, predeľuje ich biely pruh s popisom. */
+/* Vzhľad tabuliek je pri všetkých službách rovnaký: biele riadky a sivý výnos.
+   Farebné odtiene jednotlivých služieb zostávajú len na rámiku a nadpise. */
+#nbpr .gx-zp .pt-table thead th,#nbpr .gx-zp .pt-table tr.pt-tot2>td,
+#nbpr .gx-zp .pt-table tr.pt-tot2 td.pt-tot,#nbpr .gx-zp .pt-table tr.pt-tot2 td.pt-pl,
+#nbpr .gx-zp .pp-grp td,#nbpr .gx-zp .pp-tot td,#nbpr .gx-zp .gexp-table th,
+#nbpr .gx-zp .dp-grp-lbl,#nbpr .gx-zp .pt-grp .dp-grp-lbl{
+  background:#fff!important;background-image:none!important;color:inherit!important}
+#nbpr .pt-table tr.pt-tot2 td.pt-n,#nbpr .pt-table tr.pt-res td.pt-n{background:#fff!important}
+#nbpr .pt-box .pt-table tr:not(.pt-subfirst):not(.pt-clrev)>td{background-color:#fff!important}
+#nbpr .pt-box .pt-table tr.pt-subfirst>td,#nbpr .pt-box .pt-table tr.pt-clrev>td{background-color:#f1f2f5!important}
+/* meno klienta sa musí zmestiť do zlúčeného úvodného stĺpca, inak by roztiahol tabuľku */
+#nbpr .pt-cltbl td.pt-n,#nbpr .pt-cltbl th.pt-n{box-sizing:border-box;
+  width:calc(var(--wname,148px) + var(--wmet,58px))!important;
+  min-width:calc(var(--wname,148px) + var(--wmet,58px))!important;
+  max-width:calc(var(--wname,148px) + var(--wmet,58px))!important;
+  white-space:normal;word-break:break-word;line-height:1.25}
+/* rozpis klientov nesmie byť odsadený, inak sa stĺpce posunú voči tabuľke služby */
+#nbpr .pt-box .cl-box{padding:0!important;margin:0!important;border:0!important;border-radius:0!important}
+#nbpr .pt-box .cl-scroll{padding:0!important}
+#nbpr .pt-box .pt-exp>td{padding:0!important}
+/* rozbalená služba je jeden orámovaný celok – rozpad je vnútri jej tabuľky.
+   Farba rámika sa riadi službou, vzhľad je pri všetkých rovnaký. */
+#nbpr .dp-segtbl:has(.pt-box){outline:1.5px solid var(--ramik,#c3cdee);outline-offset:-1px;border-radius:12px}
+#nbpr .dp-segtbl:has(.gx-cw){--ramik:#c3cdee}
+#nbpr .dp-segtbl:has(.gx-zp){--ramik:#a8d3a0}
+#nbpr .dp-segtbl:has(.gx-kolos){--ramik:#a9c2e3}
+#nbpr .dp-segtbl:has(.gx-dig){--ramik:#9fdcc4}
+#nbpr .dp-segtbl:has(.pt-box) .gexp-title{color:var(--ramikText,#3948a8)!important}
+#nbpr .dp-segtbl:has(.gx-zp) .gexp-title{--ramikText:#246735}
+#nbpr .dp-segtbl:has(.gx-kolos) .gexp-title{--ramikText:#173F7E}
+#nbpr .dp-segtbl:has(.gx-dig) .gexp-title{--ramikText:#12776b}
+/* pri každej službe rovnako: biely pruh a bez zdvojenej hlavičky */
+#nbpr .pt-box .gexp-head{background:#fff!important;background-image:none!important}
+#nbpr .pt-box .pt-subtbl>thead,#nbpr .pt-box .pt-table>thead{display:none!important}
+#nbpr .dp-segtbl:has(.pt-box) .pt-box{border:0!important;border-radius:0!important;
+  background:#fff!important;box-shadow:none!important;margin-top:0!important;overflow:visible}
+#nbpr .pt-box .gexp-head{background:#fff!important;border-top:1px solid #e6e9f0!important;
+  border-bottom:1px solid #e6e9f0!important;padding:6px 14px!important;background-image:none!important}
+#nbpr .pt-box .gexp-title,#nbpr .pt-box .gexp-sum,#nbpr .pt-box .gexp-close{color:#6b7280!important;
+  font-size:11.5px!important}
+#nbpr .pt-box .gexp-title{font-weight:800;color:#3948a8!important}
+#nbpr .pt-box .pt-subtbl>thead{display:none!important}
+/* prvý riadok firmy (Výnos) sivý, zvyšok biely – ako pri tabuľke služby */
+#nbpr .pt-subtbl>tbody>tr.pt-subfirst>td{background-color:#f1f2f5!important}
+#nbpr .pt-subtbl>tbody>tr.pt-subrow:not(.pt-subfirst)>td{background-color:#fff!important}
+#nbpr .pt-cltbl>tbody>tr.pt-clrev>td{background-color:#f1f2f5!important}
+/* zopakovaná hlavička pri každej službe – biela s modrým písmom */
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th{background:#fff!important;color:var(--primary)!important;
+  background-image:none!important;border-bottom:1px solid var(--line);font-size:9.5px;
+  padding:5px 8px;box-shadow:none}
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th small{color:#8ea0d8!important;font-weight:500}
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th.dp-rowhead{color:var(--ink)!important;font-size:11.5px;
+  font-weight:800;background:#fff!important;text-transform:none;letter-spacing:0;
+  white-space:normal;line-height:1.25;overflow:visible;text-overflow:clip}
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th.dpg{color:var(--primary)!important}
+/* prvý riadok bloku (Výnos) sivý, marža a kusy biele */
+#nbpr .dp-segtbl>tbody>tr.dp-cmpfirst>td{background-color:#f1f2f5!important}
+#nbpr .dp-segtbl>tbody>tr.dp-cmpfirst>td.dp-tot,
+#nbpr .dp-segtbl>tbody>tr.dp-cmpfirst>td.dp-sum{background-color:#f1f2f5!important}
+#nbpr .dp-segtbl>tbody>tr.dp-cmprow:not(.dp-cmpfirst)>td,
+#nbpr .dp-segtbl>tbody>tr.dp-cmprow:not(.dp-cmpfirst)>td.dp-tot,
+#nbpr .dp-segtbl>tbody>tr.dp-cmprow:not(.dp-cmpfirst)>td.dp-sum{background-color:#fff!important}
 /* ---- centrum komentárov ---- */
 #nbpr .kc-hl{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 #nbpr .kc-fbtn{flex:none}
@@ -3732,7 +3845,7 @@ var MASKA = {
         planPocet: [153159,223312,204933,165934,272003,164878,175389,160791,265959,422875,220712,155874],
         realVynos: [376268.18,331577.01,404836.02,317597.09,625309.19,336833.35,280928.38,0,0,0,0,0],
         realMarza: [83294.06,95347.56,104642.85,94242.38,91703.97,86774.42,76607.96,0,0,0,0,0],
-        realPocet: [176696,186086,248980,127117,270008,161063,128292,0,0,0,0,0],
+        realPocet: [176696,186086,248980,127117,270008,161063,128292,181115,0,0,0,0],
         planEbitda: [47385.29,72645.63,27146.57,64269.95,56310.84,42126.22,38831.71,48554.5,37595.46,120144.38,65089.18,46179.46],
         realEbitda: [53602.08,64631.49,60855.34,57502.02,58587.99,50474.72,35217.72,0,0,0,0,0]
       },
@@ -3779,13 +3892,13 @@ var MASKA = {
 
     { nazov: "Balíky", segment: "baliky", firma: "kolos",
       "2026": { planVynos: [20205.15,23866.49,36496.98,43637.39,38353.9,51501.37,64745.79,91731.51,108338.8,130890.13,123762.17,129994.21],
-                realVynos: [19213.22,19157.7,30810.92,39312.07,35972.44,43327.68,56629.7,0,0,0,0,0],
+                realVynos: [19213.22,19157.70,30810.92,39312.07,35972.44,43327.68,56629.70,38717.83,0,0,0,0],
                 fcstVynos: [19213.22,19157.7,30810.92,39312.07,35972.44,43327.68,56629.7,67698.63,67698.63,67698.63,67698.63,67698.63],
                 planMarza: [4765.16,4986.54,6804.23,4498.47,6743.07,11293.43,8452.96,17690.13,19910.5,24426.3,23234.26,25519.44],
-                realMarza: [4953.68,4060.54,6355.32,3830.67,6219.65,10657.66,6525.24,0,0,0,0,0],
+                realMarza: [4953.68,4060.54,6355.32,3830.67,6219.65,10657.66,6525.24,8035.70,0,0,0,0],
                 fcstMarza: [4953.68,4060.54,6355.32,3830.67,6219.65,10657.66,6525.24,15009.56,15009.56,15009.56,15009.56,15009.56],
                 planPocet: [8024,13655,22052,26187,26379,20648,30101,19847,28068,32472,29636,36101],
-                realPocet: [7422,8827,14020,12082,10986,13352,21083,0,0,0,0,0],
+                realPocet: [7422,8827,14020,12082,10986,13352,21083,47680,0,0,0,0],
                 fcstPocet: [7422,8827,14020,12082,10986,13352,21083,21053,21053,21053,21053,21053] },
       "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] },
       casti: [
@@ -3827,13 +3940,13 @@ var MASKA = {
 
         { nazov: "Automobilové opravovne Ministerstva vnútra Slovenskej republiky a.s. · SK Tracked",
           "2026": { planVynos: [1919.85,2303.82,2687.78,3839.69,3839.69,3839.69,3839.69,3071.75,3071.75,3071.75,2687.78,1704.82],
-                    realVynos: [2313.21,1930.29,2191.02,2465.77,3857.77,2057.94,2397.6,0,0,0,0,0],
+                    realVynos: [2313.21,1930.29,2191.02,2465.77,3857.77,2057.94,2397.60,1657.52,0,0,0,0],
                     fcstVynos: [1917.06,1281.9,2290.8,2274.4,1545.73,3322.4,2184.45,2825.1,2825.1,2825.1,2825.1,2825.1],
                     planMarza: [768.56,922.27,1075.98,1537.11,1537.11,1537.11,1537.11,1229.69,1229.69,1229.69,1075.98,682.48],
-                    realMarza: [1145.86,965.29,1059.37,715.99,1175.38,536.29,773.11,0,0,0,0,0],
+                    realMarza: [1145.86,965.29,1059.37,715.99,1175.38,536.29,773.11,518.50,0,0,0,0],
                     fcstMarza: [795.28,703.31,1159.28,1135.14,120.73,1649.28,1085.32,1267.63,1267.63,1267.63,1267.63,1267.63],
                     planPocet: [500,600,700,1000,1000,1000,1000,800,800,800,700,444],
-                    realPocet: [467,376,445,605,864,549,580,0,0,0,0,0],
+                    realPocet: [467,376,445,605,864,549,580,442,0,0,0,0],
                     fcstPocet: [527,533,524,540,532,790,782,806,806,806,806,806] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -3851,13 +3964,13 @@ var MASKA = {
 
         { nazov: "dm drogerie markt, s.r.o. · SK Tracked",
           "2026": { planVynos: [1005,1005,1005,1005,1005,3015,3350,1675,1005,2026.75,1005,3015],
-                    realVynos: [1206.6,54.6,109.2,46.2,3133.8,2879.96,1266.96,0,0,0,0,0],
+                    realVynos: [1206.60,54.60,109.20,46.20,3133.80,2879.96,1266.96,12.60,0,0,0,0],
                     fcstVynos: [1345.13,1462.47,1597.83,1470.93,1218.66,1417.72,1503.15,1909.3,1909.3,1909.3,1909.3,1909.3],
                     planMarza: [420,420,420,420,420,1260,1400,700,420,847,420,1260],
-                    realMarza: [571.24,24.6,59.8,25.17,1640.1,1506.26,662.71,0,0,0,0,0],
+                    realMarza: [571.24,24.60,59.80,25.17,1640.10,1506.26,662.71,6.90,0,0,0,0],
                     fcstMarza: [312.26,338.97,351.67,307.62,234.86,279.84,300.17,405.16,405.16,405.16,405.16,405.16],
                     planPocet: [300,300,300,300,300,900,1000,500,300,605,300,900],
-                    realPocet: [303,13,26,11,787,723,318,0,0,0,0,0],
+                    realPocet: [303,13,26,11,787,723,318,3,0,0,0,0],
                     fcstPocet: [377,410,443,439,432,583,634,632,632,632,632,632] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -3875,13 +3988,13 @@ var MASKA = {
 
         { nazov: "Dropick · SK Tracked",
           "2026": { planVynos: [1085,1085,1085,1085,1085,1085,1085,1085,1085,1085,1088.1,1085],
-                    realVynos: [1345.13,1462.47,1597.83,1470.93,1218.66,1417.72,1503.15,0,0,0,0,0],
+                    realVynos: [1345.13,1462.47,1597.83,1470.93,1218.66,1417.72,1503.15,1364.36,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planMarza: [280,280,280,280,280,280,280,280,280,280,280.8,280],
-                    realMarza: [312.26,338.97,351.67,307.62,234.86,279.84,300.17,0,0,0,0,0],
+                    realMarza: [312.26,338.97,351.67,307.62,234.86,279.84,300.17,272.40,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planPocet: [350,350,350,350,350,350,350,350,350,350,351,350],
-                    realPocet: [377,410,443,439,432,583,634,0,0,0,0,0],
+                    realPocet: [377,410,443,439,432,583,634,578,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,0,0,0,0,0,0,0] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -3923,25 +4036,25 @@ var MASKA = {
 
         { nazov: "ŠGúDŠ · SK Tracked",
           "2026": { planVynos: [385.17,324.98,1805.46,2527.65,2912.82,1769.36,962.91,637.93,2708.2,2623.94,794.4,144.44],
-                    realVynos: [165.96,288.68,1670.19,2405.74,3519.33,2464.17,1998.83,0,0,0,0,0],
+                    realVynos: [165.96,288.68,1670.19,2405.74,3519.33,2464.17,1998.83,1297.91,0,0,0,0],
                     fcstVynos: [0,16.68,1022.7,1122.51,1155.57,2225.2,1438.48,1841.19,1841.19,1841.19,1841.19,1841.19],
                     planMarza: [261.84,220.93,1227.37,1718.32,1980.16,1202.82,654.6,433.67,1841.06,1783.78,540.04,98.19],
-                    realMarza: [125.06,208.54,1126.04,1791.51,2309.39,1927.53,1468.46,0,0,0,0,0],
+                    realMarza: [125.06,208.54,1126.04,1791.51,2309.39,1927.53,1468.46,982.23,0,0,0,0],
                     fcstMarza: [0,3.5,239.1,277.94,287.33,401.75,341.54,409.1,409.1,409.1,409.1,409.1],
                     planPocet: [32,27,150,210,242,147,80,53,225,218,66,12],
-                    realPocet: [12,20,162,198,273,177,165,0,0,0,0,0],
+                    realPocet: [12,20,162,198,273,177,165,95,0,0,0,0],
                     fcstPocet: [0,3,209,206,214,437,274,354,354,354,354,354] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "KĽUČKA · SK Tracked",
           "2026": { planVynos: [0,0,0,0,0,1105.3,9308.53,18320,18320,18320,18320,18320],
-                    realVynos: [0,0,0,0,0,1105.3,9308.53,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,1105.30,9308.53,13785.96,0,0,0,0],
                     fcstVynos: [0,0,121.23,385.35,733.84,382.85,405.08,588.95,588.95,588.95,588.95,588.95],
                     planMarza: [0,0,0,0,0,168.74,-2761.68,3000,3000,3000,3000,3000],
-                    realMarza: [0,0,0,0,0,168.74,-2761.68,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,168.74,-2761.68,1946.95,0,0,0,0],
                     fcstMarza: [0,0,27.98,84.6,167.79,83.15,88.43,131.23,131.23,131.23,131.23,131.23],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,0,363,2125,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,363,2125,3679,0,0,0,0],
                     fcstPocet: [0,0,49,145,291,155,164,233,233,233,233,233] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4031,13 +4144,13 @@ var MASKA = {
 
         { nazov: "Andra s.r.o. · SK Tracked",
           "2026": { planVynos: [0,16.68,1022.7,1122.51,1155.57,2225.2,1438.48,0,0,0,0,0],
-                    realVynos: [0,16.68,1022.7,1122.51,1155.57,2225.2,1438.48,0,0,0,0,0],
+                    realVynos: [0,16.68,1022.70,1122.51,1155.57,2225.20,1438.48,870.43,0,0,0,0],
                     fcstVynos: [0,0,0,0,391.54,395.02,159.31,364.22,364.22,364.22,364.22,364.22],
                     planMarza: [0,3.5,239.1,277.94,287.33,401.75,341.54,0,0,0,0,0],
-                    realMarza: [0,3.5,239.1,277.94,287.33,401.75,341.54,0,0,0,0,0],
+                    realMarza: [0,3.50,239.10,277.94,287.33,401.75,341.54,194.81,0,0,0,0],
                     fcstMarza: [0,0,0,0,128.92,117.18,54.41,115.72,115.72,115.72,115.72,115.72],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,3,209,206,214,437,274,0,0,0,0,0],
+                    realPocet: [0,3,209,206,214,437,274,210,0,0,0,0],
                     fcstPocet: [0,0,0,0,95,88,38,85,85,85,85,85] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4115,37 +4228,37 @@ var MASKA = {
 
         { nazov: "Flowers Drive s.r.o. · SK Tracked",
           "2026": { planVynos: [0,0,121.23,385.35,733.84,382.85,405.08,0,0,0,0,0],
-                    realVynos: [0,0,121.23,385.35,733.84,382.85,405.08,0,0,0,0,0],
+                    realVynos: [0,0,121.23,385.35,733.84,382.85,405.08,434.94,0,0,0,0],
                     fcstVynos: [0,0,30.5,59.82,54.17,78.96,117.84,97.19,97.19,97.19,97.19,97.19],
                     planMarza: [0,0,27.98,84.6,167.79,83.15,88.43,0,0,0,0,0],
-                    realMarza: [0,0,27.98,84.6,167.79,83.15,88.43,0,0,0,0,0],
+                    realMarza: [0,0,27.98,84.60,167.79,83.15,88.43,91.10,0,0,0,0],
                     fcstMarza: [0,0,4.88,7.96,8.23,12.3,15.92,14.04,14.04,14.04,14.04,14.04],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,49,145,291,155,164,0,0,0,0,0],
+                    realPocet: [0,0,49,145,291,155,164,160,0,0,0,0],
                     fcstPocet: [0,0,10,16,17,24,38,30,30,30,30,30] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Erbia · SK Tracked",
           "2026": { planVynos: [0,216.5,608.38,108.86,323.15,301.74,214.1,0,0,0,0,0],
-                    realVynos: [0,216.5,608.38,108.86,323.15,301.74,214.1,0,0,0,0,0],
+                    realVynos: [0,216.50,608.38,108.86,323.15,301.74,214.10,91.04,0,0,0,0],
                     fcstVynos: [0,82.27,49.06,51.29,51.54,27.17,0,31.09,31.09,31.09,31.09,31.09],
                     planMarza: [0,47.05,283.32,24.46,177.8,129.46,63.94,0,0,0,0,0],
-                    realMarza: [0,47.05,283.32,24.46,177.8,129.46,63.94,0,0,0,0,0],
+                    realMarza: [0,47.05,283.32,24.46,177.80,129.46,63.94,26.86,0,0,0,0],
                     fcstMarza: [0,7.57,4.51,4.69,4.74,2.47,0,2.85,2.85,2.85,2.85,2.85],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,64,69,30,22,32,26,0,0,0,0,0],
+                    realPocet: [0,64,69,30,22,32,26,15,0,0,0,0],
                     fcstPocet: [0,38,23,18,24,13,0,14,14,14,14,14] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Grandcom · SK Tracked",
           "2026": { planVynos: [0,0,0,0,0,307.16,827.7,0,0,0,0,0],
-                    realVynos: [0,0,0,0,0,307.16,827.7,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,307.16,827.70,1058,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planMarza: [0,0,0,0,0,32.6,84.83,0,0,0,0,0],
-                    realMarza: [0,0,0,0,0,32.6,84.83,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,32.60,84.83,120.12,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,0,96,248,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,96,248,339,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,0,0,0,0,0,0,0] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4175,37 +4288,37 @@ var MASKA = {
 
         { nazov: "RiverBaits s.r.o. · SK Tracked",
           "2026": { planVynos: [0,0,0,0,391.54,395.02,159.31,0,0,0,0,0],
-                    realVynos: [0,0,0,0,391.54,395.02,159.31,0,0,0,0,0],
+                    realVynos: [0,0,0,0,391.54,395.02,159.31,213.23,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,108.2,12.9,45.17,45.17,45.17,45.17,45.17],
                     planMarza: [0,0,0,0,128.92,117.18,54.41,0,0,0,0,0],
-                    realMarza: [0,0,0,0,128.92,117.18,54.41,0,0,0,0,0],
+                    realMarza: [0,0,0,0,128.92,117.18,54.41,54.17,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,42.3,5.05,17.66,17.66,17.66,17.66,17.66],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,95,88,38,0,0,0,0,0],
+                    realPocet: [0,0,0,0,95,88,38,44,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,33,4,14,14,14,14,14] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Poradca Podnikateľa · SK Tracked",
           "2026": { planVynos: [14.19,136.35,91.81,214.57,56.54,132.04,51.97,0,0,0,0,0],
-                    realVynos: [14.19,136.35,91.81,214.57,56.54,132.04,51.97,0,0,0,0,0],
+                    realVynos: [14.19,136.35,91.81,214.57,56.54,132.04,51.97,259.58,0,0,0,0],
                     fcstVynos: [30.49,73,75.97,39.68,106.19,37.57,15.19,38.65,38.65,38.65,38.65,38.65],
                     planMarza: [4.52,42.23,19.65,43.11,-10.53,1.4,8.19,0,0,0,0,0],
-                    realMarza: [4.52,42.23,19.65,43.11,-10.53,1.4,8.19,0,0,0,0,0],
+                    realMarza: [4.52,42.23,19.65,43.11,-10.53,1.40,8.19,43.72,0,0,0,0],
                     fcstMarza: [6.53,8.55,12.69,10.83,13.43,20.07,4.39,7.82,7.82,7.82,7.82,7.82],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [4,42,38,88,21,63,24,0,0,0,0,0],
+                    realPocet: [4,42,38,88,21,63,24,119,0,0,0,0],
                     fcstPocet: [9,7,2,14,4,6,3,5,5,5,5,5] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "MINIFUTKY s.r.o. · SK Tracked",
           "2026": { planVynos: [0,0,0,0,251.12,210.4,128.32,0,0,0,0,0],
-                    realVynos: [0,0,0,0,251.12,210.4,128.32,0,0,0,0,0],
+                    realVynos: [0,0,0,0,251.12,210.40,128.32,314.60,0,0,0,0],
                     fcstVynos: [0,0,0,3076.89,0,0,0,0,0,0,0,0],
                     planMarza: [0,0,0,0,39.42,29.86,20.52,0,0,0,0,0],
-                    realMarza: [0,0,0,0,39.42,29.86,20.52,0,0,0,0,0],
+                    realMarza: [0,0,0,0,39.42,29.86,20.52,45.90,0,0,0,0],
                     fcstMarza: [0,0,0,505.48,0,0,0,0,0,0,0,0],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,136,110,72,0,0,0,0,0],
+                    realPocet: [0,0,0,0,136,110,72,170,0,0,0,0],
                     fcstPocet: [0,0,0,184,0,0,0,0,0,0,0,0] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4235,37 +4348,37 @@ var MASKA = {
 
         { nazov: "IgluTrade s.r.o. · SK Tracked",
           "2026": { planVynos: [0,0,30.5,59.82,54.17,78.96,117.84,0,0,0,0,0],
-                    realVynos: [0,0,30.5,59.82,54.17,78.96,117.84,0,0,0,0,0],
+                    realVynos: [0,0,30.50,59.82,54.17,78.96,117.84,89.77,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,107.19,0,43.51,43.51,43.51,43.51,43.51],
                     planMarza: [0,0,4.88,7.96,8.23,12.3,15.92,0,0,0,0,0],
-                    realMarza: [0,0,4.88,7.96,8.23,12.3,15.92,0,0,0,0,0],
+                    realMarza: [0,0,4.88,7.96,8.23,12.30,15.92,17.04,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,16.38,0,6.65,6.65,6.65,6.65,6.65],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,10,16,17,24,38,0,0,0,0,0],
+                    realPocet: [0,0,10,16,17,24,38,14,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,17,0,7,7,7,7,7] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "ZPC Group s.r.o. · SK Tracked",
           "2026": { planVynos: [0,0,3.05,219.74,0,0,10.69,0,0,0,0,0],
-                    realVynos: [0,0,3.05,219.74,0,0,10.69,0,0,0,0,0],
+                    realVynos: [0,0,3.05,219.74,0,0,10.69,874.41,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,45.44,0,18.44,18.44,18.44,18.44,18.44],
                     planMarza: [0,0,0.42,20.19,0,0,0.99,0,0,0,0,0],
-                    realMarza: [0,0,0.42,20.19,0,0,0.99,0,0,0,0,0],
+                    realMarza: [0,0,0.42,20.19,0,0,0.99,214.95,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,6.88,0,2.79,2.79,2.79,2.79,2.79],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,1,95,0,0,4,0,0,0,0,0],
+                    realPocet: [0,0,1,95,0,0,4,406,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,17,0,7,7,7,7,7] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Glasbau (Sklobeton) · SK Tracked",
           "2026": { planVynos: [0,42.3,40.38,34.5,16.28,8.94,42.79,0,0,0,0,0],
-                    realVynos: [0,42.3,40.38,34.5,16.28,8.94,42.79,0,0,0,0,0],
+                    realVynos: [0,42.30,40.38,34.50,16.28,8.94,42.79,20.39,0,0,0,0],
                     fcstVynos: [0,42.3,40.38,34.5,16.28,8.94,42.79,28.02,28.02,28.02,28.02,28.02],
                     planMarza: [0,12.18,11.45,9.35,3.16,1.85,-6.22,0,0,0,0,0],
-                    realMarza: [0,12.18,11.45,9.35,3.16,1.85,-6.22,0,0,0,0,0],
+                    realMarza: [0,12.18,11.45,9.35,3.16,1.85,-6.22,5.65,0,0,0,0],
                     fcstMarza: [0,12.18,11.45,9.35,3.16,1.85,-6.22,4.81,4.81,4.81,4.81,4.81],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,6,8,8,5,3,8,0,0,0,0,0],
+                    realPocet: [0,6,8,8,5,3,8,3,0,0,0,0],
                     fcstPocet: [0,6,8,8,5,3,8,6,6,6,6,6] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4295,13 +4408,13 @@ var MASKA = {
 
         { nazov: "NAJAN · SK Tracked",
           "2026": { planVynos: [0,0,0,0,0,107.19,0,0,0,0,0,0],
-                    realVynos: [0,0,0,0,0,107.19,0,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,107.19,0,62.32,0,0,0,0],
                     fcstVynos: [0,0,10.1,7.8,13.81,11.7,0,9.98,9.98,9.98,9.98,9.98],
                     planMarza: [0,0,0,0,0,16.38,0,0,0,0,0,0],
-                    realMarza: [0,0,0,0,0,16.38,0,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,16.38,0,15.32,0,0,0,0],
                     fcstMarza: [0,0,3.43,2.65,3.61,5.47,0,3.49,3.49,3.49,3.49,3.49],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,0,17,0,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,17,0,14,0,0,0,0],
                     fcstPocet: [0,0,2,2,3,3,0,2,2,2,2,2] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4331,25 +4444,25 @@ var MASKA = {
 
         { nazov: "Amtape · SK Tracked",
           "2026": { planVynos: [0,0,0,0,0,25.31,23.82,0,0,0,0,0],
-                    realVynos: [0,0,0,0,0,25.31,23.82,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,25.31,23.82,3.63,0,0,0,0],
                     fcstVynos: [21.75,0,0,0,0,7.86,2.3,9.17,9.17,9.17,9.17,9.17],
                     planMarza: [0,0,0,0,0,7.15,5.06,0,0,0,0,0],
-                    realMarza: [0,0,0,0,0,7.15,5.06,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,7.15,5.06,0.89,0,0,0,0],
                     fcstMarza: [5.58,0,0,0,0,0.53,0.4,1.87,1.87,1.87,1.87,1.87],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,0,7,7,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,7,7,1,0,0,0,0],
                     fcstPocet: [1,0,0,0,0,2,1,1,1,1,1,1] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Hype · SK Tracked",
           "2026": { planVynos: [0,0,0,0,0,45.44,0,0,0,0,0,0],
-                    realVynos: [0,0,0,0,0,45.44,0,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,45.44,0,15.35,0,0,0,0],
                     fcstVynos: [0,0,6.9,0,0,7.5,18.3,7.52,7.52,7.52,7.52,7.52],
                     planMarza: [0,0,0,0,0,6.88,0,0,0,0,0,0],
-                    realMarza: [0,0,0,0,0,6.88,0,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,6.88,0,2.85,0,0,0,0],
                     fcstMarza: [0,0,0.7,0,0,0.8,2.65,0.95,0.95,0.95,0.95,0.95],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,0,17,0,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,17,0,5,0,0,0,0],
                     fcstPocet: [0,0,1,0,0,1,3,1,1,1,1,1] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4391,13 +4504,13 @@ var MASKA = {
 
         { nazov: "CleanSol s.r.o. · SK Tracked",
           "2026": { planVynos: [0,0,6.9,0,0,7.5,18.3,0,0,0,0,0],
-                    realVynos: [0,0,6.9,0,0,7.5,18.3,0,0,0,0,0],
+                    realVynos: [0,0,6.90,0,0,7.50,18.30,5.80,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,0,10.96,3.15,3.15,3.15,3.15,3.15],
                     planMarza: [0,0,0.7,0,0,0.8,2.65,0,0,0,0,0],
-                    realMarza: [0,0,0.7,0,0,0.8,2.65,0,0,0,0,0],
+                    realMarza: [0,0,0.70,0,0,0.80,2.65,0.50,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,0,1.26,0.36,0.36,0.36,0.36,0.36],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,1,0,0,1,3,0,0,0,0,0],
+                    realPocet: [0,0,1,0,0,1,3,1,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,0,4,1,1,1,1,1] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4619,25 +4732,25 @@ var MASKA = {
 
         { nazov: "Post One Group Ltd · EU Tracked",
           "2026": { planVynos: [0,0,0,0,0,0,0,2296.27,2296.27,2296.27,2296.27,2296.27],
-                    realVynos: [0,0,0,0,0,0,0,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,0,0,7952.99,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planMarza: [0,0,0,0,0,0,0,317.97,317.97,317.97,317.97,317.97],
-                    realMarza: [0,0,0,0,0,0,0,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,0,0,861.98,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planPocet: [0,200,500,500,500,500,500,500,500,500,500,500],
-                    realPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,0,0,1736,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,0,0,0,0,0,0,0] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "SP Express Sp. Z.O.O. · EU Tracked",
           "2026": { planVynos: [0,0,0,0,0,29.64,258,245.85,245.85,245.85,1229.23,2458.46],
-                    realVynos: [0,0,0,0,0,29.64,258,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,29.64,258,193.70,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planMarza: [0,0,0,0,0,10.64,258,229.61,229.61,229.61,1148.03,2296.07],
-                    realMarza: [0,0,0,0,0,10.64,258,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,10.64,258,193.70,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,0,0,0,0,0,0,0],
                     planPocet: [100,100,100,100,100,1000,100,100,100,100,500,1000],
-                    realPocet: [0,0,0,0,0,13,104,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,13,104,78,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,0,0,0,0,0,0,0] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4703,37 +4816,37 @@ var MASKA = {
 
         { nazov: "HMK GmbH (Waldaschaff) DE · EU Tracked",
           "2026": { planVynos: [70,170,140,115,240,300,375,329,211.5,470,141,305.5],
-                    realVynos: [70,170,140,115,240,300,375,0,0,0,0,0],
+                    realVynos: [70,170,140,115,240,300,375,170,0,0,0,0],
                     fcstVynos: [70,170,140,115,240,300,375,378.35,378.35,378.35,378.35,378.35],
                     planMarza: [28.13,61.05,60.32,42.23,94.48,122.77,160.37,132.85,85.4,189.78,56.94,123.36],
-                    realMarza: [28.13,61.05,60.32,42.23,94.48,122.77,160.37,0,0,0,0,0],
+                    realMarza: [28.13,61.05,60.32,42.23,94.48,122.77,160.37,74.88,0,0,0,0],
                     fcstMarza: [28.13,61.05,60.32,42.23,94.48,122.77,160.37,152.78,152.78,152.78,152.78,152.78],
                     planPocet: [8,10,8,13,12,15,6,14,9,20,6,13],
-                    realPocet: [3,6,6,4,10,14,17,0,0,0,0,0],
+                    realPocet: [3,6,6,4,10,14,17,7,0,0,0,0],
                     fcstPocet: [3,6,6,4,10,14,17,16,16,16,16,16] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Ing.-Büro Schneider · EU Tracked",
           "2026": { planVynos: [59.63,36.33,34.12,29.21,11.16,40.7,6.92,33.55,16.77,16.77,16.77,22.37],
-                    realVynos: [59.63,36.33,34.12,29.21,11.16,40.7,6.92,0,0,0,0,0],
+                    realVynos: [59.63,36.33,34.12,29.21,11.16,40.70,6.92,5.80,0,0,0,0],
                     fcstVynos: [0,0,0,0,0,0,439.5,171.07,171.07,171.07,171.07,171.07],
                     planMarza: [8.29,6.61,4.78,4.8,1.67,7.74,1.15,5.39,2.7,2.7,2.7,3.59],
-                    realMarza: [8.29,6.61,4.78,4.8,1.67,7.74,1.15,0,0,0,0,0],
+                    realMarza: [8.29,6.61,4.78,4.80,1.67,7.74,1.15,0.53,0,0,0,0],
                     fcstMarza: [0,0,0,0,0,0,34.97,13.61,13.61,13.61,13.61,13.61],
                     planPocet: [12,17,5,3,2,3,1,6,3,3,3,4],
-                    realPocet: [12,7,6,5,2,6,1,0,0,0,0,0],
+                    realPocet: [12,7,6,5,2,6,1,1,0,0,0,0],
                     fcstPocet: [0,0,0,0,0,0,65,25,25,25,25,25] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
         { nazov: "Stocklane · EU Tracked",
           "2026": { planVynos: [0,0,0,0,0,0,439.5,0,0,0,0,0],
-                    realVynos: [0,0,0,0,0,0,439.5,0,0,0,0,0],
+                    realVynos: [0,0,0,0,0,0,439.50,2339.71,0,0,0,0],
                     fcstVynos: [59.63,36.33,34.12,29.21,11.16,40.7,6.92,19.29,19.29,19.29,19.29,19.29],
                     planMarza: [0,0,0,0,0,0,34.97,0,0,0,0,0],
-                    realMarza: [0,0,0,0,0,0,34.97,0,0,0,0,0],
+                    realMarza: [0,0,0,0,0,0,34.97,222.77,0,0,0,0],
                     fcstMarza: [8.29,6.61,4.78,4.8,1.67,7.74,1.15,3.1,3.1,3.1,3.1,3.1],
                     planPocet: [0,0,0,0,0,0,0,0,0,0,0,0],
-                    realPocet: [0,0,0,0,0,0,65,0,0,0,0,0],
+                    realPocet: [0,0,0,0,0,0,65,358,0,0,0,0],
                     fcstPocet: [12,7,6,5,2,6,1,3,3,3,3,3] },
           "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
 
@@ -4795,7 +4908,31 @@ var MASKA = {
                     planPocet: [300,300,600,500,300,600,400,600,600,600,600,600],
                     realPocet: [65,61,76,70,48,58,62,0,0,0,0,0],
                     fcstPocet: [65,61,76,70,48,58,62,64,64,64,64,64] },
-          "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } }
+          "2025": { realVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,0,0,0,0,0] } },
+        { nazov: "Potraviny FRESH s.r.o. · SK Tracked",
+          "2026": { planVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realVynos: [0,0,0,0,0,0,0,2189.90,0,0,0,0],
+                    planMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,1088.56,0,0,0,0],
+                    planPocet: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,38600,0,0,0,0] } },
+        { nazov: "Trenčín región, krajská organizácia cestového ruchu · SK Tracked",
+          "2026": { planVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realVynos: [0,0,0,0,0,0,0,1129.18,0,0,0,0],
+                    planMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,850.18,0,0,0,0],
+                    planPocet: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,119,0,0,0,0] } },
+        { nazov: "MBS e-commerce s.r.o. · SK Tracked",
+          "2026": { planVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realVynos: [0,0,0,0,0,0,0,236.68,0,0,0,0],
+                    planMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,23.49,0,0,0,0],
+                    planPocet: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,56,0,0,0,0] } },
+        { nazov: "Jednota dôchodcov na Slovensku · SK Tracked",
+          "2026": { planVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realVynos: [0,0,0,0,0,0,0,238.56,0,0,0,0],
+                    planMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,39.76,0,0,0,0],
+                    planPocet: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,99,0,0,0,0] } },
+        { nazov: "Slovenský zväz včelárov · SK Tracked",
+          "2026": { planVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realVynos: [0,0,0,0,0,0,0,6.20,0,0,0,0],
+                    planMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,2.40,0,0,0,0],
+                    planPocet: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,2,0,0,0,0] } },
+        { nazov: "AZAQUE s.r.o. · SK Tracked",
+          "2026": { planVynos: [0,0,0,0,0,0,0,0,0,0,0,0], realVynos: [0,0,0,0,0,0,0,1823.27,0,0,0,0],
+                    planMarza: [0,0,0,0,0,0,0,0,0,0,0,0], realMarza: [0,0,0,0,0,0,0,116.59,0,0,0,0],
+                    planPocet: [0,0,0,0,0,0,0,0,0,0,0,0], realPocet: [0,0,0,0,0,0,0,326,0,0,0,0] } }
       ] },
 
     { nazov: "Tlač – Cromwell", segment: "tlac", firma: "cromwell",
@@ -7019,9 +7156,39 @@ function sumMetricY(obj, metric, monthsArr){ var p=0,a=0,f=0; if(obj){ monthsArr
 /* ---- rozpad na časti (po kliknutí na riadok) ---- */
 var DP_MN=["Jan","Feb","Mar","Apr","Máj","Jún","Júl","Aug","Sep","Okt","Nov","Dec"];
 function dpPer(){ var p=state.months.slice().sort(function(a,b){return a-b;}); return p.length?p:[1,2,3,4,5,6,7,8,9,10,11,12]; }
+/* Pevné šírky stĺpcov na jednom mieste – hlavná tabuľka, rozpad aj rozpis
+   klientov ich musia zdieľať, inak sa stĺpce nezarovnajú pod seba. */
+function dpSirky(hasPY){
+  var uzke=(window.innerWidth<=680), fl=dpFlags(), per=dpPer(), ytd=dpHasYtd();
+  var W_NAME=uzke?0:148, W_MET=uzke?32:58, W_MON=uzke?82:90, W_TOT=uzke?90:98, W_PCT=uzke?84:104;
+  var w=uzke?[W_MET]:[W_NAME,W_MET];
+  if(fl.real){ per.forEach(function(){ w.push(W_MON); }); } w.push(W_TOT); if(ytd) w.push(W_TOT);
+  if(fl.plan){ per.forEach(function(){ w.push(W_MON); }); } w.push(W_TOT); if(ytd) w.push(W_TOT);
+  w.push(W_PCT); if(ytd) w.push(W_PCT);
+  if(hasPY){ if(fl.py){ per.forEach(function(){ w.push(W_MON); }); } w.push(W_TOT); if(ytd) w.push(W_TOT);
+             w.push(W_PCT); if(ytd) w.push(W_PCT); }
+  var celkom=w.reduce(function(x,y){ return x+y; },0);
+  /* rovnaké čísla nech pozná aj CSS – prilepené stĺpce sa podľa nich odsadzujú */
+  try{ var n=document.getElementById("nbpr");
+    n.style.setProperty("--wname", W_NAME+"px");
+    n.style.setProperty("--wmet", W_MET+"px"); }catch(e){}
+  return { sirky:w, spolu:celkom,
+           colg:'<colgroup>'+w.map(function(x){ return '<col style="width:'+x+'px">'; }).join('')+'</colgroup>' };
+}
 function dpShowMon(){ return state.dpView!=="spolu"; }
+/* Pri jedinom zvolenom mesiaci by stĺpec Spolu opakoval ten istý údaj,
+   preto ho vynecháme – ale len v blokoch, kde sú mesiace rozpísané. */
+function dpJedenMesiac(){ return dpShowMon() && dpPer().length===1; }
 /* ktoré bloky majú rozpad po mesiacoch (plán sa dá skryť samostatne) */
 /* plnenie bez plánu: ak reálne dodávame, je to plus – nie neutrálny stav */
+/* absolútny rozdiel pod percentom – čitateľné aj pri prezentovaní,
+   na rozdiel od bubliny po nabehnutí myšou */
+function rozdielTxt(d, mk){
+  if(!isFinite(d) || Math.abs(d)<0.5) return '';
+  var z=(d>0?'+':'\u2212');
+  /* rozdiel sa ukáže v bubline po nabehnutí myšou – v bunke by naťahoval riadky */
+  return '<span class="dp-tip" data-rozdiel="'+z+fmtValFor(Math.abs(d), mk||'rev')+'"></span>';
+}
 function plnTrieda(pl, a, pre){
   if(pl!==null) return (pl>=100?' '+pre+'-ok':' '+pre+'-bad');
   if(a>0.5) return ' '+pre+'-ok '+pre+'-noplan';
@@ -7044,12 +7211,17 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
   var per=dpPer(), mon=dpShowMon(), fl=dpFlags(), ytd=dpHasYtd();
   var MNy=DP_MN[dpYtd().length-1];
   var wR=dpW(fl.real), wP=dpW(fl.plan), wY=dpW(fl.py), wPl=ytd?2:1;
-  function monTh(sub){ return '<th class="dp-bstart">'+DP_MN[per[0]-1]+'</th>'+
-      per.slice(1).map(function(m){return '<th>'+DP_MN[m-1]+'</th>';}).join('')+
-      '<th class="dp-tot">Spolu<small>'+sub+'</small></th>'+
-      (ytd?('<th class="dp-tot dp-ytd">YTD<small>1–'+MNy+'</small></th>'):''); }
-  function totTh(main, sub){ return '<th class="dp-tot dp-bstart">'+main+'<small>'+sub+'</small></th>'+
-      (ytd?('<th class="dp-tot dp-ytd">YTD<small>1–'+MNy+'</small></th>'):''); }
+  var jeden=dpJedenMesiac();
+  /* Hlavička je jednoriadková: každý stĺpec nesie celý názov, teda
+     „Realita Aug", „Realita YTD", „Plán Aug"… Dve úrovne nad sebou sa pri
+     opakovaní pri každej službe zle čítali. */
+  function monTh(co, sub, btn){
+    return '<th class="dp-bstart">'+co+' '+DP_MN[per[0]-1]+'</th>'+
+      per.slice(1).map(function(m){ return '<th>'+co+' '+DP_MN[m-1]+'</th>'; }).join('')+
+      (jeden?'':('<th class="dp-tot">'+co+' spolu<small>'+sub+'</small>'+(btn||'')+'</th>'))+
+      (ytd?('<th class="dp-tot dp-ytd">'+co+' YTD<small>1–'+MNy+'</small>'+(jeden?(btn||''):'')+'</th>'):''); }
+  function totTh(main, sub, btn){ return '<th class="dp-tot dp-bstart">'+main+'<small>'+sub+'</small>'+(btn||'')+'</th>'+
+      (ytd?('<th class="dp-tot dp-ytd">'+main+' YTD<small>1–'+MNy+'</small></th>'):''); }
   function colBtn(key, open, what){
     return mon ? ('<button class="dp-colbtn" type="button" data-dpcol="'+key+'" aria-label="'+
       (open?'Skryť mesiace – '+what:'Zobraziť mesiace – '+what)+'" title="'+
@@ -7077,21 +7249,17 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
                    '<th class="dp-sum dp-bstart">'+CY+' vs '+PY+'<small>realita '+CY+'/'+PY+'</small></th>'):'')))+
     '</tr>';
   }
-  var h1='<tr>'+firstTh(2)+
-    '<th class="dpg dp-bstart" colspan="'+wR+'">Realita · '+CY+realBtn+'</th>'+
-    '<th class="dpg dp-bstart" colspan="'+wP+'">Plán · '+CY+planBtn+'</th>'+
-    '<th class="dpg dp-bstart" colspan="'+wPl+'">Plnenie<small>realita/plán</small></th>'+
-    (hasPY?('<th class="dpg dp-bstart" colspan="'+wY+'">Realita · '+PY+pyBtn+'</th>'+
-            '<th class="dpg dp-bstart" colspan="'+wPl+'">'+CY+' vs '+PY+'<small>realita '+CY+'/'+PY+'</small></th>'):'')+
-  '</tr>';
-  var plTh='<th class="dp-bstart">Za obdobie</th>'+(ytd?('<th class="dp-ytd">YTD 1–'+MNy+'</th>'):'');
-  var h2='<tr>'+
-    (fl.real?monTh('realita '+CY):totTh('Realita','spolu '+CY))+
-    (fl.plan?monTh('plán '+CY):totTh('Plán','spolu '+CY))+
+  var plTh='<th class="dp-bstart">Plnenie<small>realita/plán</small></th>'+
+    (ytd?('<th class="dp-ytd">Plnenie YTD<small>1–'+MNy+'</small></th>'):'');
+  var rastTh='<th class="dp-bstart">'+CY+' vs '+PY+'</th>'+
+    (ytd?('<th class="dp-ytd">'+CY+' vs '+PY+' YTD</th>'):'');
+  var h2='<tr>'+firstTh(1)+
+    (fl.real?monTh('Realita','realita '+CY,realBtn):totTh('Realita','spolu '+CY,realBtn))+
+    (fl.plan?monTh('Plán','plán '+CY,planBtn):totTh('Plán','spolu '+CY,planBtn))+
     plTh+
-    (hasPY?((fl.py?monTh('realita '+PY):totTh('Realita','spolu '+PY))+plTh):'')+
+    (hasPY?((fl.py?monTh('Realita '+PY,'realita '+PY,pyBtn):totTh('Realita '+PY,'spolu '+PY,pyBtn))+rastTh):'')+
   '</tr>';
-  return h1+h2;
+  return h2;
 }
 function dpNcell(hasPY){ var fl=dpFlags(), e=dpHasYtd()?2:1; return dpW(fl.real)+dpW(fl.plan)+e+(hasPY?(dpW(fl.py)+e):0); }
 /* zdieľané: bunky jedného riadku (Realita | Plán | Plnenie | Realita PY | rast) */
@@ -7106,23 +7274,24 @@ function ptCells(get, hasPY, metric){
   var A=get(per,'a'), P=get(per,'p'), PYv=hasPY?get(per,'y'):0, out='';
   var ytd=dpHasYtd(), YP=dpYtd();
   var Ay=ytd?get(YP,'a'):0, Py=ytd?get(YP,'p'):0, PYy=(ytd&&hasPY)?get(YP,'y'):0;
+  var jeden=dpJedenMesiac();
   if(fl.real){ per.forEach(function(mo,i){
-    out+='<td class="pt-c pt-bA'+(i===0?' pt-bstart':'')+'">'+eur(get([mo],'a'))+'</td>'; }); }
-  out+='<td class="pt-c pt-bA pt-tot'+(fl.real?'':' pt-bstart')+ok(A,P)+'">'+eur(A)+'</td>';
+    out+='<td class="pt-c pt-bA'+(i===0?' pt-bstart':'')+(jeden?ok(A,P):'')+'">'+eur(get([mo],'a'))+'</td>'; }); }
+  if(!(jeden&&fl.real)) out+='<td class="pt-c pt-bA pt-tot'+(fl.real?'':' pt-bstart')+ok(A,P)+'">'+eur(A)+'</td>';
   if(ytd) out+='<td class="pt-c pt-bA pt-tot pt-ytd'+ok(Ay,Py)+'">'+eur(Ay)+'</td>';
   if(fl.plan){ per.forEach(function(mo,i){ out+='<td class="pt-c pt-bB'+(i===0?' pt-bstart':'')+'">'+eur(get([mo],'p'))+'</td>'; }); }
-  out+='<td class="pt-c pt-bB pt-tot'+(fl.plan?'':' pt-bstart')+'">'+eur(P)+'</td>';
+  if(!(jeden&&fl.plan)) out+='<td class="pt-c pt-bB pt-tot'+(fl.plan?'':' pt-bstart')+'">'+eur(P)+'</td>';
   if(ytd) out+='<td class="pt-c pt-bB pt-tot pt-ytd">'+eur(Py)+'</td>';
   var pl=pln(A,P);
-  out+='<td class="pt-c pt-pl pt-bstart'+plnTrieda(pl,A,'pt')+'" '+plnTitul(pl,A)+'>'+pctT(pl)+'</td>';
+  out+='<td class="pt-c pt-pl pt-bstart'+plnTrieda(pl,A,'pt')+'" '+plnTitul(pl,A)+'>'+pctT(pl)+rozdielTxt(A-P,MK)+'</td>';
   if(ytd){ var ply=pln(Ay,Py);
-    out+='<td class="pt-c pt-pl pt-ytd'+(ply===null?' pt-neu':(ply>=100?' pt-ok':' pt-bad'))+'">'+pctT(ply)+'</td>'; }
+    out+='<td class="pt-c pt-pl pt-ytd'+(ply===null?' pt-neu':(ply>=100?' pt-ok':' pt-bad'))+'">'+pctT(ply)+rozdielTxt(Ay-Py,MK)+'</td>'; }
   if(hasPY){
     if(fl.py){ per.forEach(function(mo,i){ out+='<td class="pt-c pt-bC'+(i===0?' pt-bstart':'')+'">'+eur(get([mo],'y'))+'</td>'; }); }
-    out+='<td class="pt-c pt-bC pt-tot'+(fl.py?'':' pt-bstart')+'">'+eur(PYv)+'</td>';
+    if(!(jeden&&fl.py)) out+='<td class="pt-c pt-bC pt-tot'+(fl.py?'':' pt-bstart')+'">'+eur(PYv)+'</td>';
     if(ytd) out+='<td class="pt-c pt-bC pt-tot pt-ytd">'+eur(PYy)+'</td>';
     var rast=PYv>0?Math.round(A/PYv*100):null;
-    out+='<td class="pt-c pt-pl pt-bstart'+(rast===null?' pt-neu':(rast>=100?' pt-ok':' pt-bad'))+'">'+pctT(rast)+'</td>';
+    out+='<td class="pt-c pt-pl pt-bstart'+(rast===null?' pt-neu':(rast>=100?' pt-ok':' pt-bad'))+'">'+pctT(rast)+rozdielTxt(A-PYv,MK)+'</td>';
     if(ytd){ var ry=PYy>0?Math.round(Ay/PYy*100):null;
       out+='<td class="pt-c pt-pl pt-ytd'+(ry===null?' pt-neu':(ry>=100?' pt-ok':' pt-bad'))+'">'+pctT(ry)+'</td>'; }
   }
@@ -7152,6 +7321,7 @@ function subMKeys(sObj){
 /* --- dvojúrovňový rozpad: segment -> firmy -> klienti --- */
 function subsDetailHtml(id, isF){
   var CY=String(state.year), PY=prevYear(), hasPY=!!DATA.years[PY];
+  var SS=dpSirky(hasPY);            /* rovnaké šírky ako hlavná tabuľka */
   var oCY=rowObjY(CY,isF,id), oPY=rowObjY(PY,isF,id);
   if(!oCY||!oCY.subs) return '';
   /* pri Tlači sa dá prepnúť medzi firmami a krajinami klientov */
@@ -7212,7 +7382,8 @@ function subsDetailHtml(id, isF){
     '<div class="gexp-head"><span class="gexp-title">Rozpad — '+nm+'</span>'+
     '<span class="gexp-sum">'+periodLabel()+' · '+order.length+(podlaKraj?' skupiny':' firmy')+' · '+fmtNum(sumRev)+' € výnos · '+fmtNum(sumMar)+' € marža</span>'+
     '<button class="gexp-close" type="button" data-close="1" title="Zavrieť" aria-label="Zavrieť">✕</button></div>'+
-    '<div class="pt-scroll"><table class="pt-table pt-subtbl"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>'+
+    '<div class="pt-scroll"><table class="pt-table pt-subtbl" style="min-width:'+SS.spolu+'px;width:100%">'+SS.colg+
+      '<thead>'+head+'</thead><tbody>'+body+'</tbody></table></div>'+
     legendaZ(body)+
     '</div>';
 }
@@ -7301,11 +7472,20 @@ function clientsTableHtml(sCY, sPY, hasPY, label, rowId, komSeg, komFirma, vyber
       .replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'')
       .replace(/class="dpg/g,'class="pt-g dpg').replace(/class="dp-sum/g,'class="pt-g dp-sum')
       .replace(/class="dp-b([ABC]) /g,'class="pt-b$1 ').replace(/class="dp-tot"/g,'class="pt-toth"');
+  /* rozpis klientov má jeden úvodný stĺpec (meno) namiesto dvoch,
+     preto mu prvé dve šírky zlúčime – čísla potom sedia pod tabuľkou služby */
+  var CS=(function(){
+    var z=dpSirky(hasPY), w=z.sirky.slice();
+    if(w.length>1) w=[w[0]+w[1]].concat(w.slice(2));
+    return { spolu:z.spolu,
+      colg:'<colgroup>'+w.map(function(x){ return '<col style="width:'+x+'px">'; }).join('')+'</colgroup>' };
+  })();
   /* rovnaký komentár ako pri firme v rozpade – je to tá istá poznámka */
   var komBtn = '';
   return '<div class="cl-box"><div class="cl-head">Klienti — '+label+komBtn+' <span>'+order.length+' klientov</span>'+
     '<button class="cl-close" type="button" data-subclose="1" title="Zavrieť">✕</button></div>'+
-    '<div class="cl-scroll"><table class="pt-table pt-cltbl"><thead>'+head+'</thead><tbody>'+body+'</tbody></table></div></div>';
+    '<div class="cl-scroll"><table class="pt-table pt-cltbl" style="min-width:'+CS.spolu+'px;width:100%">'+CS.colg+
+      '<thead>'+head+'</thead><tbody>'+body+'</tbody></table></div></div>';
 }
 /* nad týmto počtom častí ide rozpad do klientskeho rozloženia
    (klient a pod ním marža/kusy) – metrikový by bol neprehľadne dlhý */
@@ -8190,7 +8370,8 @@ function renderTable(){
   /* ---- pevné šírky stĺpcov: všetky tabuľky musia byť zarovnané ---- */
   var uzke=(window.innerWidth<=680);
   /* užšie stĺpce, aby sa jeden mesiac zmestil aj na 14-palcový displej */
-  var W_NAME=uzke?0:124, W_MET=uzke?32:58, W_MON=uzke?82:90, W_TOT=uzke?90:98, W_PCT=uzke?66:78;
+  /* stĺpce s plnením sú širšie – nesú percento aj absolútny rozdiel */
+  var W_NAME=uzke?0:148, W_MET=uzke?32:58, W_MON=uzke?82:90, W_TOT=uzke?90:98, W_PCT=uzke?84:104;
   function colWidths(){
     var ytd=dpHasYtd();
     var w=uzke?[W_MET]:[W_NAME,W_MET];
@@ -8201,8 +8382,7 @@ function renderTable(){
                w.push(W_PCT); if(ytd) w.push(W_PCT); }
     return w;
   }
-  var CW=colWidths(), TOTW=CW.reduce(function(x,y){return x+y;},0);
-  var COLG='<colgroup>'+CW.map(function(w){return '<col style="width:'+w+'px">';}).join('')+'</colgroup>';
+  var S=dpSirky(hasPY), CW=S.sirky, TOTW=S.spolu, COLG=S.colg;
 
   var head=dpHeadHtml(function(rs){
     return (uzke?'':('<th class="dp-rowhead" rowspan="'+rs+'">'+(isF?"Firma":"Segment")+'</th>'))+
@@ -8217,25 +8397,26 @@ function renderTable(){
     var Ay=ytd?g(YP,'a'):0, Py=ytd?g(YP,'p'):0, PYy=(ytd&&hasPY)?g(YP,'y'):0;
     /* bez plánu, ale s kladnou realitou – reálne dodávame, takže zelená */
     function ok(a,p){ if(!(p>0)) return (a>0.5?' dp-ok':(a<-0.5?' dp-bad':' dp-neu')); return (Math.round(a/p*100)>=100)?' dp-ok':' dp-bad'; }
+    var jeden=dpJedenMesiac();
     if(fl.real) per.forEach(function(mo,i){
-      out+='<td class="dp-cell dp-bA'+(i===0?' dp-bstart':'')+'">'+fV(g([mo],'a'))+'</td>'; });
-    out+='<td class="dp-cell dp-bA dp-tot'+(fl.real?'':' dp-bstart')+ok(A,P)+'">'+fV(A)+'</td>';
+      out+='<td class="dp-cell dp-bA'+(i===0?' dp-bstart':'')+(jeden?ok(A,P):'')+'">'+fV(g([mo],'a'))+'</td>'; });
+    if(!(jeden&&fl.real)) out+='<td class="dp-cell dp-bA dp-tot'+(fl.real?'':' dp-bstart')+ok(A,P)+'">'+fV(A)+'</td>';
     if(ytd) out+='<td class="dp-cell dp-bA dp-tot dp-ytd'+ok(Ay,Py)+'">'+fV(Ay)+'</td>';
     if(fl.plan) per.forEach(function(mo,i){ out+='<td class="dp-cell dp-bB'+(i===0?' dp-bstart':'')+'">'+fV(g([mo],'p'))+'</td>'; });
-    out+='<td class="dp-cell dp-bB dp-tot'+(fl.plan?'':' dp-bstart')+'">'+fV(P)+'</td>';
+    if(!(jeden&&fl.plan)) out+='<td class="dp-cell dp-bB dp-tot'+(fl.plan?'':' dp-bstart')+'">'+fV(P)+'</td>';
     if(ytd) out+='<td class="dp-cell dp-bB dp-tot dp-ytd">'+fV(Py)+'</td>';
     var pl=pln(A,P);
-    out+='<td class="dp-cell dp-sum dp-bstart'+plnTrieda(pl,A,'dp')+'" '+plnTitul(pl,A)+'>'+pctTxt(pl)+'</td>';
+    out+='<td class="dp-cell dp-sum dp-bstart'+plnTrieda(pl,A,'dp')+'" '+plnTitul(pl,A)+'>'+pctTxt(pl)+rozdielTxt(A-P,mk)+'</td>';
     if(ytd){ var ply=pln(Ay,Py);
-      out+='<td class="dp-cell dp-sum dp-ytd'+(ply===null?' dp-neu':(ply>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ply)+'</td>'; }
+      out+='<td class="dp-cell dp-sum dp-ytd'+(ply===null?' dp-neu':(ply>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ply)+rozdielTxt(Ay-Py,mk)+'</td>'; }
     if(hasPY){
       if(fl.py) per.forEach(function(mo,i){ out+='<td class="dp-cell dp-bC'+(i===0?' dp-bstart':'')+'">'+fV(g([mo],'y'))+'</td>'; });
-      out+='<td class="dp-cell dp-bC dp-tot'+(fl.py?'':' dp-bstart')+'">'+fV(PYv)+'</td>';
+      if(!(jeden&&fl.py)) out+='<td class="dp-cell dp-bC dp-tot'+(fl.py?'':' dp-bstart')+'">'+fV(PYv)+'</td>';
       if(ytd) out+='<td class="dp-cell dp-bC dp-tot dp-ytd">'+fV(PYy)+'</td>';
       var rast=PYv>0?Math.round(A/PYv*100):null;
-      out+='<td class="dp-cell dp-sum dp-bstart'+(rast===null?' dp-neu':(rast>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(rast)+'</td>';
+      out+='<td class="dp-cell dp-sum dp-bstart'+(rast===null?' dp-neu':(rast>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(rast)+rozdielTxt(A-PYv,mk)+'</td>';
       if(ytd){ var ry=PYy>0?Math.round(Ay/PYy*100):null;
-        out+='<td class="dp-cell dp-sum dp-ytd'+(ry===null?' dp-neu':(ry>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ry)+'</td>'; }
+        out+='<td class="dp-cell dp-sum dp-ytd'+(ry===null?' dp-neu':(ry>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ry)+rozdielTxt(Ay-PYy,mk)+'</td>'; }
     }
     return out;
   }
@@ -8303,12 +8484,19 @@ function renderTable(){
   /* pri skupine služieb (Poštové služby) sa sumárna tabuľka nezobrazuje,
      takže hlavičku musí niesť každá segmentová tabuľka */
   var jeSkupina = !isF && !!SEG_SKUPINY[state.segment];
-  var headSeg = jeSkupina
-    ? ('<thead class="dp-headmain">'+head+'</thead>')            /* plnohodnotná hlavička aj s +/− */
-    : (uzke ? ('<thead class="dp-headrep">'+
-        head.replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'')+'</thead>') : '');
+  /* Každá služba má vlastnú, tichšiu hlavičku so stĺpcami – inak pri rolovaní
+     nie je jasné, ktoré číslo patrí ktorému mesiacu. Hlavná hlavička hore
+     zostáva výraznejšia, aby bolo vidieť, čo je nadradené. */
+  var headBezTlacidiel=head.replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'');
+  function headPreSluzbu(nm){
+    if(jeSkupina) return '<thead class="dp-headmain">'+head+'</thead>';   /* plnohodnotná aj s +/− */
+    return '<thead class="dp-headrep dp-headsvc">'+
+      headBezTlacidiel.replace(/(<th class="dp-rowhead"[^>]*>)[\s\S]*?(<\/th>)/,
+        '$1'+String(nm).replace(/\$/g,'$$$$')+'$2')+'</thead>';
+  }
   if(!single) rows.forEach(function(id){
     var nm=isF?((firmObj(id)&&firmObj(id).name)||id):((segObj(id)&&segObj(id).name)||id);
+    var headSeg=headPreSluzbu(nm);
     var t1='<table class="dp-table dp-cmp dp-segtbl" style="width:'+TOTW+'px">'+COLG+headSeg+'<tbody>'+
       rowBlock(rowObjY(CY,isF,id), rowObjY(PY,isF,id), nm, false, mKeysFor(id), id)+
       '</tbody></table>';
