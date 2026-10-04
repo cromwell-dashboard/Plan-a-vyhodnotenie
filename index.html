@@ -1234,8 +1234,15 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr.filtre-otvorene .fsuhrn .fsuhrn-ch{transform:rotate(180deg)}
 #nbpr.filtre-otvorene .filters{padding-top:8px;padding-bottom:8px}
 #nbpr.kompakt .flabel{display:none}
-#nbpr.kompakt .fgroup-seg,#nbpr.kompakt .fgroup-rok,
+#nbpr.kompakt .fgroup-rok,
 #nbpr.kompakt .fgroup-kom,#nbpr.kompakt .spacer,#nbpr.kompakt .fbreak{display:none}
+/* Filter služieb zostáva dostupný aj po zrolovaní – v kompaktnej lište
+   len ako ikonky, názov sa ukáže po nabehnutí myšou. */
+#nbpr.kompakt .fgroup-seg{display:flex;flex:0 0 auto;margin-left:10px}
+#nbpr.kompakt .fgroup-seg .flabel{display:none}
+#nbpr.kompakt .fgroup-seg .seg-chip{padding:0 9px;gap:0;height:34px}
+#nbpr.kompakt .fgroup-seg .seg-chip>span:not(.tico){display:none}
+#nbpr.kompakt .fgroup-seg .seg-chip .tico{margin:0}
 /* zo skupiny obdobia zostanú v kompaktnom režime len akčné tlačidlá */
 #nbpr.kompakt .months-group{display:flex;flex:0 0 auto;margin-left:auto}
 #nbpr.kompakt .months-group #f-quarter,#nbpr.kompakt .months-group #f-month,
@@ -2289,8 +2296,8 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr td.dp-sum:hover,#nbpr td.pt-pl:hover{cursor:help}
 /* Riadky držia jednu výšku v celom detaile – tabuľka služby, rozpad firiem
    aj rozpis klientov. Odsadenie a riadkovanie preto nastavujeme spoločne. */
-#nbpr .dp-cmp td.dp-cell,#nbpr .dp-cmp td.dp-name,#nbpr .dp-cmp td.dp-metric{padding-top:4px;padding-bottom:4px}
-#nbpr .pt-box td,#nbpr .pt-box th{padding-top:4px!important;padding-bottom:4px!important;line-height:1.25!important}
+#nbpr .dp-cmp td.dp-cell,#nbpr .dp-cmp td.dp-name,#nbpr .dp-cmp td.dp-metric{padding-top:7px;padding-bottom:7px}
+#nbpr .pt-box td,#nbpr .pt-box th{padding-top:7px!important;padding-bottom:7px!important;line-height:1.3!important}
 #nbpr .pt-box .pt-grp td,#nbpr .pt-box .cl-head{padding-top:3px!important;padding-bottom:3px!important}
 #nbpr td.dp-sum,#nbpr td.pt-pl{line-height:1.15}
 #nbpr .dp-chev-off{visibility:hidden}
@@ -2781,6 +2788,209 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pt-table tr.pt-tot2 td.pt-n,#nbpr .pt-table tr.pt-res td.pt-n{background:#fff!important}
 #nbpr .pt-box .pt-table tr:not(.pt-subfirst):not(.pt-clrev)>td{background-color:#fff!important}
 #nbpr .pt-box .pt-table tr.pt-subfirst>td,#nbpr .pt-box .pt-table tr.pt-clrev>td{background-color:#f1f2f5!important}
+/* samostatné okno služby – ostatné karty sú skryté, aby nerušili */
+#nbpr .fokus-hd{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin:0 0 12px}
+#nbpr .fokus-nazov{font-size:17px;font-weight:800;color:var(--ink)}
+#nbpr .fokus-kom{flex:1 1 100%}
+#nbpr .fokus-kom .fgroup-kom{width:100%}
+#nbpr .fokus-kom .flabel{display:none}
+/* v samostatnom okne služby necháme súhrnné dlaždice – sú to celkové čísla
+   práve tejto služby a patria nad tabuľku */
+#nbpr.sluzba-fokus .graphs-bar,#nbpr.sluzba-fokus .graph,
+#nbpr.sluzba-fokus .plan-analysis-card,#nbpr.sluzba-fokus .graphs-card{display:none!important}
+#nbpr.sluzba-fokus #kpis{display:block!important;margin-bottom:16px}
+#nbpr.sluzba-fokus .filters .fgroup-kom{display:none}
+
+#nbpr .dp-sumtbl>thead>tr>th,#nbpr .dp-sumtbl>tbody>tr>td{background-image:none!important}
+/* modrý súhrnný blok sa prepína na biely – text preto nesmie zostať biely */
+#nbpr .dp-cmp.dp-sumtbl>thead>tr>th,#nbpr .dp-cmp.dp-sumtbl>thead>tr>th *,
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra>thead>tr>th,
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra>thead>tr>th *,
+#nbpr .dp-sumtbl>thead>tr>th,#nbpr .dp-sumtbl>thead>tr>th *,
+#nbpr .dp-cmp>thead>tr>th,#nbpr .dp-cmp>thead>tr>th *{color:#9aa1ad!important}
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra tbody td.dp-name,
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra tbody td.dp-name *,
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra tbody .pt-iko,
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra .met-ico,
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra>tbody>tr.dp-total>td{color:#141b2d!important}
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra>tbody>tr>td{background-image:none!important}
+#nbpr .dp-cmp.dp-sumtbl.dp-sum-modra>tbody>tr.dp-total>td.dp-cell{color:#2f3b5c!important}
+#nbpr .dp-sumtbl>thead>tr>th{background-color:#fff!important}
+#nbpr .dp-sumtbl>thead>tr>th small,#nbpr .dp-cmp>thead>tr>th small{color:#c3c9d6!important}
+#nbpr .dp-cmp>thead>tr>th.dp-rowhead,#nbpr .dp-cmp>thead>tr>th.dp-rowhead *{color:#141b2d!important}
+#nbpr .dp-colbtn{color:#9aa1ad!important;border-color:#e3e6ec!important;background:#fff!important}
+#nbpr .dp-sumtbl>tbody>tr>td{background-color:#fff!important;color:#2f3b5c!important}
+#nbpr .dp-sumtbl>tbody>tr.dp-cmpfirst>td,
+#nbpr .dp-sumtbl>tbody>tr:first-child>td{background-color:#f1f2f5!important}
+#nbpr .dp-sumtbl td.dp-name,#nbpr .dp-sumtbl th.dp-rowhead{color:#141b2d!important}
+/* každá služba je samostatná biela karta s vlastným rámom a tieňom */
+#nbpr .dp-stack{gap:26px!important}
+#nbpr .dp-stack>table.dp-segtbl{background:#fff;border:1px solid #e9ecf2!important;
+  border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.05);overflow:hidden;
+  border-collapse:separate!important;border-spacing:0}
+#nbpr .dp-stack>table.dp-segtbl>thead>tr>th{padding-top:14px}
+#nbpr .dp-stack>table.dp-segtbl>tbody>tr:last-child>td{border-bottom:0!important}
+#nbpr .dp-stack>table.dp-segtbl td.dp-name{padding-left:16px}
+#nbpr .dp-stack>table.dp-segtbl>thead>tr>th:first-child{padding-left:16px}
+#nbpr .dp-stack>table.dp-segtbl .pt-box{margin-bottom:4px}
+@media (max-width:680px){ #nbpr .dp-stack{gap:22px!important} }
+
+/* SPOLU segmenty – modrý gradientný blok, aby sa odlíšil od služieb */
+#nbpr .dp-sum-spolu{background-image:linear-gradient(180deg,#4d5ecb,#3948a8)!important;
+  border-radius:12px;overflow:hidden;margin-bottom:6px}
+#nbpr .dp-sum-spolu>thead>tr>th,#nbpr .dp-sum-spolu>thead>tr>th *,
+#nbpr .dp-cmp.dp-sum-spolu>thead>tr>th,#nbpr .dp-cmp.dp-sum-spolu>thead>tr>th *{
+  background-color:transparent!important;color:rgba(255,255,255,.78)!important;
+  border-bottom:1px solid rgba(255,255,255,.22)!important}
+#nbpr .dp-sum-spolu>thead>tr>th small,#nbpr .dp-cmp.dp-sum-spolu>thead>tr>th small{color:rgba(255,255,255,.55)!important}
+#nbpr .dp-sum-spolu>tbody>tr>td{background-color:transparent!important;font-weight:800!important;
+  color:#fff!important;font-size:13px;border-bottom:1px solid rgba(255,255,255,.14)!important}
+#nbpr .dp-sum-spolu>tbody>tr:last-child>td{border-bottom:0!important}
+#nbpr .dp-cmp.dp-sum-spolu tbody td.dp-name,#nbpr .dp-cmp.dp-sum-spolu tbody td.dp-name *,
+#nbpr .dp-cmp.dp-sum-spolu tbody td.dp-metric,#nbpr .dp-cmp.dp-sum-spolu tbody .pt-iko,
+#nbpr .dp-cmp.dp-sum-spolu .met-ico{color:#fff!important;background-color:transparent!important}
+#nbpr .dp-sum-spolu .dp-ok{color:#8ef0b8!important} #nbpr .dp-sum-spolu .dp-bad{color:#ffb3b8!important}
+/* v modrom bloku nesmie zostať svetlé podfarbenie ani tmavý text – všetko biele */
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr>td,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr.dp-cmpfirst>td,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr:first-child>td,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr.dp-cntrow>td{background-color:transparent!important}
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr>td.dp-cell,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr>td.dp-tot,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr.dp-cntrow>td.dp-cell{color:#fff!important;opacity:1!important}
+/* V modrom bloku musí byť priehľadný aj samotný riadok, nielen bunky –
+   podfarbenie nastavené na riadku presvitalo cez gradient ako biely pruh. */
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr.dp-total,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr.dp-cmprow,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr:hover,
+#nbpr .dp-cmp.dp-sum-spolu>tbody>tr.dp-total:hover{background-color:transparent!important;
+  background-image:none!important}
+/* prejdenie myšou nesmie v modrom bloku vysvietiť riadok nabielo –
+   biely text by sa stratil */
+#nbpr .dp-cmp.dp-sum-spolu tr:hover td,
+#nbpr .dp-cmp.dp-sum-spolu tr.dp-cmprow:hover td,
+#nbpr .dp-cmp.dp-sum-spolu tr.dp-clickrow:hover td.dp-cell,
+#nbpr .dp-cmp.dp-sum-spolu tr.dp-row:hover .dp-cell,
+#nbpr .dp-cmp.dp-sum-spolu tr.dp-row:hover .dp-name{background-color:rgba(255,255,255,.10)!important}
+#nbpr .dp-sum-spolu .dp-colbtn{color:#fff!important;border-color:rgba(255,255,255,.35)!important;
+  background:rgba(255,255,255,.12)!important}
+/* Jediná zobrazená služba sa vykresľuje inou tabuľkou než služby v zozname.
+   Aby vyzerali identicky, preberá všetky ich detaily – písmo metriky,
+   vycentrovaný biely stĺpec s názvom aj rovnaký odtieň riadku výnosu. */
+#nbpr .dp-sum-jedna td.dp-metric{color:#6b7280!important;font-size:10px!important;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:700}
+#nbpr .dp-sum-jedna td.dp-name{background-color:#fff!important;text-align:center!important;
+  color:#141b2d!important;font-weight:800;font-size:12.5px}
+#nbpr .dp-sum-jedna>tbody>tr>td{background-color:#fff!important;font-weight:600!important;
+  font-size:12px!important;color:#2f3b5c!important}
+#nbpr .dp-sum-jedna>tbody>tr>td.dp-sum{font-weight:800!important}
+#nbpr .dp-sum-jedna>tbody>tr>td.dp-tot{font-weight:700!important}
+#nbpr .dp-sum-jedna>tbody>tr>td.dp-ok{color:#17a05f!important}
+#nbpr .dp-sum-jedna>tbody>tr>td.dp-bad{color:#d6454f!important}
+#nbpr .dp-sum-jedna>tbody>tr>td.dp-name{color:#141b2d!important;font-weight:800!important;font-size:12.5px!important}
+#nbpr .dp-sum-jedna>tbody>tr>td.dp-metric{color:#6b7280!important;font-size:10px!important}
+#nbpr .dp-sum-jedna>tbody>tr.dp-cmpfirst>td{background-color:#f1f2f5!important}
+#nbpr .dp-sum-jedna>tbody>tr.dp-cmpfirst>td.dp-name{background-color:#fff!important}
+/* jediná zobrazená služba má rovnaký vzhľad ako ostatné karty */
+#nbpr .dp-sum-jedna{background:#fff!important;background-image:none!important;
+  border:1px solid #e9ecf2!important;border-radius:14px;box-shadow:0 1px 2px rgba(16,24,40,.05);
+  overflow:hidden;border-collapse:separate!important;border-spacing:0}
+#nbpr .dp-sum-jedna>thead>tr>th{padding-top:14px}
+#nbpr .dp-sum-jedna td.dp-name,#nbpr .dp-sum-jedna>thead>tr>th:first-child{padding-left:16px}
+#nbpr .dp-sum-jedna>tbody>tr.dp-cmpfirst>td{background-color:#f1f2f5!important}
+/* pruh plnenia – polovičná veľkosť oproti návrhu, aby nenarušil riadok */
+#nbpr .dp-bar{display:block;height:3px;border-radius:99px;background:#eef0f4;margin:3px 0 0 auto;
+  width:56px;overflow:hidden}
+#nbpr .dp-bar i{display:block;height:100%;border-radius:99px;background:#17a05f}
+#nbpr .dp-bar.je-bad i{background:#d6454f}
+#nbpr td.dp-sum,#nbpr td.pt-pl{line-height:1.1}
+/* hlavička: jednotná veľkosť písma a tiché tlačidlá +/- */
+#nbpr .dp-cmp>thead>tr>th.dpg{font-size:9.5px!important;letter-spacing:.12em;font-weight:800}
+#nbpr .dp-cmp>thead>tr:last-child>th{font-size:9px!important;letter-spacing:.1em;font-weight:700}
+#nbpr .dp-cmp>thead>tr>th small{display:block;font-size:8.5px!important;letter-spacing:0;
+  text-transform:none;margin-top:2px}
+#nbpr .dp-colbtn{width:16px;height:16px;line-height:14px;font-size:11px;border-radius:50%;
+  margin-left:7px;vertical-align:middle;padding:0}
+/* stĺpec s názvom služby je vždy biely – aj v riadku výnosu */
+#nbpr .dp-cmp.dp-sum-jedna>tbody>tr>td.dp-name,
+#nbpr .dp-cmp.dp-sum-jedna>tbody>tr.dp-cmpfirst>td.dp-name,
+#nbpr .dp-cmp.dp-segtbl>tbody>tr>td.dp-name,
+#nbpr .dp-cmp.dp-segtbl>tbody>tr.dp-cmpfirst>td.dp-name{background-color:#fff!important}
+/* názov firmy v rozpade má rovnako biely podklad ako názov služby */
+#nbpr .pt-subtbl>tbody>tr>td.pt-subname,
+#nbpr .pt-subtbl>tbody>tr.pt-subfirst>td.pt-subname,
+#nbpr .pt-subtbl>tbody>tr>td.pt-n,
+#nbpr .pt-cltbl>tbody>tr>td.pt-n{background-color:#fff!important}
+/* tučné písmo len tam, kde nesie význam – percentá a súčtové stĺpce */
+#nbpr td.dp-cell,#nbpr td.pt-c{font-weight:600!important}
+#nbpr td.dp-sum,#nbpr td.pt-pl{font-weight:800!important}
+#nbpr td.dp-tot,#nbpr td.pt-tot{font-weight:700!important}
+/* všetky popisy v hlavičke zarovnané vpravo */
+#nbpr .dp-cmp>thead>tr>th{text-align:right!important}
+#nbpr .dp-cmp>thead>tr>th.dp-rowhead,#nbpr .dp-cmp>thead>tr>th.dp-methead{text-align:right!important}
+#nbpr .dp-cmp>thead>tr>th small{text-align:right}
+/* ===================== VZHĽAD DETAILNEJ TABUĽKY =====================
+   Bez rámikov a farebných plôch – len tenké vodorovné linky. Pozornosť
+   nesie realita a plnenie, plán a minulý rok sú svetlejšie. */
+#nbpr .dp-cmp,#nbpr .pt-table{border:0!important;border-collapse:collapse!important}
+#nbpr .dp-cmp td,#nbpr .dp-cmp th,#nbpr .pt-table td,#nbpr .pt-table th{
+  border-left:0!important;border-right:0!important;box-shadow:none!important}
+#nbpr .dp-cmp>thead>tr>th{background:#fff!important;background-image:none!important;
+  color:#9aa1ad!important;font-size:9px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+  border-bottom:1px solid #e9ecf2!important;padding-bottom:9px;
+  white-space:normal;line-height:1.25;overflow:visible;text-overflow:clip}
+#nbpr .dp-cmp>thead>tr>th small{color:#c3c9d6!important;font-weight:500;letter-spacing:0;text-transform:none}
+#nbpr .dp-segtbl tbody tr>td,#nbpr .pt-table tbody tr>td{
+  border-bottom:1px solid #f4f6fa!important;border-top:0!important;background-color:#fff!important}
+#nbpr .dp-segtbl td.dp-name{background-color:#fff!important;color:#141b2d!important;
+  font-weight:800;font-size:12.5px}
+#nbpr .dp-segtbl td.dp-metric,#nbpr .pt-table td.pt-met{color:#9aa1ad!important;font-size:10px;
+  letter-spacing:.08em;text-transform:uppercase;font-weight:700;background-color:#fff!important}
+/* podfarbený je len riadok výnosu – v tabuľke služby aj v rozpade */
+#nbpr .dp-segtbl tr.dp-cmpfirst>td,
+#nbpr .pt-subtbl tr.pt-subfirst>td,
+#nbpr .pt-cltbl tr.pt-clrev>td{background-color:#f1f2f5!important}
+/* rozpad nadväzuje priamo na tabuľku – bez rámu, len tichý nadpis */
+#nbpr .dp-segtbl:has(.pt-box){outline:0!important}
+#nbpr .pt-box{border:0!important;background:transparent!important}
+#nbpr .pt-box .gexp-head{background:#fff!important;border-top:1px solid #e9ecf2!important;
+  border-bottom:0!important;padding-top:14px!important}
+#nbpr .pt-box .gexp-title{color:#141b2d!important;font-size:10px!important;letter-spacing:.12em;
+  text-transform:uppercase;font-weight:800}
+#nbpr .pt-box .gexp-sum{color:#b6bcc8!important;font-size:10.5px!important}
+#nbpr .pt-subtbl td.pt-subname{color:#141b2d!important;font-weight:800;background-color:#fff!important}
+#nbpr .pt-subtbl tr.pt-subfirst>td{border-top:1px solid #e9ecf2!important}
+/* čísla */
+/* všetky čísla v rovnakej sýtosti – žiadne vyblednuté hodnoty.
+   Bublina s rozdielom je výnimka, tá sa smie ukázať až pri nabehnutí myšou. */
+#nbpr .dp-cell,#nbpr .pt-c{color:#2f3b5c!important;opacity:1!important}
+#nbpr .dp-cell>:not(.dp-tip),#nbpr .pt-c>:not(.dp-tip){color:inherit!important;opacity:1!important}
+/* riadok Kusy má rovnakú sýtosť ako ostatné, ale plnenie si drží
+   zelenú či červenú – inak by porovnania vyzerali ako obyčajné čierne čísla */
+#nbpr .dp-cntrow td.dp-cell,#nbpr .pt-cntrow td.pt-c{color:#2f3b5c!important}
+#nbpr .dp-cntrow td.dp-ok,#nbpr .dp-cntrow td.dp-cell.dp-ok,
+#nbpr .pt-cntrow td.pt-ok,#nbpr .pt-cntrow td.pt-c.pt-ok{color:#17a05f!important}
+#nbpr .dp-cntrow td.dp-bad,#nbpr .dp-cntrow td.dp-cell.dp-bad,
+#nbpr .pt-cntrow td.pt-bad,#nbpr .pt-cntrow td.pt-c.pt-bad{color:#d6454f!important}
+#nbpr .dp-segtbl td.dp-metric,#nbpr .dp-sum-jedna td.dp-metric,#nbpr .pt-table td.pt-met{color:#6b7280!important}
+#nbpr .dp-tot,#nbpr .pt-tot,#nbpr .dp-sum,#nbpr .pt-pl{font-weight:800}
+/* rovnaká farebnosť v tabuľke služby aj v rozpade: realita a plnenie sa
+   farbia podľa plnenia plánu, súčty sú tučné */
+#nbpr .dp-ok,#nbpr .pt-ok,#nbpr td.dp-ok,#nbpr td.pt-ok,
+#nbpr td.dp-cell.dp-ok,#nbpr td.pt-c.pt-ok{color:#17a05f!important}
+#nbpr .dp-bad,#nbpr .pt-bad,#nbpr td.dp-bad,#nbpr td.pt-bad,
+#nbpr td.dp-cell.dp-bad,#nbpr td.pt-c.pt-bad{color:#d6454f!important}
+#nbpr td.dp-sum,#nbpr td.pt-pl{font-weight:800!important}
+#nbpr td.dp-tot,#nbpr td.pt-tot{font-weight:700!important}
+#nbpr td.pt-met{font-size:10px!important;letter-spacing:.08em;text-transform:uppercase;
+  font-weight:700;color:#6b7280!important}
+#nbpr .dp-table{font-size:12px}
+
+/* názov služby je vycentrovaný v bielej bunke */
+#nbpr .dp-segtbl td.dp-name,#nbpr .dp-segtbl tr.dp-cmpfirst>td.dp-name{background-color:#fff!important;
+  text-align:center!important}
+#nbpr .dp-segtbl td.dp-name .pt-nm{justify-content:center}
 /* meno klienta sa musí zmestiť do zlúčeného úvodného stĺpca, inak by roztiahol tabuľku */
 #nbpr .pt-cltbl td.pt-n,#nbpr .pt-cltbl th.pt-n{box-sizing:border-box;
   width:calc(var(--wname,148px) + var(--wmet,58px))!important;
@@ -2818,14 +3028,15 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .pt-subtbl>tbody>tr.pt-subrow:not(.pt-subfirst)>td{background-color:#fff!important}
 #nbpr .pt-cltbl>tbody>tr.pt-clrev>td{background-color:#f1f2f5!important}
 /* zopakovaná hlavička pri každej službe – biela s modrým písmom */
-#nbpr .dp-segtbl>thead.dp-headsvc>tr>th{background:#fff!important;color:var(--primary)!important;
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th{background:#fff!important;color:var(--ink)!important;
   background-image:none!important;border-bottom:1px solid var(--line);font-size:9.5px;
   padding:5px 8px;box-shadow:none}
-#nbpr .dp-segtbl>thead.dp-headsvc>tr>th small{color:#8ea0d8!important;font-weight:500}
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th small{color:var(--muted)!important;font-weight:500}
 #nbpr .dp-segtbl>thead.dp-headsvc>tr>th.dp-rowhead{color:var(--ink)!important;font-size:11.5px;
   font-weight:800;background:#fff!important;text-transform:none;letter-spacing:0;
+  text-align:center;
   white-space:normal;line-height:1.25;overflow:visible;text-overflow:clip}
-#nbpr .dp-segtbl>thead.dp-headsvc>tr>th.dpg{color:var(--primary)!important}
+#nbpr .dp-segtbl>thead.dp-headsvc>tr>th.dpg{color:var(--ink)!important}
 /* prvý riadok bloku (Výnos) sivý, marža a kusy biele */
 #nbpr .dp-segtbl>tbody>tr.dp-cmpfirst>td{background-color:#f1f2f5!important}
 #nbpr .dp-segtbl>tbody>tr.dp-cmpfirst>td.dp-tot,
@@ -3712,7 +3923,7 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   </div>
 
   <div id="vysledky">
-  <div class="kpis" id="kpis"></div>
+  <div id="kpis-miesto"><div class="kpis" id="kpis"></div></div>
 
   <div class="graphs-bar">
     <span class="graphs-bar-label">Grafy podľa segmentu</span>
@@ -3730,7 +3941,16 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
     <div class="gbars" id="gbars"></div>
   </div>
 
-  <div class="card" style="margin-bottom:16px">
+  <div class="fokus-hd" id="fokus-hd" hidden>
+    <button class="pohlad-spat" id="fokus-spat" type="button">
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M9.5 3.5 5 8l4.5 4.5" fill="none"
+        stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Späť na všetky služby</button>
+    <div class="fokus-nazov" id="fokus-nazov"></div>
+    <div class="fokus-kom" id="fokus-kom"></div>
+  </div>
+
+  <div class="card" id="dp-card" style="margin-bottom:16px">
     <div class="dp-nadpis">
       <h2>Detailný prehľad</h2>
       <div class="chart-toggle tog-maly" id="dp-toggle" role="group" aria-label="Zobrazenie">
@@ -6754,10 +6974,10 @@ function renderKPIs(){
         '<div class="kv-rad">'+
           pol("Realita", fmtValFor(c.a,metrika), "kv-real")+
           pol("Plán", fmtValFor(c.p,metrika), "kv-plan")+
-          pol("Plnenie", fmtPct(p), tr)+
+          pol("Plnenie voči plánu", fmtPct(p), tr)+
           pol("Rozdiel", (up?"+":"−")+fmtValFor(Math.abs(d),metrika), tr)+
           pol("Realita "+PYr, maPY?fmtValFor(py.a,metrika):"—", "kv-py")+
-          pol(state.year+" vs "+PYr, (pyPct===null?"—":fmtNum(pyPct)+"\u00A0%"), maPY?trPY:"kv-py")+
+          pol("Plnenie "+state.year+" vs "+PYr, (pyPct===null?"—":fmtNum(pyPct)+"\u00A0%"), maPY?trPY:"kv-py")+
         '</div><div class="ksub">'+per+'</div>'+
         '<div class="kpi-linka"><div class="kpi-linka-f '+tr+'" style="width:'+
           Math.min(Math.max((p===null?0:p),0),150)/150*100+'%"></div>'+
@@ -7177,6 +7397,10 @@ function dpJedenMesiac(){ return dpShowMon() && dpPer().length===1; }
 /* plnenie bez plánu: ak reálne dodávame, je to plus – nie neutrálny stav */
 /* absolútny rozdiel pod percentom – čitateľné aj pri prezentovaní,
    na rozdiel od bubliny po nabehnutí myšou */
+/* Pruhy plnenia sme z tabuľky odstránili – pri dvanástich stĺpcoch bolo
+   v riadku priveľa prvkov. Informáciu nesie percento svojou farbou.
+   Funkcia zostáva prázdna, aby sa dala kedykoľvek zapnúť späť. */
+function pruhTxt(pl){ return ''; }
 function rozdielTxt(d, mk){
   if(!isFinite(d) || Math.abs(d)<0.5) return '';
   var z=(d>0?'+':'\u2212');
@@ -7209,13 +7433,21 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
   /* Hlavička je jednoriadková: každý stĺpec nesie celý názov, teda
      „Realita Aug", „Realita YTD", „Plán Aug"… Dve úrovne nad sebou sa pri
      opakovaní pri každej službe zle čítali. */
+  /* popis obdobia: „Jan. – Aug." namiesto „1–Aug"; pri jednom mesiaci
+     nepíšeme „spolu", ale rovno ten mesiac */
+  var YTDPOP=DP_MN[0]+'. – '+MNy+'.';
+  var JEDENM=jeden?DP_MN[per[0]-1]:'';
+  /* Hlavička má dve úrovne: hore skupina (Realita 2026, Plán…), pod ňou
+     konkrétne obdobie (Aug, YTD, Spolu). Jednotná veľkosť písma. */
   function monTh(co, sub, btn){
-    return '<th class="dp-bstart">'+co+' '+DP_MN[per[0]-1]+'</th>'+
-      per.slice(1).map(function(m){ return '<th>'+co+' '+DP_MN[m-1]+'</th>'; }).join('')+
-      (jeden?'':('<th class="dp-tot">'+co+' spolu<small>'+sub+'</small>'+(btn||'')+'</th>'))+
-      (ytd?('<th class="dp-tot dp-ytd">'+co+' YTD<small>1–'+MNy+'</small>'+(jeden?(btn||''):'')+'</th>'):''); }
-  function totTh(main, sub, btn){ return '<th class="dp-tot dp-bstart">'+main+'<small>'+sub+'</small>'+(btn||'')+'</th>'+
-      (ytd?('<th class="dp-tot dp-ytd">'+main+' YTD<small>1–'+MNy+'</small></th>'):''); }
+    return '<th class="dp-bstart">'+DP_MN[per[0]-1]+'</th>'+
+      per.slice(1).map(function(m){ return '<th>'+DP_MN[m-1]+'</th>'; }).join('')+
+      (jeden?'':('<th class="dp-tot">Spolu</th>'))+
+      (ytd?('<th class="dp-tot dp-ytd">YTD</th>'):''); }
+  function totTh(main, sub, btn){
+    return '<th class="dp-tot dp-bstart">'+(jeden?JEDENM:'Spolu')+'</th>'+
+      (ytd?('<th class="dp-tot dp-ytd">YTD</th>'):''); }
+  function sirka(f){ return (f? per.length:0) + (jeden&&f?0:(f?1:1)) + (ytd?1:0); }
   function colBtn(key, open, what){
     return mon ? ('<button class="dp-colbtn" type="button" data-dpcol="'+key+'" aria-label="'+
       (open?'Skryť mesiace – '+what:'Zobraziť mesiace – '+what)+'" title="'+
@@ -7231,11 +7463,11 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
             (hasPY?('<th class="dpg dp-bstart" colspan="2">Realita · '+PY+pyBtn+'</th>'+
                     '<th class="dpg dp-bstart" colspan="2">'+CY+' vs '+PY+'</th>'):'')+
             '</tr><tr>'+
-            '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD 1–'+MNy+'</th>'+
-            '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD 1–'+MNy+'</th>'+
-            '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD 1–'+MNy+'</th>'+
-            (hasPY?('<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD 1–'+MNy+'</th>'+
-                    '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD 1–'+MNy+'</th>'):''))
+            '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD</th>'+
+            '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD</th>'+
+            '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD</th>'+
+            (hasPY?('<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD</th>'+
+                    '<th class="dp-bstart">Za obdobie</th><th class="dp-ytd">YTD</th>'):''))
         : ('<th class="dp-tot dp-bstart">Realita<small>spolu '+CY+'</small></th>'+
            '<th class="dp-tot dp-bstart">Plán<small>spolu '+CY+'</small></th>'+
            '<th class="dp-sum dp-bstart">Plnenie<small>realita/plán</small></th>'+
@@ -7243,17 +7475,25 @@ function dpHeadHtml(firstTh, hasPY, CY, PY){
                    '<th class="dp-sum dp-bstart">'+CY+' vs '+PY+'<small>realita '+CY+'/'+PY+'</small></th>'):'')))+
     '</tr>';
   }
-  var plTh='<th class="dp-bstart">Plnenie<small>realita/plán</small></th>'+
-    (ytd?('<th class="dp-ytd">Plnenie YTD<small>1–'+MNy+'</small></th>'):'');
-  var rastTh='<th class="dp-bstart">'+CY+' vs '+PY+'</th>'+
-    (ytd?('<th class="dp-ytd">'+CY+' vs '+PY+' YTD</th>'):'');
-  var h2='<tr>'+firstTh(1)+
-    (fl.real?monTh('Realita','realita '+CY,realBtn):totTh('Realita','spolu '+CY,realBtn))+
-    (fl.plan?monTh('Plán','plán '+CY,planBtn):totTh('Plán','spolu '+CY,planBtn))+
-    plTh+
-    (hasPY?((fl.py?monTh('Realita '+PY,'realita '+PY,pyBtn):totTh('Realita '+PY,'spolu '+PY,pyBtn))+rastTh):'')+
+  var plTh='<th class="dp-bstart">'+(jeden?JEDENM:'Za obdobie')+'</th>'+
+    (ytd?('<th class="dp-ytd">YTD</th>'):'');
+  var rastTh='<th class="dp-bstart">'+(jeden?JEDENM:'Za obdobie')+'</th>'+
+    (ytd?('<th class="dp-ytd">YTD</th>'):'');
+  var wRr=sirka(fl.real), wPp=sirka(fl.plan), wYy=sirka(fl.py), wPll=ytd?2:1;
+  var h1='<tr>'+firstTh(2)+
+    '<th class="dpg dp-bstart" colspan="'+wRr+'">Realita · '+CY+realBtn+'</th>'+
+    '<th class="dpg dp-bstart" colspan="'+wPp+'">Plán · '+CY+planBtn+'</th>'+
+    '<th class="dpg dp-bstart" colspan="'+wPll+'">Plnenie</th>'+
+    (hasPY?('<th class="dpg dp-bstart" colspan="'+wYy+'">Realita · '+PY+pyBtn+'</th>'+
+            '<th class="dpg dp-bstart" colspan="'+wPll+'">'+CY+' vs '+PY+'</th>'):'')+
   '</tr>';
-  return h2;
+  var h2='<tr>'+
+    (fl.real?monTh():totTh())+
+    (fl.plan?monTh():totTh())+
+    plTh+
+    (hasPY?((fl.py?monTh():totTh())+rastTh):'')+
+  '</tr>';
+  return h1+h2;
 }
 function dpNcell(hasPY){ var fl=dpFlags(), e=dpHasYtd()?2:1; return dpW(fl.real)+dpW(fl.plan)+e+(hasPY?(dpW(fl.py)+e):0); }
 /* zdieľané: bunky jedného riadku (Realita | Plán | Plnenie | Realita PY | rast) */
@@ -7277,9 +7517,9 @@ function ptCells(get, hasPY, metric){
   if(!(jeden&&fl.plan)) out+='<td class="pt-c pt-bB pt-tot'+(fl.plan?'':' pt-bstart')+'">'+eur(P)+'</td>';
   if(ytd) out+='<td class="pt-c pt-bB pt-tot pt-ytd">'+eur(Py)+'</td>';
   var pl=pln(A,P);
-  out+='<td class="pt-c pt-pl pt-bstart'+plnTrieda(pl,A,'pt')+'" '+plnTitul(pl,A)+'>'+pctT(pl)+rozdielTxt(A-P,MK)+'</td>';
+  out+='<td class="pt-c pt-pl pt-bstart'+plnTrieda(pl,A,'pt')+'" '+plnTitul(pl,A)+'>'+pctT(pl)+pruhTxt(pl)+rozdielTxt(A-P,MK)+'</td>';
   if(ytd){ var ply=pln(Ay,Py);
-    out+='<td class="pt-c pt-pl pt-ytd'+(ply===null?' pt-neu':(ply>=100?' pt-ok':' pt-bad'))+'">'+pctT(ply)+rozdielTxt(Ay-Py,MK)+'</td>'; }
+    out+='<td class="pt-c pt-pl pt-ytd'+(ply===null?' pt-neu':(ply>=100?' pt-ok':' pt-bad'))+'">'+pctT(ply)+pruhTxt(ply)+rozdielTxt(Ay-Py,MK)+'</td>'; }
   if(hasPY){
     if(fl.py){ per.forEach(function(mo,i){ out+='<td class="pt-c pt-bC'+(i===0?' pt-bstart':'')+'">'+eur(get([mo],'y'))+'</td>'; }); }
     if(!(jeden&&fl.py)) out+='<td class="pt-c pt-bC pt-tot'+(fl.py?'':' pt-bstart')+'">'+eur(PYv)+'</td>';
@@ -8379,7 +8619,8 @@ function renderTable(){
   var S=dpSirky(hasPY), CW=S.sirky, TOTW=S.spolu, COLG=S.colg;
 
   var head=dpHeadHtml(function(rs){
-    return (uzke?'':('<th class="dp-rowhead" rowspan="'+rs+'">'+(isF?"Firma":"Segment")+'</th>'))+
+    /* názov je v riadku pod hlavičkou, v hlavičke ho neopakujeme */
+    return (uzke?'':('<th class="dp-rowhead" rowspan="'+rs+'"></th>'))+
            '<th class="dp-methead" rowspan="'+rs+'"></th>';
   }, hasPY, CY, PY);
 
@@ -8400,9 +8641,9 @@ function renderTable(){
     if(!(jeden&&fl.plan)) out+='<td class="dp-cell dp-bB dp-tot'+(fl.plan?'':' dp-bstart')+'">'+fV(P)+'</td>';
     if(ytd) out+='<td class="dp-cell dp-bB dp-tot dp-ytd">'+fV(Py)+'</td>';
     var pl=pln(A,P);
-    out+='<td class="dp-cell dp-sum dp-bstart'+plnTrieda(pl,A,'dp')+'" '+plnTitul(pl,A)+'>'+pctTxt(pl)+rozdielTxt(A-P,mk)+'</td>';
+    out+='<td class="dp-cell dp-sum dp-bstart'+plnTrieda(pl,A,'dp')+'" '+plnTitul(pl,A)+'>'+pctTxt(pl)+pruhTxt(pl)+rozdielTxt(A-P,mk)+'</td>';
     if(ytd){ var ply=pln(Ay,Py);
-      out+='<td class="dp-cell dp-sum dp-ytd'+(ply===null?' dp-neu':(ply>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ply)+rozdielTxt(Ay-Py,mk)+'</td>'; }
+      out+='<td class="dp-cell dp-sum dp-ytd'+(ply===null?' dp-neu':(ply>=100?' dp-ok':' dp-bad'))+'">'+pctTxt(ply)+pruhTxt(ply)+rozdielTxt(Ay-Py,mk)+'</td>'; }
     if(hasPY){
       if(fl.py) per.forEach(function(mo,i){ out+='<td class="dp-cell dp-bC'+(i===0?' dp-bstart':'')+'">'+fV(g([mo],'y'))+'</td>'; });
       if(!(jeden&&fl.py)) out+='<td class="dp-cell dp-bC dp-tot'+(fl.py?'':' dp-bstart')+'">'+fV(PYv)+'</td>';
@@ -8462,7 +8703,10 @@ function renderTable(){
   var sumName = single
       ? ((isF?(firmObj(single)&&firmObj(single).name):(segObj(single)&&segObj(single).name))||single)
       : (isF?"SPOLU firmy":"SPOLU segmenty");
-  var sumTbl='<table class="dp-table dp-cmp dp-sumtbl" style="width:'+TOTW+'px">'+COLG+
+  /* modrý gradient patrí len skutočnému súhrnu; pri jedinej službe je to
+     obyčajná biela tabuľka ako ostatné */
+  var sumTbl='<table class="dp-table dp-cmp dp-sumtbl'+(single?' dp-sum-jedna':' dp-sum-spolu')+
+    '" style="width:'+TOTW+'px">'+COLG+
     '<thead>'+head+'</thead><tbody>'+
     (single
       ? rowBlock(rowObjY(CY,isF,single), rowObjY(PY,isF,single), sumName, true, mKeysFor(single), single)
@@ -8484,9 +8728,9 @@ function renderTable(){
   var headBezTlacidiel=head.replace(/<button class="dp-colbtn"[\s\S]*?<\/button>/g,'');
   function headPreSluzbu(nm){
     if(jeSkupina) return '<thead class="dp-headmain">'+head+'</thead>';   /* plnohodnotná aj s +/− */
+    /* názov služby je v riadku pod hlavičkou, netreba ho opakovať */
     return '<thead class="dp-headrep dp-headsvc">'+
-      headBezTlacidiel.replace(/(<th class="dp-rowhead"[^>]*>)[\s\S]*?(<\/th>)/,
-        '$1'+String(nm).replace(/\$/g,'$$$$')+'$2')+'</thead>';
+      headBezTlacidiel.replace(/(<th class="dp-rowhead"[^>]*>)[\s\S]*?(<\/th>)/,'$1$2')+'</thead>';
   }
   if(!single) rows.forEach(function(id){
     var nm=isF?((firmObj(id)&&firmObj(id).name)||id):((segObj(id)&&segObj(id).name)||id);
@@ -8527,7 +8771,12 @@ function hlavGradient(){
 }
 /* súvislý gradient naprieč riadkami hlavičky – bez svetlých medzier */
 function dpPaintHead(th){
+  /* hlavička je biela – gradient sa už nekreslí (vzhľad bez farebných plôch) */
   if(!th) return;
+  [].forEach.call(th.rows, function(tr){
+    [].forEach.call(tr.cells, function(c){ c.style.removeProperty('background-image'); });
+  });
+  return;
   var tb=th.closest("table"); if(tb) tb.classList.toggle("hl-svetla", state.segment==="digital");
   var H=th.offsetHeight; if(!H) return;
   var top0=th.getBoundingClientRect().top;
@@ -8542,6 +8791,9 @@ function dpPaintHead(th){
   });
 }
 function dpPaintSumGradient(tbl){
+  if(tbl){ tbl.querySelectorAll('th,td').forEach(function(c){ c.style.removeProperty('background-image'); }); }
+  return;
+  /* pôvodné kreslenie gradientu ponechané nižšie pre prípad návratu k farebnej hlavičke */
   if(!tbl || !tbl.tHead) return;
   /* pri „Všetko" je modrá cez hlavičku aj súčtový riadok, inak len hlavička */
   var cela = (state.segment==="all");
@@ -8906,7 +9158,63 @@ if(_mg) _mg.addEventListener("click", function(e){
 var _dp=document.getElementById("dp-wrap");
 if(_dp){ _dp.addEventListener("click", function(e){ var cb=e.target.closest("[data-dpcol]"); if(cb){ dpToggleCol(cb.getAttribute("data-dpcol")); renderTable(); return; }
   if(e.target.closest("[data-subclose]")){ state.subExpanded=null; renderTable(); return; }
-  var sb=e.target.closest("[data-sub]"); if(sb){ var kk=sb.getAttribute("data-sub"); state.subExpanded=(state.subExpanded===kk?null:kk); renderTable(); return; } var qq=e.target.closest("[data-pp]"); if(qq){ ppOpen(qq.getAttribute("data-pp")); return; } var fc=e.target.closest("[data-mkey]"); if(fc){ if(!MANUAL_CANEDIT) return; var pp=(fc.getAttribute("data-mkey")||"").split("|"); if(pp.length!==4) return; var doc=MANUAL["M|"+pp[0]+"|"+pp[1]+"|"+pp[3]]||{}, curv=(pp[2]==="mar"?doc.mar:doc.rev); var val=window.prompt("Ručná hodnota (€):", (curv!=null?curv:"")); if(val!==null && window.__nbSaveManual) window.__nbSaveManual(pp[0],pp[1],parseInt(pp[3],10),pp[2],val); return; } var th=e.target.closest("[data-sort]"); if(th){ var k=th.getAttribute("data-sort"); if(state.sortCol===k){state.sortDir=state.sortDir==="asc"?"desc":"asc";}else{state.sortCol=k;state.sortDir=(k==="rev"||k==="mar"||k==="mo"||k==="mp")?"desc":"asc";} renderTable(); return; } var cl=e.target.closest("[data-close]"); if(cl){ state.tblExpanded=null; renderTable(); return; } var tr=e.target.closest("[data-trow]"); if(tr){ var row=tr.getAttribute("data-trow"); state.tblExpanded=(state.tblExpanded===row?null:row); renderTable(); return; } }); }
+  var sb=e.target.closest("[data-sub]"); if(sb){ var kk=sb.getAttribute("data-sub"); state.subExpanded=(state.subExpanded===kk?null:kk); renderTable(); return; } var qq=e.target.closest("[data-pp]"); if(qq){ ppOpen(qq.getAttribute("data-pp")); return; } var fc=e.target.closest("[data-mkey]"); if(fc){ if(!MANUAL_CANEDIT) return; var pp=(fc.getAttribute("data-mkey")||"").split("|"); if(pp.length!==4) return; var doc=MANUAL["M|"+pp[0]+"|"+pp[1]+"|"+pp[3]]||{}, curv=(pp[2]==="mar"?doc.mar:doc.rev); var val=window.prompt("Ručná hodnota (€):", (curv!=null?curv:"")); if(val!==null && window.__nbSaveManual) window.__nbSaveManual(pp[0],pp[1],parseInt(pp[3],10),pp[2],val); return; } var th=e.target.closest("[data-sort]"); if(th){ var k=th.getAttribute("data-sort"); if(state.sortCol===k){state.sortDir=state.sortDir==="asc"?"desc":"asc";}else{state.sortCol=k;state.sortDir=(k==="rev"||k==="mar"||k==="mo"||k==="mp")?"desc":"asc";} renderTable(); return; } var cl=e.target.closest("[data-close]"); if(cl){ state.tblExpanded=null; renderTable(); return; } var tr=e.target.closest("[data-trow]"); if(tr){ var row=tr.getAttribute("data-trow"); otvorSluzbu(row); return; } }); }
+/* ===================== SAMOSTATNÉ OKNO SLUŽBY =====================
+   Kliknutie na riadok služby otvorí len ju – bez grafov a ostatných služieb,
+   s komentármi hneď nad tabuľkou. Späť sa vracia tlačidlom. */
+function otvorSluzbu(id){
+  if(!id) return;
+  var n=document.getElementById("nbpr");
+  if(n.classList.contains("sluzba-fokus") && state.tblExpanded===id){ zavriSluzbu(); return; }
+  FOKUS_NAVRAT={ segment:state.segment, tblExpanded:state.tblExpanded };
+  state.segment=id;
+  state.tblExpanded=id;
+  n.classList.add("sluzba-fokus");
+  var nz=document.getElementById("fokus-nazov");
+  if(nz) nz.textContent=(segObj(id)&&segObj(id).name)||id;
+  var hd=document.getElementById("fokus-hd"); if(hd) hd.hidden=false;
+  presunKomentare(true);
+  presunDlazdice(true);
+  try{ renderFilters(); renderAll(); }catch(e){}
+  window.scrollTo(0,0);
+}
+var FOKUS_NAVRAT=null;
+function zavriSluzbu(){
+  var n=document.getElementById("nbpr");
+  n.classList.remove("sluzba-fokus");
+  var hd=document.getElementById("fokus-hd"); if(hd) hd.hidden=true;
+  presunKomentare(false);
+  presunDlazdice(false);
+  if(FOKUS_NAVRAT){ state.segment=FOKUS_NAVRAT.segment; state.tblExpanded=null; FOKUS_NAVRAT=null; }
+  else state.tblExpanded=null;
+  try{ renderFilters(); renderAll(); }catch(e){}
+  window.scrollTo(0,0);
+}
+/* dlaždice s celkovými číslami služby presunieme nad tabuľku a späť */
+function presunDlazdice(doFokusu){
+  var k=document.getElementById("kpis");
+  var karta=document.getElementById("dp-card");
+  if(!k||!karta||!karta.parentNode) return;
+  if(doFokusu){
+    if(k.nextElementSibling!==karta) karta.parentNode.insertBefore(k, karta);
+  }else{
+    var dom=document.getElementById("kpis-miesto");
+    if(dom && k.parentNode!==dom) dom.appendChild(k);
+  }
+}
+/* komentáre k službe presunieme nad tabuľku a späť – je to ten istý prvok,
+   takže si zachová obsah aj obsluhu */
+function presunKomentare(doFokusu){
+  var kom=document.getElementById("kom-group");
+  var ciel=document.getElementById("fokus-kom");
+  var lista=document.querySelector("#nbpr .filters");
+  if(!kom||!ciel||!lista) return;
+  if(doFokusu){ if(kom.parentNode!==ciel) ciel.appendChild(kom); }
+  else { if(kom.parentNode!==lista) lista.appendChild(kom); }
+}
+document.addEventListener("click", function(e){
+  if(e.target.closest("#fokus-spat")){ e.preventDefault(); zavriSluzbu(); }
+}, true);
 function toggleExpand(key){ /* v maske vypnuté */ }
 
 
