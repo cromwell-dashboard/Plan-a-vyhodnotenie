@@ -1655,13 +1655,10 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* Šesť čísel vedľa seba sa vojde len na širokú obrazovku. Užšiemu oknu
    sa najprv zmenší písmo a potom sa hodnoty preskladajú do dvoch riadkov,
    nech sa sumy neorezávajú a nelepia na seba. */
-@media (max-width:1560px){
-  #nbpr .kv-rad{gap:8px}
+/* šesť hodnôt vedľa seba len tam, kde sa popisy zmestia celé */
+@media (max-width:1620px){
+  #nbpr .kv-rad{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px 12px}
   #nbpr .kv-v{font-size:16px}
-}
-@media (max-width:1440px){
-  #nbpr .kv-rad{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px}
-  #nbpr .kv-v{font-size:17px}
 }
 @media (max-width:1180px){
   #nbpr .kv-v{font-size:15.5px}
@@ -1671,7 +1668,9 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 #nbpr .kv{min-width:0;position:relative}
 /* jemné zvislé oddelenie medzi hodnotami */
 #nbpr .kv+.kv::before{content:"";position:absolute;left:-6px;top:-1px;bottom:-1px;width:1px;background:#dde1ea}
-#nbpr .kv-l{font-size:9.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+/* popis dlaždice sa radšej zalomí, než by sa skrátil */
+#nbpr .kv-l{white-space:normal;line-height:1.2;
+  font-size:9.5px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
   color:var(--muted-2);margin-bottom:4px;white-space:nowrap}
 #nbpr .kv-v{font-size:17px;font-weight:700;letter-spacing:-.01em;white-space:nowrap;
   font-variant-numeric:tabular-nums;line-height:1.15}
@@ -2929,8 +2928,7 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* všetky popisy v hlavičke zarovnané vpravo */
 #nbpr .dp-cmp>thead>tr>th{text-align:right!important}
 #nbpr .dp-cmp>thead>tr>th.dp-rowhead,#nbpr .dp-cmp>thead>tr>th.dp-methead{text-align:right!important}
-#nbpr .dp-cmp>thead>tr>th small{text-align:right}
-/* ===================== VZHĽAD DETAILNEJ TABUĽKY =====================
+#nbpr .dp-cmp>thead>tr>th small{text-align:right}/* ===================== VZHĽAD DETAILNEJ TABUĽKY =====================
    Bez rámikov a farebných plôch – len tenké vodorovné linky. Pozornosť
    nesie realita a plnenie, plán a minulý rok sú svetlejšie. */
 #nbpr .dp-cmp,#nbpr .pt-table{border:0!important;border-collapse:collapse!important}
@@ -3826,6 +3824,21 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
   /* bloky grafov sa musia zmestiť do kontajnera */
   #nbpr .gseg,#nbpr .gseg-m,#nbpr .cl-box,#nbpr .kpi,#nbpr .card{box-sizing:border-box}
   #nbpr .gbars,#nbpr .gseg{max-width:100%;min-width:0}
+}
+
+/* Na mobile je stĺpec s ikonkami metrík prilepený vľavo. Potrebuje krycie
+   pozadie a tieň, inak sa pod neho pri posúvaní prepíšu čísla. */
+@media (max-width:680px){
+  #nbpr .dp-cmp td.dp-metric,#nbpr .dp-cmp th.dp-methead,
+  #nbpr .pt-table td.pt-met,#nbpr .pt-table th.pt-methead{
+    position:sticky!important;left:0!important;z-index:6;
+    background-color:#fff!important;box-shadow:2px 0 0 rgba(16,24,40,.06)}
+  #nbpr .dp-cmp tr.dp-cmpfirst>td.dp-metric,
+  #nbpr .pt-subtbl tr.pt-subfirst>td.pt-met{background-color:#f1f2f5!important}
+  #nbpr .dp-cmp.dp-sum-spolu>tbody>tr>td.dp-metric{background-color:#4455c4!important;
+    box-shadow:2px 0 0 rgba(255,255,255,.14)}
+  #nbpr .dp-cmp .dp-grp-lbl{z-index:7;background-color:#fff!important}
+  #nbpr .dp-cmp.dp-sum-spolu .dp-grp-lbl{background-color:#4455c4!important}
 }
 </style>
 </head>
@@ -7374,7 +7387,12 @@ function dpPer(){ var p=state.months.slice().sort(function(a,b){return a-b;}); r
    klientov ich musia zdieľať, inak sa stĺpce nezarovnajú pod seba. */
 function dpSirky(hasPY){
   var uzke=(window.innerWidth<=680), fl=dpFlags(), per=dpPer(), ytd=dpHasYtd();
-  var W_NAME=uzke?0:148, W_MET=uzke?32:58, W_MON=uzke?82:90, W_TOT=uzke?90:98, W_PCT=uzke?84:104;
+  /* na užších monitoroch stĺpce zúžime, nech sa tabuľka zmestí na obrazovku
+     a nemusí sa posúvať do boku */
+  var tesne=(!uzke && window.innerWidth<=1500);
+  var W_NAME=uzke?0:(tesne?124:148), W_MET=uzke?32:(tesne?48:58),
+      W_MON=uzke?82:(tesne?76:90),  W_TOT=uzke?90:(tesne?84:98),
+      W_PCT=uzke?84:(tesne?84:104);
   var w=uzke?[W_MET]:[W_NAME,W_MET];
   if(fl.real){ per.forEach(function(){ w.push(W_MON); }); } w.push(W_TOT); if(ytd) w.push(W_TOT);
   if(fl.plan){ per.forEach(function(){ w.push(W_MON); }); } w.push(W_TOT); if(ytd) w.push(W_TOT);
