@@ -2928,7 +2928,12 @@ td .svc-tag { white-space: normal; word-break: break-word; max-width: 130px; }
 /* všetky popisy v hlavičke zarovnané vpravo */
 #nbpr .dp-cmp>thead>tr>th{text-align:right!important}
 #nbpr .dp-cmp>thead>tr>th.dp-rowhead,#nbpr .dp-cmp>thead>tr>th.dp-methead{text-align:right!important}
-#nbpr .dp-cmp>thead>tr>th small{text-align:right}/* ===================== VZHĽAD DETAILNEJ TABUĽKY =====================
+#nbpr .dp-cmp>thead>tr>th small{text-align:right}/* prepínač v pruhu rozpadu */
+#nbpr .gexp-prep{display:inline-flex;align-items:center;gap:8px;margin-left:14px}
+#nbpr .gexp-prep .rz-tog{margin:0}
+#nbpr .gexp-prep .chart-toggle-btn{font-size:10.5px;padding:3px 10px}
+#nbpr .gexp-prep .vyr-clear{font-size:10.5px}
+/* ===================== VZHĽAD DETAILNEJ TABUĽKY =====================
    Bez rámikov a farebných plôch – len tenké vodorovné linky. Pozornosť
    nesie realita a plnenie, plán a minulý rok sú svetlejšie. */
 #nbpr .dp-cmp,#nbpr .pt-table{border:0!important;border-collapse:collapse!important}
@@ -7632,6 +7637,9 @@ function subsDetailHtml(id, isF){
   var sumRev=sumMetricY(oCY,'rev',dpPer()).a, sumMar=sumMetricY(oCY,'mar',dpPer()).a;
   return '<div class="gxbox pt-box '+gxTheme(id)+'">'+
     '<div class="gexp-head"><span class="gexp-title">Rozpad — '+nm+'</span>'+
+    /* prepínač Cromwell·Kolos / SK·CZ patril do hlavičky tabuľky, ktorú
+       už nezobrazujeme – presunuli sme ho sem, do viditeľného pruhu */
+    (maKraj ? ('<span class="gexp-prep">'+hlavPrep+'</span>') : '')+
     '<span class="gexp-sum">'+periodLabel()+' · '+order.length+(podlaKraj?' skupiny':' firmy')+' · '+fmtNum(sumRev)+' € výnos · '+fmtNum(sumMar)+' € marža</span>'+
     '<button class="gexp-close" type="button" data-close="1" title="Zavrieť" aria-label="Zavrieť">✕</button></div>'+
     '<div class="pt-scroll"><table class="pt-table pt-subtbl" style="min-width:'+SS.spolu+'px;width:100%">'+SS.colg+
