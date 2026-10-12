@@ -5335,6 +5335,38 @@ body{margin:0;background:#eef0f4;font-family:-apple-system,BlinkMacSystemFont,"S
 #nbpr .dp-wrap td .dpn-w .dpn-pct{width:44px!important}
 #nbpr .dp-wrap td .dpn-w .dpn-bar{width:48px!important}
 #nbpr .dp-wrap td .dpn-w .dpn-roz{width:88px!important}
+
+/* bočná lišta – režimy s jemným popisom pod ikonkou */
+@media (min-width:681px){
+  #nb-rail .rl-btn.rl-rez{height:auto;min-height:50px;width:52px;flex-direction:column;gap:3px;padding:6px 0 5px}
+  #nb-rail .rl-btn.rl-rez svg{width:19px;height:19px}
+  #nb-rail .rl-pop{font-size:8.5px;line-height:1.05;font-weight:600;letter-spacing:.01em;text-align:center;color:inherit;opacity:.8}
+  #nb-rail .rl-btn.rl-rez.rl-on .rl-pop{opacity:1;font-weight:700}
+}
+/* 2) malé grafy – podstĺpce v percentách šírky bunky (vždy sa zmestia, stále zarovnané pod sebou) */
+#nbpr .dp-wrap td .dpn-w,#nbpr .odch-karta td.ot-d .dpn-w{display:grid!important;grid-template-columns:30% 24% 46%;align-items:center;white-space:nowrap!important;width:100%!important;text-align:right!important}
+#nbpr .dp-wrap td .dpn-w>*,#nbpr .odch-karta td.ot-d .dpn-w>*{display:block!important;min-width:0}
+#nbpr .dp-wrap td .dpn-w .dpn-pct,#nbpr .odch-karta td.ot-d .dpn-w .dpn-pct{grid-column:1;width:auto!important;padding-right:6px;text-align:right!important;overflow:visible}
+#nbpr .dp-wrap td .dpn-w .dpn-bar,#nbpr .odch-karta td.ot-d .dpn-w .dpn-bar{grid-column:2;width:100%!important;max-width:56px;justify-self:start}
+#nbpr .dp-wrap td .dpn-w .dpn-roz,#nbpr .odch-karta td.ot-d .dpn-w .dpn-roz{grid-column:3;width:auto!important;margin-left:6px;padding-left:6px;text-align:right!important;overflow:hidden;text-overflow:ellipsis}
+#nbpr .dp-wrap td:has(>.dpn-w){padding-left:8px!important;padding-right:6px!important;overflow:hidden}
+
+/* zrušiť filtre – malá červená ikonka hneď za mesiacmi (v bočnej lište už nie je) */
+@media (min-width:681px){
+  #nb-rail .rl-btn.rl-reset{display:none!important}
+  #nbpr.lista-v2:not(.kompakt) .filters #f-reset:not([hidden]){display:inline-flex!important;align-items:center;gap:3px;height:26px!important;min-width:0;padding:0 7px!important;border-radius:8px;
+    background:#fdf0f0!important;border:1px solid #f3cfcf!important;color:#b42318!important;margin:0 2px 0 4px!important}
+  #nbpr.lista-v2:not(.kompakt) .filters #f-reset .akcia-txt,#nbpr.lista-v2:not(.kompakt) .filters #f-reset .akcia-kratky{display:none!important}
+  #nbpr.lista-v2:not(.kompakt) .filters #f-reset .akcia-iko{display:block!important;width:11px;height:11px}
+  #nbpr.lista-v2:not(.kompakt) .filters #f-reset .akcia-pocet{font-size:10px;min-width:14px;height:14px;line-height:14px;padding:0 3px;background:#b42318!important;color:#fff!important;border-radius:7px}
+  #nbpr.lista-v2:not(.kompakt) .lista-karta .lista-akcie{margin-left:0!important;flex:0 0 auto}
+  #nbpr.lista-v2:not(.kompakt) .lista-obd .obdobie{flex-wrap:nowrap!important}
+  #nbpr.lista-v2:not(.kompakt) .lista-obd .nb-poc{margin-left:auto!important;flex:0 0 auto}
+}
+@media (min-width:681px) and (max-width:1300px){
+  #nbpr.lista-v2:not(.kompakt) .lista-karta .seg button{padding:0 4px!important;font-size:11.5px!important}
+  #nbpr.lista-v2:not(.kompakt) .lista-karta .nbk-dig button{padding:0 5px!important;font-size:11px!important}
+}
 </style>
 </head>
 <body>
@@ -14255,7 +14287,10 @@ function nbListaRozloz(){
   }
   /* „počítať" (NB) patrí do lišty obdobia */
   var poc=document.getElementById("nb-poc"), ob=document.querySelector("#nbpr .lista-obd .obdobie")||document.querySelector("#nbpr .lista-obd");
-  if(poc && ob){ var ak2=ob.querySelector(":scope > .lista-akcie"); if(poc.parentNode!==ob || (ak2 && poc.nextSibling!==ak2)) ob.insertBefore(poc, ak2||null); }
+  if(poc && ob){ var ak2=ob.querySelector(":scope > .lista-akcie");
+    /* zrušiť filtre hneď za mesiacmi, prepínače až za ním */
+    if(ak2 && window.innerWidth>680){ if(ak2.nextSibling!==poc) ob.insertBefore(poc, ak2.nextSibling); }
+    else if(poc.parentNode!==ob || (ak2 && poc.nextSibling!==ak2)) ob.insertBefore(poc, ak2||null); }
 }
 /* „Zrušiť filtre" len keď je čo rušiť (s počtom); riadok komentárov len pri zvolenej službe */
 function nbListaStav(){
@@ -14961,7 +14996,8 @@ function nbRailRender(){
   var rz=document.getElementById("rl-rezim"), cs=document.getElementById("rl-casti"); if(!rz||!cs) return;
   function btn(rl, ico, tip, on, cl){ return '<button type="button" class="rl-btn'+(on?" rl-on":"")+(cl?" "+cl:"")+'" data-rl="'+rl+'" data-tip="'+tip+'" aria-label="'+tip+'"'+(on?' aria-current="page"':'')+'>'+ico+'</button>'; }
   var ccOn=(typeof CC!=="undefined" && CC.on);
-  rz.innerHTML = btn("celk", RAIL_IKO.celk, "Celkové výsledky", !NB.on && !ccOn) + btn("nb", RAIL_IKO.nb, "New business", NB.on, "rl-nb") + btn("cc", RAIL_IKO.cc, "Customer care", ccOn, "rl-cc");
+  function btnR(rl, ico, tip, on, cl, popis){ return '<button type="button" class="rl-btn rl-rez'+(on?" rl-on":"")+(cl?" "+cl:"")+'" data-rl="'+rl+'" aria-label="'+tip+'"'+(on?' aria-current="page"':'')+'>'+ico+'<span class="rl-pop">'+popis+'</span></button>'; }
+  rz.innerHTML = btnR("celk", RAIL_IKO.celk, "Celkové výsledky", !NB.on && !ccOn, "", "Celkové") + btnR("nb", RAIL_IKO.nb, "New business", NB.on, "rl-nb", "New<br>business") + btnR("cc", RAIL_IKO.cc, "Customer care", ccOn, "rl-cc", "Customer<br>care");
   var kb=document.querySelector('#nb-rail [data-rl="kom"]');
   if(kb){ var t=(state.segment!=="all" && state.segment!=="multi") ? "Pridať komentár k "+segNazov(state.segment) : "Komentáre (pre nový komentár zvoľte jednu službu)"; kb.setAttribute("data-tip", t); kb.setAttribute("aria-label", t); }
   if(ccOn){
