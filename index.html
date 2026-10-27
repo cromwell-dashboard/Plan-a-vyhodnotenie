@@ -8641,7 +8641,7 @@ function renderFilters(){
 
   var mo = _EL("f-month");
   mo.innerHTML = MONTHS.map(function(name,i){
-    return '<button data-m="'+(i+1)+'" title="'+name+' – Ctrl + klik pridá ďalší mesiac, Shift + klik vyberie rozsah">'+name+'</button>';
+    return '<button data-m="'+(i+1)+'" title="'+name+' – klik pridá alebo odoberie mesiac, Shift + klik vyberie rozsah">'+name+'</button>';
   }).join("");
 
   syncChips();
@@ -11074,12 +11074,11 @@ _EL("f-month").addEventListener("click", function(e){
   var b=e.target.closest("button"); if(!b) return;
   var m=+b.dataset.m, idx=state.months.indexOf(m);
   /* bežný klik = len tento mesiac; Ctrl/⌘ + klik pridá alebo odoberie mesiac; Shift + klik vyberie rozsah od posledného kliknutého */
-  if(e.ctrlKey || e.metaKey){
-    if(idx>=0){ if(state.months.length>1) state.months.splice(idx,1); } else { state.months.push(m); sortMonths(); }
-  } else if(e.shiftKey && MES_POSL){
+  if(e.shiftKey && MES_POSL){
     var a=Math.min(MES_POSL,m), z=Math.max(MES_POSL,m); state.months=[]; for(var i=a;i<=z;i++) state.months.push(i);
   } else {
-    state.months=[m];
+    /* klik pridá alebo odoberie mesiac – dá sa zvoliť ľubovoľný počet mesiacov (aspoň jeden ostane) */
+    if(idx>=0){ if(state.months.length>1) state.months.splice(idx,1); } else { state.months.push(m); sortMonths(); }
   }
   MES_POSL=m;
   syncChips(); renderAll();
@@ -13549,8 +13548,8 @@ renderAll();
 var NB_PLAN_ROK = "2026";
 /* Plán NB 2026 – zdroj: PLAN_New_business_VŠETKO_2026.xlsx, hárok NEW BUSINESS.
    vynos / marza v €, pocet v ks, 12 čísel = Jan…Dec.
-   vynosSMarzou = výnos, ku ktorému je naplánovaná marža (Digital TOP maržu
-   v pláne nemá, preto sa maržovosť plánu počíta len zo SME). */
+   vynosSMarzou = výnos, ku ktorému je naplánovaná marža (od verzie _1 má
+   Digital TOP maržu 30 % z tržieb, takže marža je naplánovaná k celému výnosu). */
 var NB_PLAN = [
     { seg:"zelena", firma:"zpc", nazov:"Zelená pošta",
       vynos:[10834.81,10834.81,14070.17,36432.58,46112.53,34732.58,23662.42,23662.42,36584.92,43947.34,43947.34,26895.7],
@@ -13562,9 +13561,10 @@ var NB_PLAN = [
       pocet:[300,2500,4150,9550,8870,7270,7670,9090,9640,13540,14640,13890] },
     { seg:"digital", firma:"zpc", nazov:"Digital",
       vynos:[0,5000,21400,14400,159285,198775,180200,30200,30200,66200,30200,86200],
-      marza:[0,0,350,910,1470,1470,1470,1470,1470,1470,1470,1470],
+      /* marža = SME (z plánu) + TOP klienti 30 % z tržieb (PLAN_New_business_VŠETKO_2026_1.xlsx, hárok NEW BUSINESS) */
+      marza:[0,1500,6620,4840,48625.5,60472.5,54900,9900,9900,20700,9900,26700],
       pocet:[0,0,0,0,0,0,0,0,0,0,0,0],
-      vynosSMarzou:[0,0,500,1300,2100,2100,2100,2100,2100,2100,2100,2100] },
+      vynosSMarzou:[0,5000,21400,14400,159285,198775,180200,30200,30200,66200,30200,86200] },
     { seg:"adresne", firma:"cromwell", nazov:"Adresné doručovanie – Cromwell",
       vynos:[1800,2000,2000,17711.79,17711.79,17711.79,25571.79,25571.79,26881.79,26881.79,26881.79,26881.79],
       marza:[300,500,500,2305.29,2305.29,2305.29,5305.29,5305.29,5805.29,5805.29,5805.29,5805.29],
