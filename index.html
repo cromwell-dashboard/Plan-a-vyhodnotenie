@@ -5644,6 +5644,82 @@ svg[viewBox="0 0 24 24"] rect, svg[viewBox="0 0 20 20"] rect, svg[viewBox="0 0 1
 #nbpr .r27-otab .r27-num{text-align:right;white-space:nowrap}
 #nbpr .r27-otab .tico{vertical-align:-3px}
 @media (max-width:900px){ #nbpr .r27-gg{grid-template-columns:1fr} }
+
+/* ===== Detailný prehľad – návrh B ===== */
+#dp-card, #dp-card .dp-table, #dp-card .pt-table, #dp-card .gxbox{font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif!important}
+#nbpr .dpb .dp-cmp td, #nbpr .dpb .pt-table td, #nbpr .dpb .dp-cmp td *, #nbpr .dpb .pt-table td *{font-size:13.5px!important}
+#nbpr .dpb .dp-cmp td .dpn-roz, #nbpr .dpb .pt-table td .dpn-roz{font-size:12px!important}
+#nbpr .dpb .dp-cmp thead th, #nbpr .dpb .pt-table thead th{font-size:12.5px!important}
+#nbpr .dpb .dp-cmp thead tr:first-child th.dpg, #nbpr .dpb .pt-table thead tr:first-child th.dpg{font-size:13.5px!important}
+#nbpr .dpb .dp-cmp td.dp-cell, #nbpr .dpb .pt-table td{color:#1f2a44}
+#nbpr .dpb .dp-cmp td.dp-bA.dp-ok, #nbpr .dpb .dp-cmp td.dp-bA.dp-bad, #nbpr .dpb .pt-table td.pt-bA{color:#1f2a44!important}
+#nbpr .dpb .dp-cmp tr.dp-vynosrow > td.dp-cell{font-weight:700!important}
+#nbpr .dpb .dp-cmp tr:not(.dp-vynosrow) > td.dp-cell{font-weight:400!important}
+#nbpr .dpb .dp-cmp tr.dp-vynosrow > td:not(.dpb-ind), #nbpr .dpb .pt-table tr.pt-subfirst > td:not(.dpb-ind){background:#fafbfc!important}
+#nbpr .dpb .dp-cmp tr > td.dp-sum .dpn-pct{font-weight:700!important}
+#nbpr .dpb tr.dpb-hd>td.dpb-nm{position:relative;padding:12px 10px 6px 14px!important;font-size:15px!important;font-weight:700!important;color:#1f2a44!important;
+  background:#fff!important;text-align:left!important;border-bottom:1px solid #e3e6ec!important;border-left:0!important;border-right:0!important;white-space:normal}
+#nbpr .dpb tr.dpb-hd>td.dpb-nm *{color:inherit}
+#nbpr .dpb tr.dpb-hd>td.dpb-nm .pt-nm{display:inline-flex!important;align-items:center;gap:7px;flex-direction:row!important;justify-content:flex-start!important}
+#nbpr .dpb tr.dpb-hd>td.dpb-nm .pt-iko{color:var(--dpb,#2f3fa8)!important}
+#nbpr .dpb tr.dpb-hd>td.dpb-nm .pt-txt{font-weight:700!important;font-size:15px!important;color:#1f2a44!important;text-align:left!important}
+#nbpr .dpb tr.dpb-hd>td.dpb-nm .r27-pozn{display:inline;margin-left:10px;font-weight:400;font-size:12px!important;color:#6b7385!important}
+#nbpr .dpb .dpb-bar{position:absolute;left:0;top:11px;bottom:6px;width:3px;background:var(--dpb,#8a91a3)}
+#nbpr .dpb td.dpb-ind{position:relative;padding:0!important;background:#fff!important;border:0!important}
+#nbpr .dpb td.dpb-ind .dpb-bar2{position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--dpb,#8a91a3);opacity:.25}
+#nbpr .dpb tr.dpb-l2>td.dpb-nm{font-size:13px!important;padding-left:30px!important}
+#nbpr .dpb tr.dpb-l2>td.dpb-nm .pt-txt{font-size:13px!important;font-weight:600!important;color:#4b5672!important}
+#nbpr .dpb tr.dpb-l2 .dpb-bar{left:16px}
+#nbpr .dpb tr.dp-vynosrow td:not(.dpb-ind){background:#fafbfc!important}
+#nbpr .dpb tr.dp-vynosrow td.dp-metric{font-weight:600}
+#nbpr .dpb .dpn-bar{display:none!important}
+#nbpr .dpb .dpn-roz{color:#6b7385!important;font-size:.88em;font-weight:400}
+#nbpr .dpb .dpn-pct{font-weight:700}
+#nbpr .dpb td.dp-metric{color:#6b7385}
+#nbpr .dpb tr.dp-cntrow td{color:#5b6272}
+#nbpr .dpb tr.dpb-hd.dp-clickrow{cursor:pointer}
+#nbpr .dpb tr.dpb-hd.dp-clickrow:hover>td.dpb-nm{background:#f6f7fb!important}
+#nbpr .dpb .dp-sumtbl tr.dpb-hd>td.dpb-nm{font-size:16px!important}
+
+#nbpr #dp-wrap.dpb .dp-cmp td.dp-metric, #nbpr #dp-wrap.dpb .dp-cmp td.dp-metric *, #nbpr #dp-wrap.dpb .pt-table td.pt-met, #nbpr #dp-wrap.dpb .pt-table td.pt-met *{font-size:13px!important;color:#6b7385!important;font-weight:400!important}
+#nbpr #dp-wrap.dpb .dp-cmp tr.dp-vynosrow td.dp-metric, #nbpr #dp-wrap.dpb .dp-cmp tr.dp-vynosrow td.dp-metric *{color:#1f2a44!important;font-weight:600!important}
+#nbpr #dp-wrap.dpb .dp-cmp tr.dp-vynosrow > td:not(.dpb-ind), #nbpr #dp-wrap.dpb .pt-table tr.pt-subfirst > td:not(.dpb-ind){background:#fafbfc!important;background-image:none!important}
+#nbpr #dp-wrap.dpb .dp-cmp tr:not(.dp-vynosrow):not(.dpb-hd) > td:not(.dpb-ind){background:#fff!important}
+
+@media (max-width:1500px){
+  #nbpr #dp-wrap.dpb .dp-cmp td, #nbpr #dp-wrap.dpb .dp-cmp td *, #nbpr #dp-wrap.dpb .pt-table td, #nbpr #dp-wrap.dpb .pt-table td *{font-size:12.5px!important}
+  #nbpr #dp-wrap.dpb .dp-cmp td .dpn-roz{font-size:11px!important}
+  #nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm, #nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm .pt-txt{font-size:14.5px!important}
+  #nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm .r27-pozn{font-size:11.5px!important}
+}
+#nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm, #nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm .pt-txt{font-size:15px!important}
+#nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm .r27-pozn{font-size:12px!important}
+#nbpr #dp-wrap.dpb tr.dpb-l2>td.dpb-nm, #nbpr #dp-wrap.dpb tr.dpb-l2>td.dpb-nm .pt-txt{font-size:13px!important}
+
+/* ===== zjednotené písmo a zarovnanie plnenia (percento | rozdiel) ===== */
+#nbpr #dp-wrap.dpb td, #nbpr #dp-wrap.dpb th, #nbpr #dp-wrap.dpb td *, #nbpr #dp-wrap.dpb th *, #nbpr #dp-wrap.dpb .gexp-head *{font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif!important}
+#nbpr #dp-wrap.dpb .dp-cmp td, #nbpr #dp-wrap.dpb .dp-cmp td *, #nbpr #dp-wrap.dpb .pt-table td, #nbpr #dp-wrap.dpb .pt-table td *{font-size:14px!important}
+#nbpr #dp-wrap.dpb .dp-cmp td.dp-metric, #nbpr #dp-wrap.dpb .dp-cmp td.dp-metric *, #nbpr #dp-wrap.dpb .pt-table td.pt-met, #nbpr #dp-wrap.dpb .pt-table td.pt-met *{font-size:13.5px!important}
+#nbpr #dp-wrap.dpb .pt-table td.pt-c{font-weight:400!important;color:#1f2a44}
+#nbpr #dp-wrap.dpb .pt-table tr.pt-subfirst td.pt-c{font-weight:700!important}
+#nbpr #dp-wrap.dpb .pt-table td.pt-bA.pt-ok, #nbpr #dp-wrap.dpb .pt-table td.pt-bA.pt-bad{color:#1f2a44!important}
+#nbpr #dp-wrap.dpb .pt-table tr.pt-subfirst td.pt-met, #nbpr #dp-wrap.dpb .pt-table tr.pt-subfirst td.pt-met *{color:#1f2a44!important;font-weight:600!important}
+#nbpr #dp-wrap.dpb .dpn-roz, #nbpr #dp-wrap.dpb .dpn-roz *, #nbpr #dp-wrap.dpb .r27-idx{font-size:12.5px!important;font-weight:400!important;color:#6b7385!important}
+#nbpr #dp-wrap.dpb .dpn-pct, #nbpr #dp-wrap.dpb .dpn-pct *{font-weight:700!important}
+#nbpr #dp-wrap.dpb td .dpn-w, #nbpr #dp-wrap.dpb td .r27-cmp{display:grid!important;grid-template-columns:minmax(0,.8fr) minmax(0,1.3fr)!important;column-gap:10px!important;align-items:baseline!important;width:100%!important;max-width:none!important;margin:0!important;justify-content:stretch!important}
+#nbpr #dp-wrap.dpb td .dpn-w>.dpn-pct, #nbpr #dp-wrap.dpb td .r27-cmp>.r27-idx{grid-column:1/2!important;grid-row:1!important;text-align:right!important;order:1;justify-self:end!important;position:static!important;margin:0!important;width:auto!important}
+#nbpr #dp-wrap.dpb td .dpn-w>.dpn-roz, #nbpr #dp-wrap.dpb td .dpn-w>.dp-tip, #nbpr #dp-wrap.dpb td .r27-cmp>.r27-roz{grid-column:2/3!important;grid-row:1!important;text-align:right!important;order:2;justify-self:end!important;min-width:0;position:static!important;margin:0!important;width:auto!important}
+#nbpr #dp-wrap.dpb .r27-cmp>.r27-roz{font-weight:600!important}
+#nbpr #dp-wrap.dpb .r27-cmp>.r27-idx{font-weight:700!important;font-size:14px!important}
+#nbpr #dp-wrap.dpb .r27-cmp>.r27-idx.r27-plus{color:#2e7d4f!important}
+#nbpr #dp-wrap.dpb .r27-cmp>.r27-idx.r27-minus{color:#c0392b!important}
+#nbpr #dp-wrap.dpb .r27-cmp>.r27-roz{color:#6b7385!important;font-weight:400!important}
+#nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm, #nbpr #dp-wrap.dpb tr.dpb-hd>td.dpb-nm .pt-txt{font-size:15px!important;font-weight:700!important}
+#nbpr #dp-wrap.dpb tr.dpb-l2>td.dpb-nm, #nbpr #dp-wrap.dpb tr.dpb-l2>td.dpb-nm .pt-txt{font-size:13.5px!important}
+@media (max-width:1500px){
+  #nbpr #dp-wrap.dpb .dp-cmp td, #nbpr #dp-wrap.dpb .dp-cmp td *, #nbpr #dp-wrap.dpb .pt-table td, #nbpr #dp-wrap.dpb .pt-table td *{font-size:13px!important}
+  #nbpr #dp-wrap.dpb .dpn-roz, #nbpr #dp-wrap.dpb .dpn-roz *, #nbpr #dp-wrap.dpb .r27-idx{font-size:11.5px!important}
+}
 </style>
 </head>
 <body>
@@ -5904,14 +5980,14 @@ var MASKA = {
         planPocet: [153159,223312,204933,165934,272003,164878,175389,160791,265959,422875,220712,155874],
         realVynos: [376268.18,331577.01,404836.02,317597.09,625309.19,336833.35,280928.38,0,0,0,0,0],
         realMarza: [83294.06,95347.56,104642.85,94242.38,91703.97,86774.42,76607.96,0,0,0,0,0],
-        realPocet: [176696,186086,248980,127117,270008,161063,128292,181115,0,0,0,0],
+        realPocet: [176696,186086,248980,127117,270008,161063,128292,181115,205231,0,0,0],
         planEbitda: [47385.29,72645.63,27146.57,64269.95,56310.84,42126.22,38831.71,48554.5,37595.46,120144.38,65089.18,46179.46],
         realEbitda: [53602.08,64631.49,60855.34,57502.02,58587.99,50474.72,35217.72,0,0,0,0,0]
       },
       "2025": {
         realVynos: [381394.42,295043.42,378728.41,309633.29,538462.75,239739.96,387382.21,361908.35,491555.55,491107.64,464084.81,363389.31],
         realMarza: [89388.42,64736.78,74228.77,63215.52,94432.37,51605.95,61836.58,79963.05,79120.77,104167.35,95379.02,125706.29],
-        realPocet: [296446,219500,201477,162478,249007,142960,162314,0,0,0,0,0],
+        realPocet: [296446,219500,201477,162478,249007,142960,162314,154308,252106,411495,272689,150471],
         realEbitda: [72764.38,49669.19,52046.38,44505.27,76242.49,34835.92,43134.61,64354.43,55746.99,81960.13,69047.18,98974.52]},
       /* Rozpad, ktorý sa zobrazí po kliknutí na riadok (Výnos a Marža po častiach).
          EBITDA sa nedelí – zobrazí sa len sumárne. Kusy nesledujeme. */
@@ -8661,7 +8737,7 @@ function r27RenderTable(wrap){
     if(a===null || b===null || !b) return NA();
     var d=a-b, ix=Math.round(a/b*100);
     return '<span class="r27-cmp"><span class="r27-roz '+(d>=0?'r27-plus':'r27-minus')+'">'+(d>=0?'+':'−')+fmtValFor(Math.abs(d), mk)+'</span>'+
-           '<span class="r27-idx">'+fmtNum(ix)+' %</span></span>';
+           '<span class="r27-idx '+(d>=0?'r27-plus':'r27-minus')+'">'+fmtNum(ix)+' %</span></span>';
   }
   function pln(a, p){
     if(a===null || p===null || !p) return NA();
@@ -8686,7 +8762,7 @@ function r27RenderTable(wrap){
   /* šírky */
   var karta=document.getElementById("dp-card"), av=0;
   if(karta){ var cs=getComputedStyle(karta); av=Math.floor(karta.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)); }
-  var W_NAME=uzke?0:170, W_MET=uzke?44:64, w=uzke?[W_MET]:[W_NAME,W_MET];
+  var W_NAME=uzke?0:(DP_STYL_B?22:170), W_MET=uzke?44:64, w=uzke?[W_MET]:[W_NAME,W_MET];
   SK.forEach(function(g){ obd.forEach(function(){ w.push(g.typ==="h"?104:132); }); });
   var sum=w.reduce(function(x,y){return x+y;},0);
   if(av>sum){ var dat=sum-(W_NAME+W_MET), f=(av-W_NAME-W_MET)/dat; w=w.map(function(x,i){ return i<(uzke?1:2)?x:Math.floor(x*f); }); sum=w.reduce(function(x,y){return x+y;},0); if(av>sum){ w[w.length-1]+=av-sum; sum=av; } }
@@ -8791,10 +8867,10 @@ function r27RenderTable(wrap){
     var sumTxt=obdNazov+' · '+k1.length+' '+(roz==="produkt"?(k1.length===1?'produkt':(k1.length<5?'produkty':'produktov')):(roz==="firma"?(k1.length===1?'firma':(k1.length<5?'firmy':'firiem')):(roz==="obchodnik"?(k1.length===1?'obchodník':(k1.length<5?'obchodníci':'obchodníkov')):(k1.length===1?'klient':(k1.length<5?'klienti':'klientov')))))+
       ' · plán 2027: '+(pl.ma?fmtNum(pl.s)+' € výnos':'zatiaľ nenahratý');
     /* prepínač ide do prázdneho ľavého poľa hlavičky tabuľky rozpadu */
-    var headTog = uzke ? head : head.replace('<th class="dp-rowhead" rowspan="2"></th><th class="dp-methead" rowspan="2"></th>',
+    var headTog = (uzke||DP_STYL_B) ? head : head.replace('<th class="dp-rowhead" rowspan="2"></th><th class="dp-methead" rowspan="2"></th>',
       '<th class="dp-rowhead r27-togth" colspan="2" rowspan="2">'+tog+'</th>');
     return '<div class="gxbox pt-box r27-box '+gxTheme(id)+'">'+
-      '<div class="gexp-head"><span class="gexp-title">Rozpad — '+sl.nazov+'</span>'+(uzke?tog:'')+
+      '<div class="gexp-head"><span class="gexp-title">Rozpad — '+sl.nazov+'</span>'+((uzke||DP_STYL_B)?tog:'')+
       '<span class="gexp-sum">'+sumTxt+'</span>'+
       '<button class="gexp-close" type="button" data-r27close="1" title="Zavrieť" aria-label="Zavrieť">✕</button></div>'+
       tbl('dp-segtbl r27-roztbl', '<thead class="dp-headrep dp-headsvc">'+headTog+'</thead>', body)+'</div>';
@@ -8822,6 +8898,7 @@ function r27RenderTable(wrap){
   wrap.style.setProperty('--wname', (uzke?0:w[0])+'px');
   wrap.style.setProperty('--wmet', (uzke?w[0]:w[1])+'px');
   try{ dpPaintSumGradient(wrap.querySelector('.dp-sumtbl')); }catch(e){}
+  try{ dpStylB(wrap); }catch(e){}
   wrap.querySelectorAll('.dp-headmain').forEach(function(th){ try{ dpPaintHead(th); }catch(e){} });
   var ma27=((r27Ctx()==='nb'?DATA_NB27:DATA_2027).riadky||[]).length>0;
   var ts=document.getElementById("table-sub");
@@ -9888,19 +9965,21 @@ function dpPer(){ var p=state.months.slice().sort(function(a,b){return a-b;}); r
 /* Pevné šírky stĺpcov na jednom mieste – hlavná tabuľka, rozpad aj rozpis
    klientov ich musia zdieľať, inak sa stĺpce nezarovnajú pod seba. */
 var DP_GRAFY=false, DP_GRAFY_PY=false;
+/* vzhľad Detailného prehľadu „B“: názov služby ako nadpis nad riadkami, bez malých grafov, Calibri */
+var DP_STYL_B=true;
 var DP_POSL_SIRKY=null;   /* posledné šírky stĺpcov Detailného prehľadu – rozpad ich preberá, aby stĺpce sedeli pod sebou */
 function dpSirky(hasPY){
   var uzke=(window.innerWidth<=680), fl=dpFlags(), per=dpPer(), ytd=dpHasYtd();
   /* na užších monitoroch stĺpce zúžime, nech sa tabuľka zmestí na obrazovku
      a nemusí sa posúvať do boku */
   var tesne=(!uzke && window.innerWidth<=1500);
-  var W_NAME=uzke?0:(tesne?96:108), W_MET=uzke?32:(tesne?48:56),
-      W_MON=uzke?82:(tesne?68:76),  W_TOT=uzke?90:(tesne?78:86),
+  var W_NAME=uzke?0:(DP_STYL_B?22:(tesne?96:108)), W_MET=uzke?32:(tesne?54:62),
+      W_MON=uzke?82:(tesne?(DP_STYL_B?82:68):(DP_STYL_B?86:76)),  W_TOT=uzke?90:(tesne?(DP_STYL_B?96:78):(DP_STYL_B?100:86)),
       W_PCT=uzke?84:(tesne?84:92);
   /* v režime New business má plnenie voči plánu aj malý pruh a rozdiel – potrebuje viac miesta */
   var jeNB=(typeof NB!=="undefined" && NB && NB.on);
   /* malé grafy plnenia: v NB vždy; v celkových výsledkoch len ak sa tabuľka so širšími stĺpcami plnenia zmestí */
-  var W_SIR=uzke?168:(tesne?180:196), W_PLN=W_SIR;
+  var W_SIR=uzke?168:(tesne?150:166), W_PLN=W_SIR;
   function sirkaS(wp, wpy){ if(wpy===undefined) wpy=wp;
     var s0=(uzke?W_MET:W_NAME+W_MET), jd=dpJedenMesiac();
     if(fl.real){ s0+=per.length*W_MON; } if(!(jd&&fl.real)) s0+=W_TOT; if(ytd) s0+=W_TOT;
@@ -9979,6 +10058,7 @@ function dpJedenMesiac(){ return dpShowMon() && dpPer().length===1; }
    v riadku priveľa prvkov. Informáciu nesie percento svojou farbou.
    Funkcia zostáva prázdna, aby sa dala kedykoľvek zapnúť späť. */
 function pruhTxt(pl){
+  if(DP_STYL_B) return '';
   /* malý pruh plnenia – len v režime New business (pri chýbajúcom pláne prázdne miesto, nech stĺpce sedia) */
   /* keď sa veľké grafy nezmestia, ukáže sa aspoň malinký pruh hneď za percentom */
   if(!DP_GRAFY) return pruhMini(pl);
@@ -9986,6 +10066,7 @@ function pruhTxt(pl){
   return '<span class="dpn-bar"><i class="'+(pl>=100?'dpn-ok':(pl>=90?'dpn-pozor':'dpn-zle'))+'" style="width:'+Math.max(2,Math.min(100,pl)).toFixed(1)+'%"></i></span>';
 }
 function pruhMini(pl){
+  if(DP_STYL_B) return '';
   if(pl===null || pl===undefined || !isFinite(pl)) return '<span class="dpn-bar dpn-mini dpn-prazdny"></span>';
   return '<span class="dpn-bar dpn-mini"><i class="'+(pl>=100?'dpn-ok':(pl>=90?'dpn-pozor':'dpn-zle'))+'" style="width:'+Math.max(4,Math.min(100,pl)).toFixed(1)+'%"></i></span>';
 }
@@ -11419,6 +11500,7 @@ function renderTable(){
   wrap.style.setProperty('--wname', (uzke?0:CW[0])+'px');
   wrap.style.setProperty('--wmet', (uzke?CW[0]:CW[1])+'px');
   dpPaintSumGradient(wrap.querySelector('.dp-sumtbl'));
+  try{ dpStylB(wrap); }catch(e){}
   wrap.querySelectorAll('.dp-headmain').forEach(function(th){ dpPaintHead(th); });
   document.querySelectorAll('#dp-toggle button').forEach(function(b){ b.setAttribute("aria-pressed", b.getAttribute("data-dpv")===(mon?"mesiace":"spolu")); });
   var ts=document.getElementById("table-sub");
@@ -11460,6 +11542,37 @@ function dpPaintHead(th){
       c.style.setProperty('background-size','100% '+H+'px','important');
       c.style.setProperty('background-position','0 -'+off+'px','important');
     });
+  });
+}
+/* Návrh B: názov (služby, firmy, časti) sa presunie do samostatného riadku nad jej riadky
+   Výnos / Marža / Kusy; v pôvodnom stĺpci ostane len tenká farebná čiarka. */
+var DPB_FARBY={ tlac:"#5B6FB5", adresne:"#4F8FA8", neadresne:"#7E6FAE", zelena:"#5E9A6B", baliky:"#B08A4E", digital:"#4E9C94",
+  cromwell:"#5B6FB5", kolos:"#B08A4E", zpc:"#5E9A6B", nezaradene:"#8A91A3", all:"#2F3FA8", firma:"#6B7FA8" };
+function dpbFarba(tr, td){
+  var m=(tr.className||"").match(/dp-seg-([a-z]+)/); if(m && DPB_FARBY[m[1]]) return DPB_FARBY[m[1]];
+  var a=tr.getAttribute("data-r27svc")||tr.getAttribute("data-trow"); if(a && DPB_FARBY[a]) return DPB_FARBY[a];
+  var tb=tr.closest(".gxbox"); if(tb){ var c=(tb.className||"").match(/gx-([a-z]+)/); }
+  return null;
+}
+function dpStylB(root){
+  if(!DP_STYL_B || window.innerWidth<=680 || !root) return;
+  root.classList.add("dpb");
+  root.querySelectorAll("td.dp-name, td.pt-subname").forEach(function(td){
+    if(td.classList.contains("dpb-ind")) return;
+    var tr=td.parentNode, tbl=tr.closest("table"); if(!tbl) return;
+    var ncol=0; var cg=tbl.querySelector("colgroup"); if(cg) ncol=cg.children.length; if(!ncol){ ncol=0; [].forEach.call(tr.cells,function(c){ ncol+=c.colSpan||1; }); }
+    var vnut=tr.closest(".r27-roztbl, .gxbox"); 
+    var farba=dpbFarba(tr, td) || (tr.closest("tbody") && tr.closest("table").classList.contains("dp-sumtbl") ? DPB_FARBY.all : null);
+    var hd=document.createElement("tr");
+    hd.className="dpb-hd"+(tr.classList.contains("dp-clickrow")?" dp-clickrow":"")+(tr.classList.contains("r27-l2")?" dpb-l2":"")+(tr.classList.contains("dp-total")?" dpb-tot":"")+(tr.classList.contains("r27-nez")?" r27-nez":"");
+    ["data-trow","data-r27svc","data-r27item","data-sub"].forEach(function(a){ if(tr.hasAttribute(a)) hd.setAttribute(a, tr.getAttribute(a)); });
+    var c=document.createElement("td"); c.colSpan=ncol; c.className="dpb-nm "+(td.className.replace(/\b(dp-name|pt-subname|pt-n)\b/g,"")||"");
+    c.innerHTML='<span class="dpb-bar"></span>'+td.innerHTML;
+    hd.appendChild(c);
+    if(farba){ hd.style.setProperty("--dpb", farba); }
+    tr.parentNode.insertBefore(hd, tr);
+    td.innerHTML='<span class="dpb-bar2"></span>'; td.classList.add("dpb-ind");
+    if(farba) td.style.setProperty("--dpb", farba);
   });
 }
 function dpPaintSumGradient(tbl){
@@ -11797,6 +11910,8 @@ document.addEventListener("click", function(e){
 document.addEventListener("click", function(e){
   if(NB.on || (typeof CC!=="undefined" && CC.on) || window.innerWidth<=680) return;
   var g=e.target.closest("#graphs [data-seg]"); if(!g) return;
+  /* prepínač Marža / EBITDA a ďalšie tlačidlá v grafe musia fungovať ďalej */
+  if(e.target.closest("[data-mm],[data-marsw],button,a")) return;
   /* graf v celkových výsledkoch už nie je klikateľný – odchýlky sú len v sekcii v bočnej lište */
   e.preventDefault(); e.stopPropagation();
 }, true);
