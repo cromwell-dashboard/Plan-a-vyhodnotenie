@@ -5767,6 +5767,197 @@ svg[viewBox="0 0 24 24"] rect, svg[viewBox="0 0 20 20"] rect, svg[viewBox="0 0 1
 #nbpr .kv-rad.kv-rad-5{grid-template-columns:repeat(5,minmax(0,1fr))}
 @media (max-width:1620px){ #nbpr .kv-rad.kv-rad-5{grid-template-columns:repeat(3,minmax(0,1fr))} }
 #nbpr #nb-karty .nb-r27kpi{margin-bottom:4px}
+
+/* bočná lišta: všetky tlačidlá (aj označené) rovnako veľké štvorce */
+#nb-rail .rl-btn, #nb-rail .rl-btn.rl-rez, #nb-rail .rl-btn.rl-kom{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important;
+  box-sizing:border-box!important;padding:0!important;margin-left:auto;margin-right:auto;display:flex!important;flex-direction:column;align-items:center;justify-content:center}
+
+#nbpr .r27-roz-pozn{margin:2px 0 10px;padding:8px 12px;background:#f5f6f8;border-left:3px solid #c3c8d3;border-radius:2px;font-size:12.5px;line-height:1.45;color:#4a5263}
+
+#nbpr .r27-valtog{display:inline-flex;vertical-align:middle;margin-left:12px}
+#nbpr .r27-pozn .r27-valtog{padding:2px!important;height:auto!important;background:#f3f4f7!important;border:0!important;box-shadow:none!important;border-radius:3px}
+#nbpr .r27-pozn .r27-valtog button,#nbpr .dpb tr.dpb-hd>td.dpb-nm .r27-pozn .r27-valtog button{font-size:11.5px!important;height:22px!important;line-height:22px!important;padding:0 8px!important;
+  color:#4a5263!important;background:transparent!important;font-weight:600!important;text-decoration:none!important;box-shadow:none!important}
+#nbpr .r27-pozn .r27-valtog button[aria-pressed="true"],#nbpr .dpb tr.dpb-hd>td.dpb-nm .r27-pozn .r27-valtog button[aria-pressed="true"]{background:var(--primary,#2f3fa8)!important;color:#fff!important}
+
+/* jednotný vzhľad malých prepínačov roka 2027 (Valadio, firmy v rozpade) – všade rovnaký, úzky sivý podklad */
+#nbpr .r27-valtog, #nbpr .r27-roztog, #nbpr .gexp-head .r27-valtog, #nbpr .gexp-head .r27-roztog, #nbpr .r27-pozn .r27-valtog{
+  display:inline-flex!important;align-items:center;gap:0;padding:1px!important;height:auto!important;background:#f3f4f7!important;border:0!important;box-shadow:none!important;border-radius:3px!important;vertical-align:middle}
+#nbpr .r27-valtog button, #nbpr .r27-roztog button, #nbpr .gexp-head .r27-valtog button, #nbpr .gexp-head .r27-roztog button,
+#nbpr .dpb tr.dpb-hd>td.dpb-nm .r27-pozn .r27-valtog button{
+  font-size:11.5px!important;height:22px!important;min-height:0!important;line-height:22px!important;padding:0 7px!important;border:0!important;border-radius:2px!important;
+  color:#4a5263!important;background:transparent!important;font-weight:600!important;text-decoration:none!important;box-shadow:none!important}
+#nbpr .r27-valtog button[aria-pressed="true"], #nbpr .r27-roztog button[aria-pressed="true"], #nbpr .gexp-head .r27-valtog button[aria-pressed="true"],
+#nbpr .gexp-head .r27-roztog button[aria-pressed="true"], #nbpr .dpb tr.dpb-hd>td.dpb-nm .r27-pozn .r27-valtog button[aria-pressed="true"]{background:var(--primary,#2f3fa8)!important;color:#fff!important}
+#nbpr .gexp-head .r27-valtog, #nbpr .gexp-head .r27-roztog{margin-left:12px}
+
+#nbpr #dp-wrap .r27-valtog button, #nbpr #dp-wrap .r27-roztog button, #nbpr #dp-wrap.dpb .dp-cmp td .r27-valtog button,
+#nbpr #dp-wrap.dpb .gexp-head .r27-valtog button, #nbpr #dp-wrap.dpb .gexp-head .r27-roztog button{font-size:13px!important;height:24px!important;line-height:24px!important;padding:0 9px!important}
+
+/* prepínače v roku 2027: pohľad rozpadu (Po produktoch / Po klientoch) je výrazný – modrý;
+   filtre (Valadio, firmy) sú tlmené – zvolená možnosť biela na sivom podklade */
+#nbpr #dp-wrap .r27-valtog button[aria-pressed="true"], #nbpr #dp-wrap .r27-roztog button[aria-pressed="true"],
+#nbpr #dp-wrap.dpb .dp-cmp td .r27-valtog button[aria-pressed="true"], #nbpr #dp-wrap.dpb .gexp-head .r27-valtog button[aria-pressed="true"],
+#nbpr #dp-wrap.dpb .gexp-head .r27-roztog button[aria-pressed="true"], #nbpr .dpb tr.dpb-hd>td.dpb-nm .r27-pozn .r27-valtog button[aria-pressed="true"]{
+  background:#fff!important;color:var(--primary-navy,#1f2a4a)!important;box-shadow:0 1px 2px rgba(31,42,74,.16)!important}
+#nbpr #dp-wrap .r27-valtog button[aria-pressed="false"], #nbpr #dp-wrap .r27-roztog button[aria-pressed="false"]{color:#7a8294!important}
+#nbpr #dp-wrap .r27-viewtog{display:inline-flex!important;align-items:center;padding:1px!important;background:#eef1fb!important;border:0!important;box-shadow:none!important;border-radius:3px!important;margin-left:12px;vertical-align:middle}
+#nbpr #dp-wrap .r27-viewtog button, #nbpr #dp-wrap.dpb .gexp-head .r27-viewtog button{font-size:13px!important;height:24px!important;line-height:24px!important;padding:0 10px!important;border:0!important;border-radius:2px!important;
+  font-weight:700!important;color:var(--primary,#2f3fa8)!important;background:transparent!important;box-shadow:none!important}
+#nbpr #dp-wrap .r27-viewtog button[aria-pressed="true"], #nbpr #dp-wrap.dpb .gexp-head .r27-viewtog button[aria-pressed="true"]{background:var(--primary,#2f3fa8)!important;color:#fff!important}
+
+/* fixná hlavička Detailného prehľadu – rovnaký vzhľad ako hlavička tabuľky */
+#nbpr #dp-fixhead{position:fixed;display:none;z-index:45;overflow:hidden;background:#fff;box-shadow:0 2px 4px -2px rgba(31,42,74,.18)}
+#nbpr #dp-fixhead.on{display:block}
+#nbpr #dp-fixhead table{position:relative}
+
+/* ===== jednotné písmo v celom dashboarde (rovnaké ako v tabuľkách) ===== */
+html body, body *:not(svg):not(path):not(.mono):not(code):not(pre){font-family:Calibri,Carlito,"Segoe UI",Arial,sans-serif!important}
+/* orámovanie tabuliek o pár odtieňov tmavšie */
+#nbpr table td, #nbpr table th{border-bottom-color:#e1e4eb!important;border-left-color:#c9ced8!important;border-right-color:#c9ced8!important}
+#nbpr #dp-card, #nbpr .card, #nbpr .kpi, #nbpr .gxbox{border-color:#d5d9e2!important}
+
+/* ===== Detailný prehľad bez nadpisu, popisu a prepínača Po mesiacoch / Spolu (mesiace sa rozbaľujú cez +/−) ===== */
+#nbpr #dp-card > .dp-nadpis, #nbpr #dp-card > #table-sub{display:none!important}
+#nbpr #dp-card{padding-top:14px!important}
+/* ===== horná lišta: služby na sivom pruhu, riadok s obdobím biely ===== */
+#nbpr.lista-v2:not(.kompakt) .filters{padding-top:8px!important}
+/* služby: vyššie, ďalej od seba; zvolená služba v jemnom rámiku ako tlačidlá Výsledky / Plán 2027 */
+#nbpr.lista-v2:not(.kompakt) .filters>.fgroup-seg .seg-chips{gap:6px!important}
+#nbpr.lista-v2:not(.kompakt) .filters .seg-chip{height:34px!important;padding:0 12px!important;border:1px solid transparent!important;border-radius:3px!important;background:transparent!important;box-shadow:none!important}
+#nbpr.lista-v2:not(.kompakt) .filters .seg-chip.on, #nbpr.lista-v2:not(.kompakt) .filters .seg-chip[aria-pressed="true"]{background:#fff!important;border-color:#d5d9e2!important}
+#nbpr.lista-v2:not(.kompakt) .filters .seg-chip:not(.on):hover{background:rgba(255,255,255,.6)!important}
+#nbpr.lista-v2:not(.kompakt) .lista-imp .lista-impbtn{height:34px}
+@media (max-width:1400px){ #nbpr.lista-v2:not(.kompakt) .filters .seg-chip{padding:0 9px!important} #nbpr.lista-v2:not(.kompakt) .filters>.fgroup-seg .seg-chips{gap:3px!important} }
+
+#nbpr.lista-v2:not(.kompakt) .filters>.fgroup-seg .seg-chips .seg-chip{border:1px solid transparent!important}
+#nbpr.lista-v2:not(.kompakt) .filters>.fgroup-seg .seg-chips .seg-chip.on,
+#nbpr.lista-v2:not(.kompakt) .filters>.fgroup-seg .seg-chips .seg-chip[aria-pressed="true"]{border:1px solid #d5d9e2!important;background:#fff!important;box-shadow:none!important}
+
+/* rozpad v roku 2027 bez vlastnej hlavičky – stĺpce sú rovnaké ako hore, platí jedna (prilepená) hlavička */
+#nbpr #dp-wrap .r27-roztbl > thead{display:none!important}
+
+
+/* Detailný prehľad bez karty – tabuľka leží priamo na pozadí (orámované ostávajú len karty Výnos a Marža) */
+#nbpr #dp-card{border:0!important;box-shadow:none!important;background:transparent!important;padding-left:0!important;padding-right:0!important}
+#nbpr #dp-card::before, #nbpr #dp-card::after{display:none!important}
+/* prilepená hlavička: medzera cca pol centimetra pod hornou lištou */
+#nbpr #dp-fixhead{padding-top:18px;background:#fff}
+
+#nbpr #dp-wrap .r27-p26btn{margin-left:6px;vertical-align:middle}
+#nbpr #dp-wrap .r27-p26ukaz{width:auto!important;padding:0 7px!important;font-size:11.5px!important;border-radius:3px!important;height:20px!important;line-height:18px!important}
+#nbpr #dp-wrap tr.dp-cmprow:has(+ tr) td{}
+
+/* percentá v úzkych stĺpcoch (rozdiel len v bubline) – percento cez celú šírku bunky, zarovnané vpravo, nič sa neoreže */
+#nbpr #dp-wrap.dpb td .dpn-w:has(> .dp-tip), #nbpr #dp-wrap.dpb td .dpn-w:not(:has(> .dpn-roz)){grid-template-columns:minmax(0,1fr)!important}
+#nbpr #dp-wrap.dpb td .dpn-w:has(> .dp-tip) > .dpn-pct, #nbpr #dp-wrap.dpb td .dpn-w:not(:has(> .dpn-roz)) > .dpn-pct{grid-column:1/-1!important;justify-self:end!important;white-space:nowrap}
+#nbpr #dp-wrap.dpb td .dpn-w > .dp-tip{grid-column:1/-1!important}
+#nbpr #dp-wrap.dpb td .dpn-w > .dpn-pct{white-space:nowrap!important;overflow:visible!important}
+
+#nbpr #dp-wrap tr.r27-mprow td, #nbpr #dp-wrap tr.r27-prow td{color:#4a5263}
+
+/* maržovosť pri marži a blok Ø na kus v Detailnom prehľade 2027 */
+#nbpr #dp-wrap .r27-mpct{display:block;font-size:11px!important;font-weight:400!important;color:#8a91a3!important;line-height:1.1;margin-top:1px}
+#nbpr #dp-wrap th.r27-jedg{background:#f3f4f7!important;color:#4a5263!important}
+#nbpr #dp-wrap th.r27-jed{font-size:11px!important}
+#nbpr #dp-wrap td.r27-jed{background:#fbfbfc}
+
+/* riadok Maržovosť – jemnejšie písmo, dá sa skryť (−) a zobraziť (+ pri Marži) */
+#nbpr #dp-wrap tr.r27-mprow td, #nbpr #dp-wrap tr.r27-mprow td *{font-weight:400!important;color:#8a91a3!important;font-size:12.5px!important}
+#nbpr #dp-wrap tr.r27-mprow td .r27-plus{color:#4f9a6c!important}
+#nbpr #dp-wrap tr.r27-mprow td .r27-minus{color:#c56a5f!important}
+#nbpr #dp-wrap .r27-mpbtn{float:left;width:16px;height:16px;line-height:14px;padding:0;margin:1px 4px 0 0;border:1px solid #d5d9e2;border-radius:50%;background:#fff;color:#8a91a3;font-size:12px;cursor:pointer;font-weight:400}
+#nbpr #dp-wrap .r27-mpbtn:hover{color:#1f2a44;border-color:#a8aeba}
+
+#nbpr #dp-wrap.dpb tr.r27-mprow td .r27-cmp>.r27-idx, #nbpr #dp-wrap.dpb tr.r27-mprow td .r27-cmp>.r27-idx *{font-weight:500!important;font-size:12.5px!important}
+#nbpr #dp-wrap.dpb tr.r27-mprow td .r27-cmp>.r27-idx.r27-plus{color:#4f9a6c!important}
+#nbpr #dp-wrap.dpb tr.r27-mprow td .r27-cmp>.r27-idx.r27-minus{color:#c56a5f!important}
+#nbpr #dp-wrap.dpb tr.r27-mprow td.dp-metric{white-space:nowrap}
+
+#nbpr #dp-wrap .r27-na1000{display:block;font-size:10.5px!important;font-weight:400!important;color:#8a91a3!important;line-height:1.05}
+
+#nbpr #dp-wrap tr.dpb-hd > td{position:relative}
+#nbpr #dp-wrap .r27-jedpozn{position:absolute;right:0;bottom:6px;width:var(--wjed,150px);text-align:center;font-size:11.5px!important;font-weight:400!important;color:#8a91a3!important;pointer-events:none;white-space:nowrap}
+
+/* ===== Sumár v číslach ===== */
+#celk-sumar{display:none}
+@media (min-width:681px){
+  #nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #celk-sumar{display:block}
+  #nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar .graphs-bar,#nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #graphs,
+  #nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #dp-card,#nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #odch-sekcia,
+  #nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #celk-plan{display:none!important}
+}
+#celk-sumar .sm-msg{padding:28px 4px;color:#6b7385;font-size:14px}
+#celk-sumar .sm-w{padding:6px 0 30px;color:#1f2a44;position:relative}
+#celk-sumar .sm-t1{font-size:22px;font-weight:700}
+#celk-sumar .sm-t2{font-size:13.5px;color:#6b7385;margin-top:2px}
+#celk-sumar .sm-tog{position:absolute;right:0;top:10px}
+#celk-sumar .sm-kp{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:16px 0 8px}
+#celk-sumar .sm-k{border:1px solid #d5d9e2;border-radius:3px;padding:10px 14px;background:#fff}
+#celk-sumar .sm-k span{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:#6b7385;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#celk-sumar .sm-k b{display:block;font-size:22px;margin:3px 0 1px;color:var(--primary,#3d4eb8)}
+#celk-sumar .sm-k i{font-style:normal;font-size:12.5px;color:#6b7385}
+#celk-sumar .sm-k i.p{color:#2e7d4f}#celk-sumar .sm-k i.n{color:#c0392b}
+#celk-sumar h3{font-size:15px;font-weight:700;margin:18px 0 6px;color:#1f2a44}
+#celk-sumar .sm-g2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+#celk-sumar table.sm-t{width:100%;border-collapse:collapse;font-size:13.5px;table-layout:auto}
+#celk-sumar .sm-t th{font-size:12px;font-weight:600;color:#4a5263;text-align:right;padding:6px 8px;background:#eef0f4;border-bottom:1px solid #d5d9e2;line-height:1.15}
+#celk-sumar .sm-t th span{font-weight:400;color:#8a91a3}
+#celk-sumar .sm-t th.pl{background:var(--primary,#3d4eb8);color:#fff}
+#celk-sumar .sm-t td{text-align:right;padding:5px 8px;border-bottom:1px solid #e1e4eb;white-space:nowrap}
+#celk-sumar .sm-t td.l{text-align:left;font-weight:600}
+#celk-sumar .sm-t td.pl{background:#f5f6fb}#celk-sumar .sm-t .b{font-weight:700}
+#celk-sumar .sm-t td.p{color:#2e7d4f}#celk-sumar .sm-t td.n{color:#c0392b}
+#celk-sumar .sm-t .sep{border-left:1px solid #c9ced8}
+#celk-sumar .sm-t tr.s td{color:#6b7385;font-size:12.5px}#celk-sumar .sm-t tr.s td.l{font-weight:400}
+#celk-sumar .sm-t tr.tot td{border-top:1.5px solid #9aa1ad;font-weight:700}
+#celk-sumar .sm-t tr.oth td{color:#6b7385}#celk-sumar .sm-t tr.oth td.l{font-weight:400}
+#celk-sumar .sm-tag{font-size:10.5px;font-weight:600;color:#8a5f08;background:#fdf3dc;border-radius:2px;padding:1px 5px;margin-left:6px}
+#celk-sumar .sm-t tr.klik{cursor:pointer}#celk-sumar .sm-t tr.klik:hover td{background:#f3f4f7}#celk-sumar .sm-t tr.klik:hover td.pl{background:#eceef6}
+#celk-sumar .sm-t tr.open td{background:#eef0f4}#celk-sumar .sm-t tr.open td.pl{background:#e6e9f3}
+#celk-sumar .sm-ch{display:inline-block;width:14px;color:#8a91a3;font-weight:700;transition:transform .15s}#celk-sumar .sm-ch.o{transform:rotate(90deg)}
+#celk-sumar .sm-t tr.sub td{font-size:12.5px;color:#4a5263;padding-top:3px;padding-bottom:3px;border-bottom-color:#eef0f4}
+#celk-sumar .sm-t tr.sub td.l{font-weight:400;padding-left:30px}#celk-sumar .sm-t tr.sub td.pl{background:#fafbfd}
+#celk-sumar ul{margin:4px 0 0 18px;padding:0;font-size:13.5px;line-height:1.6}
+#celk-sumar .r27-valtog button{font-size:13px!important;height:24px!important;padding:0 9px!important;border:0!important;border-radius:2px!important;background:transparent!important;color:#7a8294!important;font-weight:600!important}
+#celk-sumar .r27-valtog button[aria-pressed="true"]{background:#fff!important;color:#1f2a4a!important;box-shadow:0 1px 2px rgba(31,42,74,.16)!important}
+
+@media (min-width:681px){ #nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #kpis, #nbpr:not(.rezim-nb):not(.rezim-cc).celk-tab-sumar #kpis-miesto{display:none!important} }
+#celk-sumar .sm-t th{text-transform:none!important;letter-spacing:0!important}
+
+/* popisy pod ikonkami záložiek v bočnej lište */
+#nb-rail .rl-btn.rl-lab{gap:3px!important}
+#nb-rail .rl-btn.rl-lab svg{width:18px;height:18px}
+#nb-rail .rl-btn.rl-lab .rl-pop{display:block;font-size:8.5px;line-height:1.05;font-weight:600;text-align:center;opacity:.85}
+#nb-rail .rl-btn.rl-lab.rl-on .rl-pop{opacity:1;font-weight:700}
+
+/* bočná lišta: menšie jednotné štvorce, logo v rovnakej veľkosti a nikdy sa nestláča */
+#nb-rail .rl-btn, #nb-rail .rl-btn.rl-rez, #nb-rail .rl-btn.rl-kom{width:46px!important;height:46px!important;min-width:46px!important;min-height:46px!important;flex:none!important;gap:2px!important}
+#nb-rail .rl-btn svg, #nb-rail .rl-btn.rl-rez svg, #nb-rail .rl-btn.rl-lab svg{width:17px!important;height:17px!important;flex:none}
+#nb-rail .rl-pop, #nb-rail .rl-btn.rl-lab .rl-pop{font-size:8px!important}
+#nb-rail .rl-logo{width:46px!important;height:46px!important;min-height:46px;flex:none!important;padding:0 11px!important;gap:4px!important;margin-bottom:10px}
+#nb-rail .rl-logo i{height:3.5px!important;flex:none}
+#nb-rail .rl-sk{flex:none}
+#nbpr .kv-rad.kv-rad-3{grid-template-columns:repeat(3,minmax(0,1fr))!important;align-items:start!important}
+#celk-sumar h3 .sm-met{margin-left:12px;vertical-align:middle;padding:2px;background:#f3f4f7;border-radius:3px}
+#celk-sumar h3 .sm-met button{font-size:12px!important;height:22px!important}
+
+/* ===== hlavička Tabuľky v štýle Sumáru: jeden sivý pás, sivý doplnkový popis, modrý hlavný stĺpec ===== */
+#nbpr .dp-wrap .dp-cmp thead th.dp-rowhead,#nbpr .dp-wrap .dp-cmp thead th.dp-methead{background:#eef0f4!important;border-bottom:1px solid #d5d9e2!important}
+#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg{height:auto!important;padding:9px 8px 1px!important;font-size:12.5px!important;font-weight:600!important;color:#4a5263!important;line-height:1.2}
+#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg.hx-1{text-align:right!important}
+#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg::before{inset:0!important;background:#eef0f4!important;border-radius:0!important}
+#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg.dpg-pln,#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg.r27-jedg{color:#4a5263!important;font-weight:600!important}
+#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg.dpg-real{color:#fff!important}
+#nbpr .dp-wrap .dp-cmp thead tr:first-child th.dpg.dpg-real::before{background:var(--primary,#3d4eb8)!important}
+#nbpr .dp-wrap .dp-cmp thead tr:not(:first-child) th{background:#eef0f4!important;color:#8a91a3!important;font-size:11.5px!important;font-weight:400!important;
+  padding:1px 8px 7px!important;border-top:0!important;border-bottom:1px solid #d5d9e2!important;line-height:1.2}
+#nbpr .dp-wrap .dp-cmp thead tr:not(:first-child) th.hx-a{background:var(--primary,#3d4eb8)!important;color:rgba(255,255,255,.8)!important}
+#nbpr .dp-wrap .dp-cmp thead tr:not(:first-child) th.hx-g{box-shadow:inset 1px 0 0 #d5d9e2}
+#nbpr .dp-wrap .dp-cmp tbody tr td.dp-cell.hx-a{box-shadow:inset 0 0 0 999px rgba(61,78,184,.055)!important}
+#nbpr .dp-wrap .dp-cmp tbody td.dp-cell.hx-g{box-shadow:inset 1px 0 0 #e3e6ec}
+/* výška riadkov Tabuľky = Sumár (písmo 13,5 px, odsadenie 5 px) */
+#nbpr .dp-wrap .dp-cmp tbody tr:not(.dpb-hd) > td{padding-top:5px!important;padding-bottom:5px!important;font-size:13.5px!important;line-height:1.45!important}
 </style>
 </head>
 <body>
@@ -5949,10 +6140,6 @@ svg[viewBox="0 0 24 24"] rect, svg[viewBox="0 0 20 20"] rect, svg[viewBox="0 0 1
   <div class="card kom-card" id="kom-card"></div>
   </div><!-- /skryte-bloky -->
 
-  <div class="foot">
-    <span>Výsledky · Cromwell Group · Výnosy · Marža · EBITDA · Kusy, po segmentoch aj po firmách. Čísla dopĺňate v bloku <b>MASKA → polozky</b> na začiatku súboru.</span>
-    <span>Hodnoty sú v eurách; počty (kusy) sú voliteľné.</span>
-  </div>
 </div>
 </div>
 <script>
@@ -8646,7 +8833,7 @@ var STRUKTURA_2027 = {
     { id:"tlac",      nazov:"Tlač",                  excel:"Tlač",
       produkty:["Digitálna tlač","Kombinovaná tlač","Obálkovanie WRAP","Obálkovanie KERN","Karty, knihy, cestovné lístky a pod.","Digitalizácia (skenovanie)","Ostatné (layoutovanie, hodiny, paušály)"] },
     { id:"adresne",   nazov:"Adresné doručovanie",   excel:"Adresné doručovanie",
-      produkty:["Transakčná adresná zásielka","Transakčná adresná zásielka - refakturácia","Marketingová adresná zásielka","Potvrdená zásielka"],
+      produkty:["Transakčná adresná zásielka","Transakčná adresná zásielka - refakturácia","Marketingová adresná zásielka","Potvrdená zásielka","Zberná jazda"],
       siete:["CRW","SP"], spolocnaMarza:["Transakčná adresná zásielka","Marketingová adresná zásielka"] },
     { id:"neadresne", nazov:"Neadresné doručovanie", excel:"Neadresné doručovanie",
       produkty:["Letáky do schránok","Letáky na predajne","Tlač letákov"],
@@ -8661,6 +8848,53 @@ var STRUKTURA_2027 = {
   firmy: [ { id:"cromwell", nazov:"Cromwell" }, { id:"kolos", nazov:"Kolos" }, { id:"zpc", nazov:"ZPC Group" } ],
   siete: { CRW:"Cromwell", SP:"Slovenská pošta", Kolos:"Predajne Kolos" }
 };
+/* TOP klienti: pri týchto službách sa samostatne zobrazujú len vybraní klienti, ostatní sa zlúčia
+   do „Ostatní klienti“ (pri každom produkte zvlášť). Platí pre plán aj realitu a aj pre budúce importy –
+   nový klient sa automaticky zaradí do Ostatných. Klient sa spozná podľa časti názvu (bez diakritiky,
+   medzier a interpunkcie), takže rôzne zápisy toho istého klienta sa zlúčia.
+   prah = podiel na výnose služby, od ktorého dashboard upozorní na kandidáta na top klienta. */
+var R27_OSTATNI = "Ostatní klienti";
+var R27_TOP = {
+  baliky: { prah:0.03, klienti:[
+    { nazov:"Valadio",                       hladaj:["valadio"] },
+    { nazov:"KĽUČKA",                        hladaj:["klucka"] },
+    { nazov:"Post One Group",                hladaj:["postone"] },
+    { nazov:"JJ Automotive",                 hladaj:["jjautomotive"] },
+    { nazov:"Stocklane",                     hladaj:["stocklane"] },
+    { nazov:"G3 Worldwide Mail (COURLUX)",   hladaj:["g3worldwide","courlux"] },
+    /* Cromwell (Predajne ND) = len COOP Jednota, Dr. Max, Comfor, Gazda, Sama a KOLOS Fresh; ostatné Cromwell zápisy idú do Ostatných
+       („a+b“ = názov musí obsahovať obe časti) */
+    { nazov:"Cromwell (Predajne ND)",        hladaj:["coopjednota","cromwell+drmax","cromwell+comfor","cromwell+gazda","cromwell+sama","kolosfresh"] },
+    { nazov:"ONIO",                          hladaj:["onio"], okrem:["doprava"] },
+    { nazov:"Automobilové opravovne MV SR",  hladaj:["automobiloveopravovne"] },
+    { nazov:"ŠGúDŠ",                         hladaj:["sguds"] }
+  ] }
+};
+function r27TopKluc(x){ return r27Nrm(x).replace(/[^a-z0-9]/g,""); }
+function r27TopKlient(sluzba, meno){
+  var t=R27_TOP[sluzba]; if(!t || !meno) return meno;
+  var k=r27TopKluc(meno);
+  function obsahuje(h){ return h.split("+").every(function(x){ return k.indexOf(x)>=0; }); }
+  var hit=t.klienti.filter(function(c){ return c.hladaj.some(obsahuje) && !(c.okrem||[]).some(obsahuje); })[0];
+  return hit ? hit.nazov : R27_OSTATNI;
+}
+/* kandidáti na top klienta: klienti v Ostatných s podielom nad prahom (za celý rok, plán aj realita 2027) */
+function r27TopPozn(id){
+  var t=R27_TOP[id]; if(!t || r27Ctx()!=="celk") return '';
+  var rows=r27Riadky().filter(function(r){ return r.rok===STRUKTURA_2027.rok && r.sluzba===id && r.klient===R27_OSTATNI; });
+  if(!rows.length) return '<div class="r27-roz-pozn">Samostatne sa zobrazuje '+t.klienti.length+' top klientov, ostatní sú zlúčení v riadku „'+R27_OSTATNI+'“ pri každom produkte.</div>';
+  var out=[];
+  ["plan","realita"].forEach(function(typ){
+    var tot=0, po={}, prodTot={}, prodKl={};
+    r27Riadky().forEach(function(r){ if(r.rok===STRUKTURA_2027.rok && r.typ===typ && r.sluzba===id){ tot+=r.v; prodTot[r.produkt]=(prodTot[r.produkt]||0)+r.v;
+      if(r.klient===R27_OSTATNI){ var n=r.klientOrig||"?"; po[n]=(po[n]||0)+r.v; (prodKl[n]=prodKl[n]||{})[r.produkt]=1; } } });
+    /* „klient“, ktorý je celým produktom (napr. C2C porovnávač), nie je kandidát */
+    function celyProdukt(n){ var pr=Object.keys(prodKl[n]||{}); return pr.length===1 && Math.abs((prodTot[pr[0]]||0)-po[n])<1; }
+    if(tot>0) Object.keys(po).forEach(function(n){ var p=po[n]/tot; if(p>=t.prah && !celyProdukt(n)) out.push(n+' ('+(typ==="plan"?"plán":"realita")+' '+fmtNum(Math.round(p*1000)/10).replace(/,0$/,"")+' %)'); });
+  });
+  return '<div class="r27-roz-pozn">Samostatne sa zobrazuje '+t.klienti.length+' top klientov, ostatní (aj noví z ďalších importov) sú zlúčení v riadku „'+R27_OSTATNI+'“ pri každom produkte.'+
+    (out.length?' <b>Kandidáti na top klienta</b> (nad '+Math.round(t.prah*100)+' % výnosu služby): '+r27Esc(out.join(', '))+'.':'')+'</div>';
+}
 /* Plán a realita 2027 z excelov oddelení (vzor Vzor_plan_realita_2027.xlsx).
    Sem sa vkladajú riadky – zatiaľ prázdne. */
 var DATA_2027 = { riadky: [] };
@@ -8700,6 +8934,17 @@ function r27HistoriaNB(){
   R27_CACHE_NB={ maska:M, riadky:out };
   return out;
 }
+/* Rok 2026 po produktoch – zatiaľ len Balíky (natvrdo, podklad KOLOS_BALIKY_2026_realita_po_produktoch_odhad.xlsx, 30. 10. 2026).
+   real = skutočnosť jan – sep 2026 po produktoch (rozpis kolegu z KOLOS reportingu),
+   plan = plán 2026 rozpočítaný na produkty: jan – sep podľa skutočného mixu produktov v danom mesiaci,
+          okt – dec podľa mixu jul – sep 2026. Súčty sa rovnajú doterajšiemu plánu Balíkov.
+   Realita + odhad 2026 = jan – sep skutočnosť, okt – dec rozpočítaný plán (rovnaké čísla ako v pláne). */
+var R27_HIST_PROD = { baliky: { firma:"kolos", mesReal:9, data:{"real":{"Balík Slovensko":{"v":[8346.2,10301.26,15085.33,18812.81,19705.84,20000.66,19625.45,18206.14,20727.53,0,0,0],"m":[3221.73,2971.43,5742.61,6158.01,6544.22,7828.31,4421.54,5314.41,7034.17,0,0,0],"k":[2201.0,3667.0,4308.0,4779.0,5566.0,5697.0,6382.0,5623.0,6067.0,0,0,0]},"Balík Zahraničie":{"v":[7331.42,5779.33,8224.92,13868.36,10262.85,15308.72,25098.06,25638.2,34364.05,0,0,0],"m":[1303.81,730.54,1357.33,2134.33,1384.39,2093.33,472.69,3331.09,6617.59,0,0,0],"k":[1940.0,1525.0,1869.0,2426.0,2327.0,3331.0,5298.0,5955.0,7609.0,0,0,0]},"Balík do schránky":{"v":[2585.6,3077.11,6730.67,4210.9,2613.75,4343.3,8930.14,615.07,7305.66,0,0,0],"m":[299.96,358.57,865.38,598.33,301.04,871.02,1750.99,135.54,1768.46,0,0,0],"k":[3280.0,3635.0,7836.0,4876.0,3092.0,4323.0,9155.0,646.0,7122.0,0,0,0]},"Balík C2C":{"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0,0],"m":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0,0],"k":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0,0,0]},"Zvozy":{"v":[950.0,0.0,770.0,2420.0,3390.0,3675.0,2976.04,4570.0,5500.0,0,0,0],"m":[128.18,0.0,-1610.0,-5060.0,-2010.0,-135.0,-120.01,680.0,1080.0,0,0,0],"k":[1.0,0.0,7.0,1.0,1.0,1.0,249.0,1.0,1.0,0,0,0]}},"plan":{"Balík Slovensko":{"v":[8777.09,12833.21,17869.29,20882.69,21010.41,23773.75,22438.15,34062.75,33073.45,44163.24,41758.22,43860.95],"m":[3099.13,3649.06,6148.23,7231.53,7094.96,8295.29,5727.79,9936.81,8487.99,12609.31,11993.96,13173.61],"k":[2380,5673,6776,10358,13366,8810,9111,9129,8187,10846,9898,12058]},"Balík Zahraničie":{"v":[7709.92,7199.84,9742.8,15394.23,10942.27,18196.68,28695.08,47967.76,54832.27,64179.68,60684.61,63740.39],"m":[1254.19,897.14,1453.21,2506.41,1500.89,2218.21,612.34,6228.43,7985.32,7835.74,7453.34,8186.41],"k":[2097,2359,2940,5258,5587,5151,7564,9667,10269,11319,10332,12585]},"Balík do schránky":{"v":[2719.09,3833.44,7972.79,4674.21,2786.79,5162.66,10210.0,1150.76,11657.12,12708.34,12016.27,12621.35],"m":[288.54,440.34,926.51,702.64,326.37,922.98,2268.29,253.43,2133.97,2748.16,2614.04,2871.14],"k":[3546,5623,12325,10569,7424,6685,13071,1049,9611,10156,9269,11291]},"Balík C2C":{"v":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"m":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"k":[0,0,0,0,0,0,0,0,0,0,0,0]},"Zvozy":{"v":[999.05,0.0,912.1,2686.26,3614.43,4368.28,3402.56,8550.24,8775.96,9838.87,9303.07,9771.52],"m":[123.3,0.0,-1723.72,-5942.11,-2179.15,-143.05,-155.46,1271.46,1303.22,1233.09,1172.92,1288.28],"k":[1,0,11,2,2,2,355,2,1,151,137,167]}}},
+  /* klienti: realita jan – sep (rv/rm/rk) a plán 2026 rozpočítaný na klientov (pv/pm/pk) – podiel klienta
+     v rámci produktu v danom mesiaci (jan – sep), okt – dec podľa podielu jul – sep */
+  klienti:{"Balík Slovensko":{"Cromwell a.s. (COOP Jednota)":{"rv":[0.0,3256.36,3354.2,4089.85,3292.29,3286.94,4887.45,3309.13,3310.83],"rm":[0.0,297.96,307.5,375.95,302.25,301.49,447.55,303.28,303.58],"rk":[0,1530,1562,1911,1538,1534,2290,1535,1546],"pv":[0.0,4056.75,3973.21,4539.83,3510.25,3907.02,5587.92,6191.21,5282.86,8678.49,8205.88,8619.08],"pm":[0.0,365.91,329.22,441.49,327.69,319.47,579.77,567.07,366.32,792.8,754.11,828.28],"pk":[0,2366,2456,4143,3693,2370,3270,2492,2085,3228,2943,3586]},"Automobilové opravovne Ministerstva vnútra Slovenskej republiky a.s.":{"rv":[2313.21,1930.29,2191.02,2465.77,3857.77,2057.94,2397.6,1657.52,2909.26],"rm":[1145.86,965.29,1059.37,715.99,1175.38,536.29,773.11,518.5,954.92],"rk":[467,376,445,605,864,549,580,442,700],"pv":[2432.64,2404.74,2595.37,2737.07,4113.19,2446.17,2741.22,3101.13,4642.1,5252.29,4966.27,5216.34],"pm":[1102.25,1185.42,1134.2,840.81,1274.3,568.28,1001.51,969.48,1152.28,1689.15,1606.71,1764.74],"pk":[505,582,700,1311,2075,849,828,718,945,1033,943,1149]},"KOLOS  Fresh":{"rv":[1917.06,1281.9,2290.8,2274.4,1545.73,3322.4,2184.45,2189.9,2201.9],"rm":[795.28,703.31,1159.28,1135.14,120.73,1649.28,1085.32,1088.56,1097.2],"rk":[527,533,524,540,532,790,782,522,523],"pv":[2016.03,1596.98,2713.56,2524.64,1648.06,3949.16,2497.52,4097.19,3513.42,4959.58,4689.49,4925.63],"pm":[765.02,863.7,1241.14,1333.03,130.89,1747.66,1405.95,2035.4,1323.97,2459.5,2339.47,2569.57],"pk":[569,825,824,1170,1278,1222,1116,847,706,1096,1001,1219]},"ŠGúDŠ":{"rv":[165.96,288.68,1670.19,2405.74,3519.33,2464.17,1998.83,1297.91,3143.63],"rm":[125.06,208.54,1126.04,1791.51,2309.39,1927.53,1468.46,982.23,2198.3],"rk":[12,20,162,198,273,177,165,95,281],"pv":[174.53,359.63,1978.42,2670.43,3752.32,2929.03,2285.3,2428.32,5016.07,4857.1,4592.6,4823.86],"pm":[120.3,256.1,1205.58,2103.81,2503.73,2042.52,1902.3,1836.56,2652.65,3495.54,3324.94,3651.94],"pk":[13,31,255,429,656,274,236,154,379,325,296,361]},"Dropick":{"rv":[1345.13,1462.47,1597.83,1470.93,1218.66,1417.72,1503.15,1364.36,1348.01],"rm":[312.26,338.97,351.67,307.62,234.86,279.84,300.17,272.4,261.21],"rk":[377,410,443,439,432,583,634,578,561],"pv":[1414.58,1821.93,1892.71,1632.77,1299.34,1685.17,1718.58,2552.65,2150.92,3179.2,3006.07,3157.44],"pm":[300.38,416.27,376.51,361.25,254.63,296.53,388.85,509.33,315.2,626.91,596.32,654.97],"pk":[408,634,697,951,1037,902,905,938,757,1064,971,1183]},"KĽUČKA – vnútroštátne (30 %)":{"rv":[0.0,0.0,0.0,0.0,0.0,331.59,2792.56,4135.79,5304.33],"rm":[0.0,0.0,0.0,0.0,0.0,50.62,-828.5,584.08,1727.97],"rk":[0,0,0,0,0,109,638,1104,1416],"pv":[0.0,0.0,0.0,0.0,0.0,394.14,3192.79,7737.87,8463.71,9225.48,8723.06,9162.32],"pm":[0.0,0.0,0.0,0.0,0.0,53.64,-1073.26,1092.1,2085.11,1115.47,1061.03,1165.39],"pk":[0,0,0,0,0,169,911,1792,1911,1895,1730,2107]},"dm drogerie markt, s.r.o.":{"rv":[1206.6,54.6,109.2,46.2,3133.8,2879.96,1266.96,12.6,8.0],"rm":[571.24,24.6,59.8,25.17,1640.1,1506.26,662.71,6.9,2.3],"rk":[303,13,26,11,787,723,318,3,3],"pv":[1268.89,68.02,129.35,51.28,3341.26,3423.26,1448.54,23.57,12.77,971.03,918.15,964.39],"pm":[549.5,30.21,64.02,29.56,1778.13,1596.11,858.49,12.9,2.78,505.2,480.55,527.81],"pk":[328,20,41,24,1890,1118,454,5,4,194,177,216]},"ZPC Group, s.r.o.(Zľavomat)":{"rv":[590.06,787.38,930.87,729.97,789.15,992.55,926.29,863.51,766.51],"rm":[151.1,200.53,233.28,200.18,208.55,248.72,200.11,214.08,172.42],"rk":[199,391,459,346,372,474,449,404,353],"pv":[620.52,980.91,1102.66,810.28,841.39,1179.79,1059.04,1615.58,1223.07,1927.88,1822.89,1914.68],"pm":[145.35,246.26,249.76,235.08,226.1,263.56,259.23,400.28,208.06,441.07,419.54,460.81],"pk":[215,605,722,750,893,733,641,656,476,724,661,805]},"Trenčín región":{"rv":[0.0,0.0,1129.18,1129.18,0.0,1129.18,0.0,1129.18,0.0],"rm":[0.0,0.0,851.18,851.18,0.0,851.18,0.0,850.18,0.0],"rk":[0,0,119,119,0,119,0,119,0],"pv":[0.0,0.0,1337.57,1253.42,0.0,1342.2,0.0,2112.64,0.0,851.59,805.21,845.76],"pm":[0.0,0.0,911.3,999.57,0.0,901.96,0.0,1589.65,0.0,639.24,608.05,667.85],"pk":[0,0,187,258,0,184,0,193,0,71,65,79]},"Crossline Media s.r.o.":{"rv":[0.0,0.0,0.0,3076.89,0.0,0.0,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,505.48,0.0,0.0,0.0,0.0,0.0],"rk":[0,0,0,184,0,0,0,0,0],"pv":[0.0,0.0,0.0,3415.42,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,593.6,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,399,0,0,0,0,0,0,0,0]},"Natures SK":{"rv":[511.73,293.15,298.8,207.09,343.98,276.39,136.91,323.05,424.12],"rm":[48.37,36.71,32.78,56.07,13.97,35.91,13.95,32.63,49.21],"rk":[219,125,136,99,149,106,61,136,194],"pv":[538.15,365.2,353.94,229.88,366.75,328.53,156.53,604.41,676.74,666.74,630.43,662.18],"pm":[46.53,45.08,35.1,65.84,15.15,38.05,18.07,61.01,59.38,72.02,68.51,75.25],"pk":[237,193,214,215,358,164,87,221,262,235,214,261]},"Flowers Drive s.r.o.":{"rv":[0.0,0.0,121.23,385.35,733.84,382.85,405.08,434.94,346.5],"rm":[0.0,0.0,27.98,84.6,167.79,83.15,88.43,91.1,44.35],"rk":[0,0,49,145,291,155,164,160,160],"pv":[0.0,0.0,143.6,427.75,782.42,455.07,463.14,813.75,552.89,894.83,846.1,888.71],"pm":[0.0,0.0,29.96,99.35,181.91,88.11,114.55,170.34,53.52,168.33,160.12,175.87],"pk":[0,0,77,314,699,240,234,260,216,290,265,323]},"Erbia":{"rv":[0.0,216.5,608.38,108.86,323.15,301.74,214.1,91.04,129.34],"rm":[0.0,47.05,283.32,24.46,177.8,129.46,63.94,26.86,29.89],"rk":[0,64,69,30,22,32,26,15,37],"pv":[0.0,269.71,720.66,120.84,344.54,358.66,244.78,170.33,206.38,327.67,309.83,325.43],"pm":[0.0,57.78,303.33,28.72,192.76,137.18,82.83,50.22,36.07,90.75,86.32,94.81],"pk":[0,99,109,65,53,49,37,24,50,47,43,52]},"RiverBaits s.r.o.":{"rv":[0.0,0.0,0.0,0.0,391.54,395.02,159.31,213.23,103.07],"rm":[0.0,0.0,0.0,0.0,128.92,117.18,54.41,54.17,30.41],"rk":[0,0,0,0,95,88,38,44,20],"pv":[0.0,0.0,0.0,0.0,417.46,469.54,182.14,398.94,164.46,358.69,339.16,356.23],"pm":[0.0,0.0,0.0,0.0,139.77,124.17,70.48,101.29,36.7,104.51,99.41,109.18],"pk":[0,0,0,0,228,136,54,71,27,61,56,68]},"Poradca Podnikateľa":{"rv":[14.19,136.35,91.81,214.57,56.54,132.04,51.97,259.58,207.76],"rm":[4.52,42.23,19.65,43.11,-10.53,1.4,8.19,43.72,43.87],"rk":[4,42,38,88,21,63,24,119,96],"pv":[14.92,169.86,108.75,238.18,60.28,156.95,59.42,485.66,331.51,391.65,370.32,388.96],"pm":[4.35,51.86,21.04,50.63,-11.42,1.48,10.61,81.75,52.94,72.02,68.5,75.24],"pk":[4,65,60,191,50,97,34,193,130,143,131,159]},"Fibra print s.r.o. (3Vek)":{"rv":[0.0,0.0,422.44,0.0,0.0,0.0,379.56,238.56,0.0],"rm":[0.0,0.0,179.94,0.0,0.0,0.0,39.75,39.76,0.0],"rk":[0,0,212,0,0,0,100,99,0],"pv":[0.0,0.0,500.4,0.0,0.0,0.0,433.96,446.33,0.0,466.16,440.78,462.97],"pm":[0.0,0.0,192.65,0.0,0.0,0.0,51.49,74.34,0.0,59.78,56.87,62.46],"pk":[0,0,333,0,0,0,143,161,0,119,109,133]},"MINIFUTKY s.r.o.":{"rv":[0.0,0.0,0.0,0.0,251.12,210.4,128.32,314.6,133.68],"rm":[0.0,0.0,0.0,0.0,39.42,29.86,20.52,45.9,23.49],"rk":[0,0,0,0,136,110,72,170,72],"pv":[0.0,0.0,0.0,0.0,267.74,250.09,146.71,588.6,213.3,434.85,411.17,431.88],"pm":[0.0,0.0,0.0,0.0,42.74,31.64,26.58,85.82,28.34,67.6,64.3,70.63],"pk":[0,0,0,0,327,170,103,276,97,188,172,210]},"Tatra Billing, a. s. (Metlife)":{"rv":[30.49,73.0,75.97,39.68,106.19,37.57,15.19,144.37,37.32],"rm":[6.53,8.55,12.69,10.83,13.43,20.07,4.39,123.37,16.32],"rk":[9,7,2,14,4,6,3,2,3],"pv":[32.06,90.94,89.99,44.05,113.22,44.66,17.37,270.11,59.55,148.48,140.39,147.46],"pm":[6.28,10.5,13.59,12.72,14.56,21.27,5.69,230.68,19.69,108.33,103.05,113.18],"pk":[10,11,3,30,10,9,4,3,4,5,4,5]},"Cromwell a.s. (Dr. Max)":{"rv":[0.0,82.27,49.06,51.29,51.54,27.17,0.0,60.2,55.45],"rm":[0.0,7.57,4.51,4.69,4.74,2.47,0.0,5.5,5.1],"rk":[0,38,23,18,24,13,0,26,26],"pv":[0.0,102.49,58.11,56.93,54.95,32.3,0.0,112.63,88.48,87.22,82.47,86.62],"pm":[0.0,9.3,4.83,5.51,5.14,2.62,0.0,10.28,6.15,7.97,7.58,8.33],"pk":[0,59,36,39,58,20,0,42,35,31,28,35]},"NAJAN":{"rv":[0.0,0.0,0.0,0.0,0.0,107.19,69.51,62.32,66.6],"rm":[0.0,0.0,0.0,0.0,0.0,16.38,12.16,15.32,13.46],"rk":[0,0,0,0,0,17,11,14,13],"pv":[0.0,0.0,0.0,0.0,0.0,127.41,79.47,116.6,106.27,149.65,141.5,148.62],"pm":[0.0,0.0,0.0,0.0,0.0,17.36,15.75,28.65,16.24,30.78,29.28,32.16],"pk":[0,0,0,0,0,26,16,23,18,23,21,25]},"Cromwell a. s.(CZ)":{"rv":[56.83,57.29,47.18,41.47,41.47,0.0,0.0,0.0,0.0],"rm":[7.17,13.17,6.46,7.47,8.04,0.0,0.0,0.0,0.0],"rk":[17,17,14,11,11,0,0,0,0],"pv":[59.76,71.37,55.89,46.03,44.22,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[6.9,16.17,6.92,8.77,8.72,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[18,26,22,24,26,0,0,0,0,0,0,0]},"Hunting Trade":{"rv":[111.14,85.68,25.01,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[33.96,33.53,8.25,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[46,32,9,0,0,0,0,0,0],"pv":[116.88,106.74,29.63,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[32.67,41.18,8.83,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[50,50,14,0,0,0,0,0,0,0,0,0]},"Glasbau (Sklobeton)":{"rv":[0.0,42.3,40.38,34.5,16.28,8.94,42.79,20.39,14.92],"rm":[0.0,12.18,11.45,9.35,3.16,1.85,-6.25,5.65,3.88],"rk":[0,6,8,8,5,3,8,3,3],"pv":[0.0,52.7,47.83,38.3,17.36,10.63,48.92,38.15,23.81,58.9,55.69,58.5],"pm":[0.0,14.96,12.26,10.98,3.43,1.96,-8.1,10.56,4.68,2.47,2.35,2.58],"pk":[0,9,13,17,12,5,11,5,4,8,8,9]},"Včelári":{"rv":[0.0,0.0,0.0,0.0,0.0,108.2,12.9,6.2,83.0],"rm":[0.0,0.0,0.0,0.0,0.0,42.3,5.05,2.4,33.6],"rk":[0,0,0,0,0,33,4,2,17],"pv":[0.0,0.0,0.0,0.0,0.0,128.61,14.75,11.6,132.44,77.0,72.81,76.47],"pm":[0.0,0.0,0.0,0.0,0.0,44.82,6.54,4.49,40.54,30.87,29.36,32.25],"pk":[0,0,0,0,0,51,6,3,23,14,13,15]},"Cromwell a.s. (PSS)":{"rv":[0.0,142.3,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[0.0,12.95,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[0,41,0,0,0,0,0,0,0],"pv":[0.0,177.28,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,15.9,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,63,0,0,0,0,0,0,0,0,0,0]},"SOS electronic s.r.o. s.r.o":{"rv":[0.0,89.6,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[0.0,9.6,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[0,16,0,0,0,0,0,0,0],"pv":[0.0,111.62,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,11.79,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,25,0,0,0,0,0,0,0,0,0,0]},"Lezolep s.r.o.":{"rv":[0.0,0.0,10.1,7.8,13.81,11.7,0.0,0.0,36.2],"rm":[0.0,0.0,3.43,2.65,3.61,5.47,0.0,0.0,7.61],"rk":[0,0,2,2,3,3,0,0,9],"pv":[0.0,0.0,11.96,8.66,14.72,13.91,0.0,0.0,57.76,27.3,25.81,27.11],"pm":[0.0,0.0,3.67,3.11,3.91,5.8,0.0,0.0,9.18,5.72,5.44,5.98],"pk":[0,0,3,4,7,5,0,0,12,5,5,6]},"Slovenský zväz protifašistických bojovníkov":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,62.25],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,10.95],"rk":[0,0,0,0,0,0,0,0,26],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,99.33,46.95,44.39,46.63],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,13.21,8.23,7.83,8.6],"pk":[0,0,0,0,0,0,0,0,35,16,14,17]},"Oris Cosmetics":{"rv":[0.0,0.0,0.0,0.0,0.0,54.0,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,-31.87,0.0,0.0,0.0],"rk":[0,0,0,0,0,1,0,0,0],"pv":[0.0,0.0,0.0,0.0,0.0,64.19,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,0.0,0.0,-33.77,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,0,0,2,0,0,0,0,0,0]},"Cromwell (Dopravoprojekt SK)":{"rv":[7.93,3.94,8.01,3.32,4.84,15.59,7.51,0.0,0.0],"rm":[3.33,1.24,2.36,1.27,0.84,15.59,2.76,0.0,0.0],"rk":[2,1,2,1,1,3,2,0,0],"pv":[8.34,4.91,9.49,3.69,5.16,18.53,8.59,0.0,0.0,5.66,5.36,5.63],"pm":[3.2,1.52,2.53,1.49,0.91,16.52,3.58,0.0,0.0,2.08,1.97,2.17],"pk":[2,2,3,2,2,5,3,0,0,1,1,1]},"CleanSol s.r.o.":{"rv":[0.0,0.0,6.9,0.0,0.0,7.5,18.3,5.8,9.0],"rm":[0.0,0.0,0.7,0.0,0.0,0.8,2.65,0.5,1.6],"rk":[0,0,1,0,0,1,3,1,2],"pv":[0.0,0.0,8.17,0.0,0.0,8.91,20.92,10.85,14.36,24.96,23.6,24.79],"pm":[0.0,0.0,0.75,0.0,0.0,0.85,3.43,0.93,1.93,3.57,3.4,3.73],"pk":[0,0,2,0,0,2,4,2,3,4,3,4]},"PEDD":{"rv":[21.75,0.0,0.0,0.0,0.0,7.86,2.3,0.0,14.12],"rm":[5.58,0.0,0.0,0.0,0.0,0.53,0.4,0.0,1.28],"rk":[1,0,0,0,0,2,1,0,1],"pv":[22.87,0.0,0.0,0.0,0.0,9.34,2.63,0.0,22.53,12.38,11.71,12.3],"pm":[5.37,0.0,0.0,0.0,0.0,0.56,0.52,0.0,1.54,1.26,1.2,1.32],"pk":[1,0,0,0,0,3,1,0,1,1,1,1]},"Cromwell a.s. (Greenway )":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,40.74,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.45,0.0],"rk":[0,0,0,0,0,0,0,17,0],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,76.22,0.0,30.72,29.05,30.51],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,8.32,0.0,3.35,3.18,3.5],"pk":[0,0,0,0,0,0,0,28,0,10,9,11]},"ZPC Group s.r.o. ( Engerio)":{"rv":[21.5,12.9,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[3.95,7.05,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[9,3,0,0,0,0,0,0,0],"pv":[22.61,16.07,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[3.8,8.66,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[10,5,0,0,0,0,0,0,0,0,0,0]},"Cromwell a.s. ( Satur)":{"rv":[30.36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[7.31,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[8,0,0,0,0,0,0,0,0],"pv":[31.93,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[7.03,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[9,0,0,0,0,0,0,0,0,0,0,0]},"Cromwell a.s. (Comfor)":{"rv":[0.0,4.3,4.3,4.3,4.3,0.0,4.3,4.3,0.0],"rm":[0.0,0.4,0.4,0.4,0.4,0.0,0.4,0.4,0.0],"rk":[0,2,2,2,2,0,2,2,0],"pv":[0.0,5.36,5.09,4.77,4.58,0.0,4.92,8.05,0.0,6.49,6.13,6.44],"pm":[0.0,0.49,0.43,0.47,0.43,0.0,0.52,0.75,0.0,0.6,0.57,0.63],"pk":[0,3,3,4,5,0,3,3,0,2,2,3]},"Armatúry SK":{"rv":[0.0,0.0,0.0,0.0,0.0,25.16,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,5.03,0.0,0.0,0.0],"rk":[0,0,0,0,0,1,0,0,0],"pv":[0.0,0.0,0.0,0.0,0.0,29.91,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,0.0,0.0,5.33,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,0,0,2,0,0,0,0,0,0]},"KOLOS (Miko-Mat s.r.o.)":{"rv":[0.0,0.0,0.0,11.83,0.0,8.89,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,2.92,0.0,1.52,0.0,0.0,0.0],"rk":[0,0,0,3,0,2,0,0,0],"pv":[0.0,0.0,0.0,13.13,0.0,10.57,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,3.43,0.0,1.61,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,7,0,3,0,0,0,0,0,0]},"Cromwell a.s. (GTF_PU)":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,15.18,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,1.38,0.0],"rk":[0,0,0,0,0,0,0,6,0],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,28.4,0.0,11.45,10.82,11.37],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.58,0.0,1.04,0.99,1.08],"pk":[0,0,0,0,0,0,0,10,0,4,3,4]},"Cromwell a.s. (Biso)":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,9.42,3.14,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.87,0.29,0.0],"rk":[0,0,0,0,0,0,3,1,0],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,10.77,5.87,0.0,9.47,8.96,9.41],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,1.13,0.54,0.0,0.87,0.83,0.91],"pk":[0,0,0,0,0,0,4,2,0,2,2,3]},"Cromwell a.s. (Gazda)":{"rv":[0.0,0.0,0.0,0.0,4.3,0.0,0.0,6.45,0.0],"rm":[0.0,0.0,0.0,0.0,0.4,0.0,0.0,0.6,0.0],"rk":[0,0,0,0,2,0,0,3,0],"pv":[0.0,0.0,0.0,0.0,4.58,0.0,0.0,12.07,0.0,4.86,4.6,4.83],"pm":[0.0,0.0,0.0,0.0,0.43,0.0,0.0,1.12,0.0,0.45,0.43,0.47],"pk":[0,0,0,0,5,0,0,5,0,2,2,2]},"Zelená pošta s. r. o.":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,10.69,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.99,0.0,0.0],"rk":[0,0,0,0,0,0,4,0,0],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,12.22,0.0,0.0,8.06,7.62,8.01],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,1.28,0.0,0.0,0.74,0.71,0.78],"pk":[0,0,0,0,0,0,6,0,0,2,2,3]},"Cromwell a.s. (Technia)":{"rv":[0.0,0.0,0.0,8.81,0.0,0.0,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,0.81,0.0,0.0,0.0,0.0,0.0],"rk":[0,0,0,3,0,0,0,0,0],"pv":[0.0,0.0,0.0,9.78,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,0.95,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,7,0,0,0,0,0,0,0,0]},"BloomPress":{"rv":[0.0,0.0,0.0,0.0,2.82,0.0,0.0,0.0,5.4],"rm":[0.0,0.0,0.0,0.0,0.62,0.0,0.0,0.0,0.67],"rk":[0,0,0,0,1,0,0,0,2],"pv":[0.0,0.0,0.0,0.0,3.01,0.0,0.0,0.0,8.62,4.07,3.85,4.04],"pm":[0.0,0.0,0.0,0.0,0.67,0.0,0.0,0.0,0.81,0.5,0.48,0.53],"pk":[0,0,0,0,2,0,0,0,3,1,1,1]},"Bono s.r.o.":{"rv":[0.0,0.0,2.47,5.01,0.0,0.0,0.0,0.0,0.0],"rm":[0.0,0.0,0.57,1.16,0.0,0.0,0.0,0.0,0.0],"rk":[0,0,1,2,0,0,0,0,0],"pv":[0.0,0.0,2.93,5.56,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.61,1.36,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,2,4,0,0,0,0,0,0,0,0]},"Cromwell a.s. ( Labas)":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,2.15,2.15],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.2,0.2],"rk":[0,0,0,0,0,0,0,1,1],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.02,3.43,3.24,3.07,3.22],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.37,0.24,0.3,0.29,0.31],"pk":[0,0,0,0,0,0,0,2,1,1,1,1]},"Cromwell a.s. (Sama)":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,4.18],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.38],"rk":[0,0,0,0,0,0,0,0,2],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,6.67,3.15,2.98,3.13],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.46,0.29,0.27,0.3],"pk":[0,0,0,0,0,0,0,0,3,1,1,1]},"Cromwell a.s. (Squadro)":{"rv":[0.0,0.0,0.0,0.0,3.39,0.0,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.35,0.0,0.0,0.0,0.0],"rk":[0,0,0,0,1,0,0,0,0],"pv":[0.0,0.0,0.0,0.0,3.61,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,0.0,0.38,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,0,2,0,0,0,0,0,0,0]},"ZPC Group s.r.o. (Fin Club)":{"rv":[2.26,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[0.21,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[1,0,0,0,0,0,0,0,0],"pv":[2.38,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.2,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[1,0,0,0,0,0,0,0,0,0,0,0]}},"Balík Zahraničie":{"Post One Group Ltd (SK)":{"rv":[6097.77,4178.95,4317.01,3021.95,2685.29,2898.41,2556.55,2061.35,2839.25],"rm":[1115.65,518.23,605.21,567.93,530.01,535.95,402.27,387.17,529.18],"rk":[1669,1259,1275,930,983,1040,950,766,1035],"pv":[6412.58,5206.1,5113.7,3354.44,2863.06,3445.19,2922.95,3856.68,4530.39,5623.92,5317.66,5585.43],"pm":[1073.2,636.41,647.96,666.94,574.63,567.94,521.12,723.93,638.55,991.46,943.07,1035.83],"pk":[1804,1947,2005,2016,2358,1609,1356,1243,1397,1651,1507,1836]},"KĽUČKA – zahraničie (70 %)":{"rv":[0.0,0.0,0.0,0.0,0.0,773.71,6515.96,9650.17,12376.77],"rm":[0.0,0.0,0.0,0.0,0.0,118.12,-1933.18,1362.86,4031.94],"rk":[0,0,0,0,0,254,1488,2575,3305],"pv":[0.0,0.0,0.0,0.0,0.0,919.67,7449.82,18054.98,19748.73,21526.06,20353.79,21378.72],"pm":[0.0,0.0,0.0,0.0,0.0,125.17,-2504.31,2548.26,4865.25,2602.76,2475.77,2719.26],"pk":[0,0,0,0,0,393,2127,4181,4460,4422,4036,4918]},"Post One Group Ltd (EU)":{"rv":[288.96,390.78,372.77,457.49,528.31,4265.13,8489.74,5891.64,7602.52],"rm":[28.81,33.16,33.7,41.36,60.4,249.27,697.72,474.81,611.36],"rk":[39,48,48,62,64,696,1376,970,1223],"pv":[303.88,486.83,441.56,507.83,563.29,5069.75,9706.49,11022.96,12130.8,16579.49,15676.61,16466.01],"pm":[27.71,40.72,36.08,48.57,65.48,264.14,903.85,887.79,737.72,1341.29,1275.83,1401.32],"pk":[42,74,76,134,154,1076,1965,1575,1651,2142,1955,2381]},"ONIO":{"rv":[0.0,0.0,1608.5,8202.19,4627.09,2240.11,1515.21,843.12,2221.15],"rm":[0.0,0.0,302.89,1066.39,129.46,370.11,156.75,59.43,170.4],"rk":[0,0,153,946,806,307,227,153,359],"pv":[0.0,0.0,1905.34,9104.64,4933.41,2662.7,1732.37,1577.43,3544.13,3453.68,3265.6,3430.04],"pm":[0.0,0.0,324.29,1252.29,140.35,392.19,203.06,111.12,205.62,290.67,276.48,303.67],"pk":[0,0,241,2049,1935,475,324,248,485,443,405,493]},"Andra s.r.o.":{"rv":[0.0,16.68,1022.7,1122.51,1155.57,2225.2,1438.48,870.43,673.47],"rm":[0.0,3.5,239.1,277.94,287.33,401.75,341.54,194.81,130.87],"rk":[0,3,209,206,214,437,274,210,161],"pv":[0.0,20.78,1211.44,1246.01,1232.07,2644.98,1644.64,1628.53,1074.61,2249.21,2126.72,2233.81],"pm":[0.0,4.3,255.99,326.39,311.51,425.72,442.44,364.25,157.92,501.68,477.19,524.13],"pk":[0,5,329,446,514,676,391,341,217,387,353,430]},"Stocklane s.r.o.":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,439.5,2339.71,4342.31],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,34.97,222.77,346.26],"rk":[0,0,0,0,0,0,65,358,681],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,502.49,4377.48,6928.72,5370.8,5078.32,5334.04],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,45.3,416.53,417.83,454.14,431.98,474.47],"pk":[0,0,0,0,0,0,93,581,919,663,605,737]},"AZAQUE (Capi-Cap)":{"rv":[0.0,0.0,0.0,0.0,89.92,1249.1,1763.3,1823.27,1534.18],"rm":[0.0,0.0,0.0,0.0,21.02,104.33,123.8,116.59,119.91],"rk":[0,0,0,0,15,222,315,326,267],"pv":[0.0,0.0,0.0,0.0,95.87,1484.74,2016.01,3411.24,2447.98,3861.89,3651.58,3835.46],"pm":[0.0,0.0,0.0,0.0,22.79,110.55,160.38,218.0,144.69,270.91,257.69,283.03],"pk":[0,0,0,0,36,343,450,529,360,545,497,606]},"Grandcom":{"rv":[0.0,0.0,0.0,0.0,0.0,307.16,827.7,1058.0,835.91],"rm":[0.0,0.0,0.0,0.0,0.0,32.6,84.83,120.12,91.36],"rk":[0,0,0,0,0,96,248,339,271],"pv":[0.0,0.0,0.0,0.0,0.0,365.11,946.32,1979.46,1333.8,2052.54,1940.77,2038.49],"pm":[0.0,0.0,0.0,0.0,0.0,34.54,109.89,224.6,110.24,222.79,211.92,232.76],"pk":[0,0,0,0,0,148,354,550,366,515,470,572]},"MAGNET PRESS, SLOVAKIA s.r.o.":{"rv":[364.82,212.13,244.0,184.1,217.3,257.63,266.83,269.18,224.39],"rm":[84.33,44.27,53.72,42.24,107.36,55.51,56.25,59.59,48.46],"rk":[106,61,70,51,59,74,78,74,62],"pv":[383.65,264.27,289.03,204.36,231.69,306.23,305.07,503.62,358.04,573.47,542.24,569.54],"pm":[81.12,54.37,57.51,49.6,116.39,58.82,72.87,111.42,58.48,123.54,117.51,129.06],"pk":[115,94,110,111,142,114,111,120,84,128,117,143]},"MBS Valadio":{"rv":[173.72,151.06,183.06,257.62,317.62,376.33,235.08,236.68,256.49],"rm":[12.85,6.86,24.59,26.51,35.67,40.48,27.21,23.49,30.57],"rk":[42,36,43,65,68,83,52,56,59],"pv":[182.69,188.19,216.84,285.96,338.65,447.32,268.77,442.82,409.26,549.22,519.31,545.46],"pm":[12.36,8.42,26.33,31.13,38.67,42.89,35.25,43.92,36.89,61.11,58.12,63.84],"pk":[45,56,68,141,163,128,74,91,80,100,91,111]},"HMK GmbH (Waldaschaff) DE":{"rv":[70.0,170.0,140.0,115.0,240.0,300.0,375.0,170.0,230.0],"rm":[28.13,61.05,60.32,42.23,94.48,122.77,160.37,74.88,100.74],"rk":[3,6,6,4,10,14,17,7,10],"pv":[73.61,211.78,165.84,127.65,255.89,356.59,428.74,318.06,366.99,584.48,552.65,580.48],"pm":[27.06,74.97,64.58,49.59,102.43,130.09,207.75,140.01,121.56,252.63,240.3,263.93],"pk":[3,9,9,9,24,22,24,11,13,20,19,23]},"Natures EU":{"rv":[132.62,211.33,98.51,143.49,174.93,116.91,72.62,0.0,128.78],"rm":[11.88,17.04,6.51,22.66,44.83,7.34,5.49,0.0,35.89],"rk":[47,58,27,40,49,28,24,0,38],"pv":[139.47,263.27,116.69,159.28,186.51,138.96,83.03,0.0,205.49,151.89,143.62,150.85],"pm":[11.43,20.93,6.97,26.61,48.6,7.78,7.11,0.0,43.31,31.11,29.59,32.51],"pk":[51,90,42,87,118,43,34,0,51,37,34,41]},"ZPC Group s.r.o.":{"rv":[0.0,0.0,3.05,219.74,0.0,0.0,10.96,10.9,648.0],"rm":[0.0,0.0,0.42,20.19,0.0,0.0,1.26,0.87,108.0],"rk":[0,0,1,95,0,0,4,2,1],"pv":[0.0,0.0,3.61,243.92,0.0,0.0,12.53,20.39,1033.97,505.19,477.67,501.73],"pm":[0.0,0.0,0.45,23.71,0.0,0.0,1.63,1.63,130.32,82.81,78.76,86.51],"pk":[0,0,2,206,0,0,6,3,1,4,4,5]},"SP Express (nový projekt)":{"rv":[0.0,0.0,0.0,0.0,45.22,0.0,258.0,193.7,228.5],"rm":[0.0,0.0,0.0,0.0,24.32,0.0,258.0,193.7,228.5],"rk":[0,0,0,0,19,0,104,78,89],"pv":[0.0,0.0,0.0,0.0,48.21,0.0,294.98,362.4,364.6,512.98,485.05,509.47],"pm":[0.0,0.0,0.0,0.0,26.37,0.0,334.22,362.18,275.73,511.44,486.48,534.32],"pk":[0,0,0,0,46,0,148,127,120,163,148,181]},"Glas-Kontor s.r.o.":{"rv":[136.56,372.37,137.19,0.0,0.0,0.0,0.0,0.0,39.95],"rm":[12.4,30.77,6.81,0.0,0.0,0.0,0.0,0.0,5.55],"rk":[21,39,16,0,0,0,0,0,2],"pv":[143.61,463.9,162.51,0.0,0.0,0.0,0.0,0.0,63.75,30.13,28.49,29.92],"pm":[11.93,37.79,7.29,0.0,0.0,0.0,0.0,0.0,6.7,4.17,3.97,4.36],"pk":[23,60,25,0,0,0,0,0,3,1,1,1]},"IgluTrade s.r.o.":{"rv":[0.0,0.0,30.5,59.82,54.17,78.96,117.84,89.77,68.66],"rm":[0.0,0.0,4.88,7.96,8.23,12.3,15.92,17.04,10.53],"rk":[0,0,10,16,17,24,38,14,23],"pv":[0.0,0.0,36.13,66.4,57.76,93.86,134.73,167.96,109.56,208.35,197.01,206.93],"pm":[0.0,0.0,5.22,9.35,8.92,13.03,20.62,31.86,12.71,32.7,31.1,34.16],"pk":[0,0,16,35,41,37,54,23,31,45,41,50]},"Fleetflow EU":{"rv":[0.0,28.2,18.44,44.82,88.42,76.11,91.69,0.0,70.77],"rm":[0.0,5.66,4.49,8.47,27.97,9.42,14.81,0.0,10.93],"rk":[0,5,3,4,14,12,15,0,11],"pv":[0.0,35.13,21.84,49.75,94.27,90.47,104.83,0.0,112.92,122.52,115.85,121.68],"pm":[0.0,6.95,4.81,9.95,30.32,9.98,19.19,0.0,13.19,19.35,18.41,20.22],"pk":[0,8,5,9,34,19,21,0,15,16,14,17]},"Ing.-Büro Schneider":{"rv":[59.63,36.33,34.12,29.21,11.16,40.7,6.92,5.8,0.0],"rm":[8.29,6.61,4.78,4.8,1.67,7.74,1.15,0.53,0.0],"rk":[12,7,6,5,2,6,1,1,0],"pv":[62.71,45.26,40.42,32.42,11.9,48.38,7.91,10.85,0.0,9.59,9.07,9.53],"pm":[7.97,8.12,5.12,5.64,1.81,8.2,1.49,0.99,0.0,1.26,1.2,1.32],"pk":[13,11,9,11,5,9,1,2,0,1,1,1]},"Fleetflow SK":{"rv":[0.0,11.5,0.0,2.87,14.35,2.87,2.87,105.5,8.01],"rm":[0.0,3.39,0.0,0.97,3.25,0.97,0.97,18.69,1.86],"rk":[0,3,0,1,5,1,1,20,2],"pv":[0.0,14.33,0.0,3.19,15.3,3.41,3.28,197.39,12.78,87.77,82.99,87.17],"pm":[0.0,4.16,0.0,1.14,3.52,1.03,1.26,34.95,2.24,16.18,15.39,16.9],"pk":[0,5,0,2,12,2,1,32,3,14,13,15]},"Amtape":{"rv":[0.0,0.0,0.0,0.0,0.0,25.31,23.82,3.63,34.94],"rm":[0.0,0.0,0.0,0.0,0.0,7.15,5.06,0.89,5.28],"rk":[0,0,0,0,0,7,7,1,10],"pv":[0.0,0.0,0.0,0.0,0.0,30.08,27.23,6.79,55.75,47.05,44.49,46.73],"pm":[0.0,0.0,0.0,0.0,0.0,7.58,6.55,1.66,6.37,8.44,8.03,8.82],"pk":[0,0,0,0,0,11,10,2,13,11,10,12]},"JJ Automotive":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,73.03,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,5.89,0.0,0.0],"rk":[0,0,0,0,0,0,12,0,0],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,83.5,0.0,0.0,55.08,52.08,54.7],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,7.63,0.0,0.0,4.43,4.21,4.63],"pk":[0,0,0,0,0,0,17,0,0,7,7,8]},"Hype":{"rv":[0.0,0.0,0.0,0.0,0.0,45.44,0.0,15.35,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,6.88,0.0,2.85,0.0],"rk":[0,0,0,0,0,17,0,5,0],"pv":[0.0,0.0,0.0,0.0,0.0,54.01,0.0,28.72,0.0,11.58,10.95,11.5],"pm":[0.0,0.0,0.0,0.0,0.0,7.29,0.0,5.33,0.0,2.14,2.04,2.24],"pk":[0,0,0,0,0,26,0,8,0,3,3,3]},"Cromwell (Dopravoprojekt CZ)":{"rv":[7.34,0.0,15.07,7.55,13.5,0.0,16.96,0.0,0.0],"rm":[1.47,0.0,9.91,4.68,8.39,0.0,11.61,0.0,0.0],"rk":[1,0,2,1,2,0,2,0,0],"pv":[7.72,0.0,17.85,8.38,14.39,0.0,19.39,0.0,0.0,12.79,12.09,12.7],"pm":[1.41,0.0,10.61,5.5,9.1,0.0,15.04,0.0,0.0,8.73,8.3,9.12],"pk":[1,0,3,2,5,0,3,0,0,1,1,1]},"SP Express Sp. Z.O.O.":{"rv":[0.0,0.0,0.0,0.0,0.0,29.64,0.0,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,10.64,0.0,0.0,0.0],"rk":[0,0,0,0,0,13,0,0,0],"pv":[0.0,0.0,0.0,0.0,0.0,35.23,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[0.0,0.0,0.0,0.0,0.0,11.27,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[0,0,0,0,0,20,0,0,0,0,0,0]}},"Balík do schránky":{"G3 Worldwide Mail (Switzerland) AG (COURLUX)":{"rv":[2533.6,3023.43,6663.79,4149.3,2571.51,4292.26,8875.58,578.99,7269.58],"rm":[289.25,342.93,845.17,579.5,288.51,856.19,1735.74,125.24,1758.41],"rk":[3215,3574,7760,4806,3044,4265,9093,605,7081],"pv":[2664.41,3766.57,7893.57,4605.83,2741.75,5101.99,10147.62,1083.26,11599.55,12612.77,11925.91,12526.44],"pm":[278.24,421.13,904.87,680.53,312.79,907.27,2248.53,234.17,2121.84,2721.39,2588.58,2843.17],"pk":[3476,5529,12205,10417,7309,6595,12982,982,9556,10070,9190,11195]},"G3 Worldwide Mail (CZ) AG (Spring)":{"rv":[52.0,53.68,66.88,61.6,42.24,51.04,54.56,36.08,36.08],"rm":[10.71,15.64,20.21,18.83,12.53,14.83,15.25,10.3,10.05],"rk":[65,61,76,70,48,58,62,41,41],"pv":[54.68,66.87,79.22,68.38,45.04,60.67,62.38,67.5,57.57,95.57,90.36,94.91],"pm":[10.3,19.21,21.64,22.11,13.58,15.71,19.76,19.26,12.13,26.77,25.46,27.97],"pk":[70,94,120,152,115,90,89,67,55,86,79,96]}},"Zvozy":{"ONIO doprava":{"rv":[0.0,0.0,770.0,2420.0,3390.0,3675.0,2580.0,4570.0,5500.0],"rm":[0.0,0.0,-1610.0,-5060.0,-2010.0,-135.0,-225.0,680.0,1080.0],"rk":[0,0,7,1,1,1,1,1,1],"pv":[0.0,0.0,912.1,2686.26,3614.43,4368.28,2949.76,8550.24,8775.96,9540.19,9020.66,9474.88],"pm":[0.0,0.0,-1723.72,-5942.11,-2179.15,-143.05,-291.46,1271.46,1303.22,1154.15,1097.83,1205.81],"pk":[0,0,11,2,2,2,1,2,1,2,2,2]},"NAG group (palety)":{"rv":[950.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rm":[128.18,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"rk":[1,0,0,0,0,0,0,0,0],"pv":[999.05,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pm":[123.3,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0],"pk":[1,0,0,0,0,0,0,0,0,0,0,0]},"Mercheo (Felix)":{"rv":[0.0,0.0,0.0,0.0,0.0,0.0,396.04,0.0,0.0],"rm":[0.0,0.0,0.0,0.0,0.0,0.0,104.99,0.0,0.0],"rk":[0,0,0,0,0,0,248,0,0],"pv":[0.0,0.0,0.0,0.0,0.0,0.0,452.8,0.0,0.0,298.68,282.41,296.64],"pm":[0.0,0.0,0.0,0.0,0.0,0.0,136.0,0.0,0.0,78.94,75.09,82.47],"pk":[0,0,0,0,0,0,354,0,0,149,135,165]}}},
+  pozn:"2026 po produktoch a klientoch: jan – sep realita, okt – dec odhad",
+  poznDlha:"Rok 2026 po produktoch a klientoch: január – september je realita (rozpis KOLOS reportingu po klientoch), október – december je odhad – plán 2026 za Balíky rozdelený na produkty podľa mixu júl – september 2026 a v rámci produktu na klientov podľa ich podielu v júli – septembri. Rovnako je rozpočítaný aj plán 2026 (január – september podľa skutočného mixu v danom mesiaci, október – december podľa júla – septembra), takže odhad október – december sa rovná plánu. Súčty za službu sa nemenia." } };
 function r27Historia(){
   if(r27Ctx()==="nb") return r27HistoriaNB();
   if(R27_CACHE.data===MASKA) return R27_CACHE.riadky;
@@ -8707,6 +8952,36 @@ function r27Historia(){
   var pary=[["v","Vynos"],["m","Marza"],["mS","MarzaS"],["e","Ebitda"],["k","Pocet"]];
   pol.forEach(function(o){
     for(var Y in o){ if(!/^\d{4}$/.test(Y)) continue; var d=o[Y]; if(!d) continue;
+      /* služba s rozpisom roka 2026 na produkty (natvrdo) */
+      var hp=R27_HIST_PROD[o.segment];
+      if(hp && +Y===STRUKTURA_2027.rok-1 && (!hp.firma || hp.firma===o.firma)){
+        if(hp.klienti){
+          Object.keys(hp.klienti).forEach(function(pr){ Object.keys(hp.klienti[pr]).forEach(function(kn){
+            var c=hp.klienti[pr][kn], kl=r27TopKlient(o.segment, kn);
+            for(var ix=0; ix<12; ix++){
+              function rk(typ, v, m, k, dopl){ var r={ rok:+Y, mes:ix+1, typ:typ, sluzba:o.segment, firma:o.firma||"", siet:"", produkt:pr, klientIco:"", klient:kl, klientOrig:kn, obchodnik:"",
+                  v:Number(v)||0, m:Number(m)||0, mS:0, e:0, k:Number(k)||0, zdroj:o.nazov+" (po klientoch)" };
+                if(dopl!==undefined) r.doplnene=dopl; if(r.v||r.m||r.k) out.push(r); }
+              rk("plan", c.pv[ix], c.pm[ix], c.pk[ix]);
+              if(ix<hp.mesReal){ rk("realita", c.rv[ix], c.rm[ix], c.rk[ix]); rk("odhad", c.rv[ix], c.rm[ix], c.rk[ix], false); }
+              else rk("odhad", c.pv[ix], c.pm[ix], c.pk[ix], true);
+            }
+          }); });
+          continue;
+        }
+        Object.keys(hp.data.plan).forEach(function(pr){
+          for(var ix=0; ix<12; ix++){
+            var pl=hp.data.plan[pr], re=hp.data.real[pr]||{v:[],m:[],k:[]};
+            function riadok(typ, src, dopl){ var r={ rok:+Y, mes:ix+1, typ:typ, sluzba:o.segment, firma:o.firma||"", siet:"", produkt:pr, klientIco:"", klient:"", obchodnik:"",
+                v:Number(src.v[ix])||0, m:Number(src.m[ix])||0, mS:0, e:0, k:Number(src.k[ix])||0, zdroj:o.nazov+" (po produktoch)" };
+              if(dopl!==undefined) r.doplnene=dopl; if(r.v||r.m||r.k) out.push(r); }
+            riadok("plan", pl);
+            if(ix<hp.mesReal){ riadok("realita", re); riadok("odhad", re, false); }
+            else riadok("odhad", pl, true);
+          }
+        });
+        continue;
+      }
       [["plan","plan"],["realita","real"]].forEach(function(t){
         for(var ix=0; ix<12; ix++){
           var r={ rok:+Y, mes:ix+1, typ:t[0], sluzba:o.segment||"", firma:o.firma||"", siet:"", produkt:"", klientIco:"", klient:"", obchodnik:"",
@@ -8735,7 +9010,18 @@ function r27Historia(){
   return out;
 }
 /* všetky riadky: história (2025, 2026) + nové dáta 2027 */
-function r27Riadky(){ return r27Historia().concat((r27Ctx()==='nb'?DATA_NB27:DATA_2027).riadky||[]); }
+/* Balíky: prepínač S Valadiom / Bez Valadia (len celkové výsledky, týka sa všetkých zobrazení roka 2027) */
+var R27_BEZ_VALADIA=false; try{ R27_BEZ_VALADIA=localStorage.getItem("cg_r27_bezval")==="1"; }catch(e){}
+function r27ValadioTog(){
+  return '<span class="chart-toggle tog-maly r27-valtog" role="group" aria-label="Valadio">'+
+    '<button class="chart-toggle-btn" type="button" data-r27val="s" aria-pressed="'+(!R27_BEZ_VALADIA)+'">S Valadiom</button>'+
+    '<button class="chart-toggle-btn" type="button" data-r27val="bez" aria-pressed="'+R27_BEZ_VALADIA+'">Bez Valadia</button></span>';
+}
+function r27Riadky(){
+  var r=r27Historia().concat((r27Ctx()==='nb'?DATA_NB27:DATA_2027).riadky||[]);
+  if(R27_BEZ_VALADIA && r27Ctx()==='celk') r=r.filter(function(x){ return !(x.sluzba==="baliky" && x.klient==="Valadio"); });
+  return r;
+}
 /* súčet metriky za filter ­– filter je funkcia(riadok) alebo objekt {rok, typ, sluzba, firma, produkt, klient} */
 function r27Suma(filter, mesiace, metrika){
   var f = typeof filter==="function" ? filter : function(r){ for(var k in filter){ if(filter[k]!==undefined && r[k]!==filter[k]) return false; } return true; };
@@ -8783,10 +9069,16 @@ function r27Aktivny(){ return String(state.year)==="2027" && !(typeof CC!=="unde
 function r27AktivnyCelk(){ return r27Aktivny() && r27Ctx()==="celk"; }
 function r27Metriky(id){
   var s=r27Sluzba(id), a=[["v","Výnos","rev"],["m","Marža","mar"]];
+  if(!R27_SKRY_MP) a.push(["mp","Maržovosť","pct"]);
   if(s && s.ebitda && r27Ctx()!=="nb") a.push(["e","EBITDA","ebitda"]);
   a.push(["k","Kusy","cnt"]);
   return a;
 }
+/* formát priemernej ceny: do 1 € na tri desatinné miesta, inak na dve */
+function r27FmtPct(x){ return x.toLocaleString("sk-SK",{minimumFractionDigits:1,maximumFractionDigits:1})+"\u00A0%"; }
+function r27FmtCena(x){ var a=Math.abs(x), d=2; return a.toLocaleString("sk-SK",{minimumFractionDigits:d,maximumFractionDigits:d})+"\u00A0€"; }
+var R27_SKRY_MP=false; try{ R27_SKRY_MP=localStorage.getItem("cg_r27_skrymp")==="1"; }catch(e){}
+var R27_SKRY_P26=false; try{ R27_SKRY_P26=localStorage.getItem("cg_r27_skryp26")==="1"; }catch(e){}
 /* stav rozpadu v roku 2027 */
 var R27 = { open:null, roz:"produkt", item:null, firma:"" };
 var R27_DRUHA = { produkt:"klient", firma:"produkt", klient:"produkt", obchodnik:"klient" };
@@ -8800,13 +9092,19 @@ function r27RenderTable(wrap){
   var ids=segList().filter(function(id){ return !!r27Sluzba(id); });
   var suvisle = per.every(function(m,i){ return i===0 || m===per[i-1]+1; });
   var obdNazov = per.length===12 ? "Celý rok" : (per.length===1 ? DP_MN[per[0]-1] : (suvisle ? DP_MN[per[0]-1]+" – "+DP_MN[per[per.length-1]-1] : "Spolu"));
-  function hodn(flt, mm, met){ var x=r27Suma(flt, mm, met); return x.ma ? x.s : null; }
+  function hodn(flt, mm, met){
+    if(met==="p"){ var v=r27Suma(flt, mm, "v"), k=r27Suma(flt, mm, "k"); return (v.ma && k.ma && Math.abs(k.s)>0.0001) ? v.s/k.s : null; }
+    if(met==="mp"){ var v2=r27Suma(flt, mm, "v"), m2=r27Suma(flt, mm, "m"); return (v2.ma && m2.ma && Math.abs(v2.s)>0.5) ? m2.s/v2.s*100 : null; }
+    var x=r27Suma(flt, mm, met); return x.ma ? x.s : null; }
   function NA(){ return '<span class="r27-na">—</span>'; }
-  function fV(x, mk){ return x===null ? NA() : fmtValFor(x, mk); }
+  function fV(x, mk){ return x===null ? NA() : (mk==="cena" ? r27FmtCena(x) : (mk==="pct" ? r27FmtPct(x) : fmtValFor(x, mk))); }
   function cmp(a, b, mk){
+    if(mk==="pct") return '';
     if(a===null || b===null || !b) return NA();
+    /* maržovosť: rozdiel v percentuálnych bodoch, bez indexu */
+    if(mk==="pct"){ return ''; var dp=a-b; return '<span class="r27-cmp"><span class="r27-roz"></span><span class="r27-idx '+(dp>=0?'r27-plus':'r27-minus')+'">'+(dp>=0?'+':'−')+Math.abs(dp).toLocaleString("sk-SK",{minimumFractionDigits:1,maximumFractionDigits:1})+'\u00A0p.\u00A0b.</span></span>'; }
     var d=a-b, ix=Math.round(a/b*100);
-    return '<span class="r27-cmp"><span class="r27-roz '+(d>=0?'r27-plus':'r27-minus')+'">'+(d>=0?'+':'−')+fmtValFor(Math.abs(d), mk)+'</span>'+
+    return '<span class="r27-cmp"><span class="r27-roz '+(d>=0?'r27-plus':'r27-minus')+'">'+(d>=0?'+':'−')+(mk==="cena"?r27FmtCena(Math.abs(d)):fmtValFor(Math.abs(d), mk))+'</span>'+
            '<span class="r27-idx '+(d>=0?'r27-plus':'r27-minus')+'">'+fmtNum(ix)+' %</span></span>';
   }
   function pln(a, p){
@@ -8827,22 +9125,40 @@ function r27RenderTable(wrap){
         {t:"Realita · 2025", typ:"h", f:{rok:2025,typ:"realita"}},
         {t:"Plán 2027 vs realita 2025", typ:"cmp", a:0, b:5} ];
   /* New business v roku 2025 neexistoval – stĺpce 2025 sa vynechajú */
-  if(r27Ctx()==="nb") SK=SK.filter(function(g){ return !(g.f && g.f.rok===2025) && g.t.indexOf("2025")<0; });
+  SK.forEach(function(g,i){ g._i=i; });
+  var p26i=-1; SK.forEach(function(g,i){ if(g.f && g.f.rok===2026 && g.f.typ==="plan") p26i=i; });
+  SK=SK.filter(function(g){
+    if(r27Ctx()==="nb" && ((g.f && g.f.rok===2025) || g.t.indexOf("2025")>=0)) return false;
+    /* stĺpec Plán 2026 (a porovnanie s ním) sa dá skryť */
+    if(R27_SKRY_P26 && p26i>=0 && (g._i===p26i || (g.typ==="cmp" && g.b===p26i))) return false;
+    return true; });
+  var preIx={}; SK.forEach(function(g,i){ preIx[g._i]=i; });
+  SK.forEach(function(g){ if(g.a!==undefined) g.a=preIx[g.a]; if(g.b!==undefined) g.b=preIx[g.b]; });
+  SK.forEach(function(g){
+    if(p26i>=0 && g._i===p26i) g.btn='<button class="dp-colbtn r27-p26btn" type="button" data-r27p26="skry" title="Skryť stĺpec Plán 2026" aria-label="Skryť stĺpec Plán 2026">−</button>';
+    if(R27_SKRY_P26 && p26i>=0 && g.f && g.f.rok===2026 && g.f.typ==="odhad") g.btn='<button class="dp-colbtn r27-p26btn r27-p26ukaz" type="button" data-r27p26="ukaz" title="Zobraziť stĺpec Plán 2026">+ Plán 2026</button>';
+  });
   var obd=[[per, obdNazov]]; if(ytd) obd.push([YP, "YTD"]);
   /* šírky */
   var karta=document.getElementById("dp-card"), av=0;
   if(karta){ var cs=getComputedStyle(karta); av=Math.floor(karta.clientWidth-(parseFloat(cs.paddingLeft)||0)-(parseFloat(cs.paddingRight)||0)); }
-  var W_NAME=uzke?0:(DP_STYL_B?22:170), W_MET=uzke?44:64, w=uzke?[W_MET]:[W_NAME,W_MET];
+  var W_NAME=uzke?0:(DP_STYL_B?22:170), W_MET=uzke?44:(R27_SKRY_MP?72:92), w=uzke?[W_MET]:[W_NAME,W_MET];   /* širší stĺpec ukazovateľov – Maržovosť s tlačidlom */
   SK.forEach(function(g){ obd.forEach(function(){ w.push(g.typ==="h"?104:132); }); });
+  /* blok „Ø na kus“: hlavné číslo (plán / realita 2027) · porovnávané (realita 2026 + odhad / plán 2027) · index */
+  var JG=SK.filter(function(g){ return g.typ==="h"; }).slice(0,2), JED = JG.length===2;
+  var JNAZ = JED ? JG.map(function(g){ return g.f.typ==="plan" ? "Plán "+g.f.rok : "Real "+g.f.rok; }) : [];
+  if(JED) w.push(76,76);
   var sum=w.reduce(function(x,y){return x+y;},0);
   if(av>sum){ var dat=sum-(W_NAME+W_MET), f=(av-W_NAME-W_MET)/dat; w=w.map(function(x,i){ return i<(uzke?1:2)?x:Math.floor(x*f); }); sum=w.reduce(function(x,y){return x+y;},0); if(av>sum){ w[w.length-1]+=av-sum; sum=av; } }
   var colg='<colgroup>'+w.map(function(x){ return '<col style="width:'+x+'px">'; }).join('')+'</colgroup>';
   var ncol=w.length;
   var head='<tr>'+(uzke?'':'<th class="dp-rowhead" rowspan="2"></th>')+'<th class="dp-methead" rowspan="2"></th>'+
-    SK.map(function(g){ return '<th class="dpg'+(g.real?' dpg-real':'')+'"'+(g.real?' data-r27real="1"':'')+' colspan="'+obd.length+'">'+g.t+'</th>'; }).join('')+'</tr>'+
-    '<tr>'+SK.map(function(){ return obd.map(function(o,i){ return '<th class="dp-tot'+(i===0?' dp-bstart':' dp-ytd')+'">'+o[1]+'</th>'; }).join(''); }).join('')+'</tr>';
+    SK.map(function(g){ return '<th class="dpg'+(g.real?' dpg-real':'')+'"'+(g.real?' data-r27real="1"':'')+' colspan="'+obd.length+'">'+g.t+(g.btn?' '+g.btn:'')+'</th>'; }).join('')+
+    (JED?'<th class="dpg r27-jedg" colspan="2" title="Priemer za obdobie '+obdNazov+': pri Výnose priemerná cena, pri Marži priemerná marža – na kus, pri Neadresnom doručovaní na 1 000 kusov">Ø cena</th>':'')+'</tr>'+
+    '<tr>'+SK.map(function(){ return obd.map(function(o,i){ return '<th class="dp-tot'+(i===0?' dp-bstart':' dp-ytd')+'">'+o[1]+'</th>'; }).join(''); }).join('')+
+    (JED?JNAZ.map(function(t,i){ return '<th class="dp-tot r27-jed'+(i===0?' dp-bstart':'')+'">'+t+'</th>'; }).join(''):'')+'</tr>';
   /* fn = filter (funkcia nad riadkom); cmpFn = filter pre porovnania (v súčte len služby s plánom) */
-  function bunky(fn, met, mk, cmpFn, bezMarze){
+  function bunky(fn, met, mk, cmpFn, bezMarze, bezJedn, na1000){
     cmpFn = cmpFn || fn;
     function grpVal(g, filt, o){ return hodn(function(r){ return r.rok===g.f.rok && r.typ===g.f.typ && filt(r); }, o[0], met); }
     var hod=SK.map(function(g){ return g.typ!=="h"?null:obd.map(function(o){ return grpVal(g, fn, o); }); });
@@ -8851,10 +9167,22 @@ function r27RenderTable(wrap){
     SK.forEach(function(g, gi){ obd.forEach(function(o, oi){
       var cls='dp-cell'+(oi===0?' dp-bstart':' dp-ytd');
       if(bezMarze){ out+='<td class="'+cls+(g.typ==="h"?' dp-tot':' dp-sum')+'">'+NA()+'</td>'; return; }
-      if(g.typ==="h") out+='<td class="'+cls+' dp-tot">'+fV(hod[gi][oi], mk)+'</td>';
+      if(g.typ==="h"){
+        out+='<td class="'+cls+' dp-tot">'+fV(hod[gi][oi], mk)+'</td>'; }
       else if(g.typ==="cmp") out+='<td class="'+cls+' dp-sum r27-cmpcell">'+cmp(hodC[g.a][oi], hodC[g.b][oi], mk)+'</td>';
-      else out+='<td class="'+cls+' dp-sum">'+pln(hod[g.a][oi], hod[g.b][oi])+'</td>';
+      else out+='<td class="'+cls+' dp-sum'+(met==="mp"?' r27-cmpcell':'')+'">'+(met==="mp" ? cmp(hod[g.a][oi], hod[g.b][oi], "pct") : pln(hod[g.a][oi], hod[g.b][oi]))+'</td>';
     }); });
+    if(JED){
+      var jv=[null,null];
+      if((met==="v" || met==="m") && !bezJedn && !bezMarze) JG.forEach(function(g,i){
+        var f2=function(r){ return r.rok===g.f.rok && r.typ===g.f.typ && fn(r); };
+        var x=hodn(f2, obd[0][0], met), k=hodn(f2, obd[0][0], "k"); jv[i]=(x!==null && k!==null && Math.abs(k)>0.0001) ? x/k : null; });
+      var ukaz=(met==="v" || met==="m") && !bezJedn;
+      /* neadresné doručovanie: cena a marža na 1 000 kusov */
+      function jf(x){ if(!ukaz) return ''; if(x===null) return NA(); return r27FmtCena(na1000 ? x*1000 : x); }
+      out+='<td class="dp-cell dp-bstart dp-tot r27-jed">'+jf(jv[0])+'</td>'+
+           '<td class="dp-cell dp-tot r27-jed">'+jf(jv[1])+'</td>';
+    }
     return out;
   }
   /* blok = riadky Výnos/Marža/(EBITDA)/Kusy pod sebou, názov cez všetky */
@@ -8864,18 +9192,23 @@ function r27RenderTable(wrap){
       var tr=o.total?'dp-total':('dp-cmprow'+(i===0?' dp-cmpfirst':''));
       if(i===0) tr+=' dp-vynosrow '+(o.segCls||'dp-seg-all');
       if(mt[0]==='k') tr+=' dp-cntrow';
+      if(mt[0]==='mp') tr+=' r27-mprow';
       if(o.klik) tr+=' dp-clickrow';
       if(o.trCls) tr+=' '+o.trCls;
       var nm='';
       if(i===0 && !uzke) nm='<td class="dp-name'+(o.nameCls?' '+o.nameCls:'')+(o.klik?' dp-expandable':'')+(o.otvorene?' je-otvorene':'')+'" rowspan="'+n+'"><span class="pt-nm">'+
-        (o.iko?'<span class="pt-iko">'+o.iko+'</span>':'')+'<span class="pt-txt">'+o.nazov+(o.pozn?'<span class="r27-pozn">'+o.pozn+'</span>':'')+'</span>'+(o.klik?IKO_SIP:'')+'</span></td>';
+        (o.iko?'<span class="pt-iko">'+o.iko+'</span>':'')+'<span class="pt-txt">'+o.nazov+(o.pozn?'<span class="r27-pozn">'+o.pozn+'</span>':'')+'</span>'+(o.klik?IKO_SIP:'')+'</span>'+
+        ((o.jedPozn && JED)?'<span class="r27-jedpozn">'+o.jedPozn+'</span>':'')+'</td>';
       var bm = (mt[0]==='m' && o.bezMarze);
-      h+='<tr class="'+tr+'"'+(o.attr||'')+'>'+nm+'<td class="dp-metric'+(mt[0]==='e'?' dp-ebitda':'')+'">'+metCell(mt[2],mt[1])+(bm?'<span class="r27-tip" title="Marža je pri sieťach spoločná – je uvedená pri produkte spolu."> *</span>':'')+'</td>'+bunky(o.fn, mt[0], mt[2], o.cmpFn, bm)+'</tr>';
+      var mpBtn = mt[0]==='mp' ? '<button class="r27-mpbtn" type="button" data-r27mp="skry" title="Skryť maržovosť vo všetkých tabuľkách" aria-label="Skryť maržovosť">−</button>'
+                : ((mt[0]==='m' && R27_SKRY_MP) ? '<button class="r27-mpbtn" type="button" data-r27mp="ukaz" title="Zobraziť maržovosť" aria-label="Zobraziť maržovosť">+</button>' : '');
+      h+='<tr class="'+tr+'"'+(o.attr||'')+'>'+nm+'<td class="dp-metric'+(mt[0]==='e'?' dp-ebitda':'')+'">'+mpBtn+metCell(mt[2],mt[1])+(bm?'<span class="r27-tip" title="Marža je pri sieťach spoločná – je uvedená pri produkte spolu."> *</span>':'')+'</td>'+bunky(o.fn, mt[0], mt[2], o.cmpFn, bm, o.bezJedn, o.na1000)+'</tr>';
     });
     return h;
   }
-  function r27PoznOdhad(fn){
+  function r27PoznOdhad(fn, id){
     if(faza==="vyk") return '';
+    if(id && R27_HIST_PROD[id] && r27Ctx()==="celk") return R27_HIST_PROD[id].pozn;
     var mm=r27Doplnene(fn, ytd?YP:per); if(!mm.length) return '';
     return '2026: '+nbRozsahy(mm)+' doplnené plánom';
   }
@@ -8889,7 +9222,8 @@ function r27RenderTable(wrap){
     else if(dim==="firma") out=STRUKTURA_2027.firmy.map(function(f){ return f.id; }).filter(function(k){ return s[k]; });
     else if(dim==="siet") out=Object.keys(STRUKTURA_2027.siete).filter(function(k){ return s[k]; });
     else { out=Object.keys(s).filter(function(k){ return k!==""; });
-      out.sort(function(x,y){ function v(k){ return r27Suma(function(r){ return r.rok===2027 && fn(r) && r.klient===k; }, [1,2,3,4,5,6,7,8,9,10,11,12], 'v').s; } return v(y)-v(x) || x.localeCompare(y,"sk"); }); }
+      out.sort(function(x,y){ function v(k){ return r27Suma(function(r){ return r.rok===2027 && fn(r) && r.klient===k; }, [1,2,3,4,5,6,7,8,9,10,11,12], 'v').s; }
+      return (x===R27_OSTATNI)-(y===R27_OSTATNI) || v(y)-v(x) || x.localeCompare(y,"sk"); }); }
     /* nerozpísané – len ak ho majú dáta 2027 (rok 2026 sa po produktoch nerozpisuje) */
     var nez = (dim!=="produkt" || true) && r27Riadky().some(function(r){ return r.rok===2027 && fn(r) && r[dim]===""; });
     if(nez && dim!=="siet" && (dim!=="firma")) out.push("");
@@ -8910,12 +9244,15 @@ function r27RenderTable(wrap){
     if(R27.firma && firmy.indexOf(R27.firma)<0) R27.firma="";
     var fir=R27.firma;
     var base=function(r){ return r.sluzba===id && (!fir || r.firma===fir); };
-    R27.roz="produkt";
+    /* pohľad rozpadu: po produktoch (pod produktom klienti) alebo po klientoch (pod klientom produkty) */
+    var maKlientov=r27Riadky().some(function(r){ return r.rok===STRUKTURA_2027.rok && base(r) && r.klient; });
+    if(R27.roz!=="klient" || !maKlientov) R27.roz="produkt";
     var roz=R27.roz, d2=R27_DRUHA[roz], body='', pocet=0;
     var k1=kluce(roz, base);
-    /* produkty bez akýchkoľvek údajov sa nezobrazujú (napr. po importe plánu, ktorý ich nemá) */
+    /* New business: produkty bez akýchkoľvek údajov sa nezobrazujú (napr. po importe plánu, ktorý ich nemá);
+       v Celkových výsledkoch sa zobrazujú vždy všetky produkty */
     var kVsetky=k1.length;
-    k1=k1.filter(function(k){ return r27Ma(function(r){ return base(r) && r[roz]===k; }); });    k1.forEach(function(k){
+    if(r27Ctx()==="nb") k1=k1.filter(function(k){ return r27Ma(function(r){ return base(r) && r[roz]===k; }); });    k1.forEach(function(k){
       var f1=function(r){ return base(r) && r[roz]===k; };
       /* druhá úroveň: pri produkte so sieťami najprv siete, potom klienti */
       var urovne=[];
@@ -8927,30 +9264,34 @@ function r27RenderTable(wrap){
       pocet++;
       body+=blok({ nazov:nazovKluca(roz,k), fn:f1, metriky:met, iko:ikoKluca(roz), klik:maDruhu, otvorene:otv,
                    trCls:'r27-l1'+(k===""?' r27-nez':'')+(bezNiceho?' r27-prazdne':''), nameCls:'r27-n1',
-                   attr: maDruhu?(' data-r27item="'+String(k).replace(/"/g,"&quot;")+'"'):'',
+                   attr: maDruhu?(' data-r27item="'+String(k).replace(/"/g,"&quot;")+'"'):'', na1000:(id==="neadresne"),
                    bezMarze:false });
       if(otv) urovne.forEach(function(u){
         u[1].forEach(function(k2v){
           var f2=function(r){ return f1(r) && r[u[0]]===k2v; };
           var spol = (u[0]==="siet" && (sl.spolocnaMarza||[]).indexOf(k)>=0);
-          body+=blok({ nazov:nazovKluca(u[0],k2v), fn:f2, metriky:met, iko:ikoKluca(u[0]), trCls:'r27-l2'+(k2v===""?' r27-nez':''), nameCls:'r27-n2', bezMarze:spol });
+          body+=blok({ nazov:nazovKluca(u[0],k2v), fn:f2, metriky:met, iko:ikoKluca(u[0]), trCls:'r27-l2'+(k2v===""?' r27-nez':''), nameCls:'r27-n2', bezMarze:spol, na1000:(id==="neadresne") });
         });
       });
     });
     if(!k1.length) body='<tr><td class="r27-prazdna" colspan="'+ncol+'">'+
       (roz==="klient" ? 'Zatiaľ žiadni klienti – plán 2027 po klientoch ešte nie je nahratý.' : (roz==="obchodnik" ? 'Zatiaľ žiadni obchodníci – plán 2027 s obchodníkmi ešte nie je nahratý.' : (kVsetky ? 'Plán 2027 pre túto službu zatiaľ nie je nahratý – produkty bez údajov sa nezobrazujú.' : 'Zatiaľ bez údajov.')))+'</td></tr>';
+    var togPohlad = !maKlientov ? '' : '<span class="chart-toggle tog-maly r27-viewtog" role="group" aria-label="Rozpad podľa">'+
+      [["produkt","Po produktoch"],["klient","Po klientoch"]].map(function(x){ return '<button class="chart-toggle-btn" type="button" data-r27roz="'+x[0]+'" aria-pressed="'+(R27.roz===x[0])+'">'+x[1]+'</button>'; }).join('')+'</span>';
     var tog = firmy.length<2 ? '' : '<span class="chart-toggle tog-maly r27-roztog" role="group" aria-label="Firma">'+
       [["","Spolu"]].concat(firmy.map(function(k){ return [k, r27FirmaNazov(k)]; })).map(function(x){ return '<button class="chart-toggle-btn" type="button" data-r27firma="'+x[0]+'" aria-pressed="'+(fir===x[0])+'">'+x[1]+'</button>'; }).join('')+'</span>';
     var pl=r27Suma(function(r){ return r.rok===2027 && r.typ==="plan" && base(r); }, ytd?YP:per, 'v');
-    var sumTxt=obdNazov+(fir?' · '+r27FirmaNazov(fir):'')+' · '+k1.length+' '+(roz==="produkt"?(k1.length===1?'produkt':((k1.length<5&&k1.length>0)?'produkty':'produktov')):(roz==="firma"?(k1.length===1?'firma':((k1.length<5&&k1.length>0)?'firmy':'firiem')):(roz==="obchodnik"?(k1.length===1?'obchodník':((k1.length<5&&k1.length>0)?'obchodníci':'obchodníkov')):(k1.length===1?'klient':((k1.length<5&&k1.length>0)?'klienti':'klientov')))))+
+    var sumTxt='Ø cena '+(id==="neadresne"?'na 1 000 ks':'na kus')+' · '+obdNazov+(fir?' · '+r27FirmaNazov(fir):'')+' · '+k1.length+' '+(roz==="produkt"?(k1.length===1?'produkt':((k1.length<5&&k1.length>0)?'produkty':'produktov')):(roz==="firma"?(k1.length===1?'firma':((k1.length<5&&k1.length>0)?'firmy':'firiem')):(roz==="obchodnik"?(k1.length===1?'obchodník':((k1.length<5&&k1.length>0)?'obchodníci':'obchodníkov')):(k1.length===1?'klient':((k1.length<5&&k1.length>0)?'klienti':'klientov')))))+
       ' · plán 2027: '+(pl.ma?fmtNum(pl.s)+' € výnos':'zatiaľ nenahratý');
     /* prepínač ide do prázdneho ľavého poľa hlavičky tabuľky rozpadu */
     var headTog = (uzke||DP_STYL_B) ? head : head.replace('<th class="dp-rowhead" rowspan="2"></th><th class="dp-methead" rowspan="2"></th>',
       '<th class="dp-rowhead r27-togth" colspan="2" rowspan="2">'+tog+'</th>');
     return '<div class="gxbox pt-box r27-box '+gxTheme(id)+'">'+
-      '<div class="gexp-head"><span class="gexp-title">Rozpad — '+sl.nazov+'</span>'+((uzke||DP_STYL_B)?tog:'')+
+      '<div class="gexp-head"><span class="gexp-title">Rozpad — '+sl.nazov+(id==="baliky"&&R27_BEZ_VALADIA&&r27Ctx()==="celk"?' (bez Valadia)':'')+'</span>'+togPohlad+((uzke||DP_STYL_B)?tog:'')+((id==="baliky"&&r27Ctx()==="celk")?r27ValadioTog():'')+
       '<span class="gexp-sum">'+sumTxt+'</span>'+
       '<button class="gexp-close" type="button" data-r27close="1" title="Zavrieť" aria-label="Zavrieť">✕</button></div>'+
+      ((R27_HIST_PROD[id] && r27Ctx()==="celk" && faza!=="vyk") ? '<div class="r27-roz-pozn">'+R27_HIST_PROD[id].poznDlha+'</div>' : '')+
+      r27TopPozn(id)+
       tbl('dp-segtbl r27-roztbl', '<thead class="dp-headrep dp-headsvc">'+headTog+'</thead>', body)+'</div>';
   }
 
@@ -8962,19 +9303,21 @@ function r27RenderTable(wrap){
     var cmpFlt=function(r){ return sMaju.indexOf(r.sluzba)>=0; };
     var spoluPozn = (sMaju.length && sMaju.length<ids.length) ? ('porovnanie len za služby s plánom ('+sMaju.length+' z '+ids.length+')') : '';
     html+=tbl('dp-sumtbl dp-sum-spolu', '<thead class="dp-headmain">'+head+'</thead>',
-      blok({ nazov:"SPOLU služby", fn:flt, cmpFn:cmpFlt, metriky:[["v","Výnos","rev"],["m","Marža","mar"],["k","Kusy","cnt"]], total:true, pozn:spoluPozn }));
+      blok({ nazov:"SPOLU služby", fn:flt, cmpFn:cmpFlt, jedPozn:"Ø cena na kus", metriky:[["v","Výnos","rev"],["m","Marža","mar"]].concat(R27_SKRY_MP?[]:[["mp","Maržovosť","pct"]]).concat([["k","Kusy","cnt"]]), total:true, pozn:spoluPozn }));
   }
   ids.forEach(function(id){
     var sl=r27Sluzba(id), thead=single?'<thead class="dp-headmain">'+head+'</thead>':'<thead class="dp-headrep dp-headsvc">'+head+'</thead>';
     var fn=function(r){ return r.sluzba===id; }, otv=(R27.open===id);
     html+=tbl(single?'dp-sumtbl dp-sum-jedna':'dp-segtbl', thead,
       blok({ nazov:sl.nazov, fn:fn, metriky:r27Metriky(id), segCls:'dp-seg-'+id, nameCls:rozpadTrieda(id), iko:icoHtml(id),
-             total:!!single, klik:true, otvorene:otv, attr:' data-r27svc="'+id+'"', pozn:r27PoznOdhad(fn) }));
+             total:!!single, klik:true, otvorene:otv, attr:' data-r27svc="'+id+'"', na1000:(id==="neadresne"), jedPozn:'Ø cena '+(id==="neadresne"?'na 1 000 ks':'na kus'), pozn:r27PoznOdhad(fn, id)+((id==="baliky" && r27Ctx()==="celk")?' '+r27ValadioTog():'') }));
     if(otv) html+=rozpadHtml(id);
   });
   wrap.innerHTML='<div class="dp-stack" style="min-width:'+sum+'px;width:100%">'+html+'</div>';
   wrap.style.setProperty('--wname', (uzke?0:w[0])+'px');
   wrap.style.setProperty('--wmet', (uzke?w[0]:w[1])+'px');
+  /* šírka bloku Ø cena – poznámka „Ø cena na kus / na 1 000 ks“ stojí presne nad ním */
+  wrap.style.setProperty('--wjed', (JED ? (w[w.length-1]+w[w.length-2]) : 0)+'px');
   try{ dpPaintSumGradient(wrap.querySelector('.dp-sumtbl')); }catch(e){}
   try{ dpStylB(wrap); }catch(e){}
   wrap.querySelectorAll('.dp-headmain').forEach(function(th){ try{ dpPaintHead(th); }catch(e){} });
@@ -8992,6 +9335,14 @@ function r27RenderTable(wrap){
     var t;
     if((t=e.target.closest("[data-r27close]"))){ R27.open=null; R27.item=null; }
     else if((t=e.target.closest("[data-r27firma]"))){ R27.firma=t.getAttribute("data-r27firma"); }
+    else if((t=e.target.closest("[data-r27roz]"))){ R27.roz=t.getAttribute("data-r27roz"); R27.item=null; }
+    else if((t=e.target.closest("[data-r27mp]"))){ R27_SKRY_MP=(t.getAttribute("data-r27mp")==="skry");
+      try{ localStorage.setItem("cg_r27_skrymp", R27_SKRY_MP?"1":"0"); }catch(_){} }
+    else if((t=e.target.closest("[data-r27p26]"))){ R27_SKRY_P26=(t.getAttribute("data-r27p26")==="skry");
+      try{ localStorage.setItem("cg_r27_skryp26", R27_SKRY_P26?"1":"0"); }catch(_){} }
+    else if((t=e.target.closest("[data-r27val]"))){ R27_BEZ_VALADIA=(t.getAttribute("data-r27val")==="bez");
+      try{ localStorage.setItem("cg_r27_bezval", R27_BEZ_VALADIA?"1":"0"); }catch(_){}
+      e.preventDefault(); e.stopPropagation(); renderAll(); return; }
     else if((t=e.target.closest("[data-r27item]"))){ var k=t.getAttribute("data-r27item"); R27.item=(R27.item===k?null:k); }
     else if((t=e.target.closest("[data-r27svc]"))){ var id=t.getAttribute("data-r27svc"); R27.open=(R27.open===id?null:id); R27.item=null; R27.roz="produkt"; R27.firma=""; }
     else return;
@@ -9033,13 +9384,12 @@ function r27KpiHtml(){
         pol("Plnenie voči plánu", rp.pct, rp.cls)+pol("Rozdiel", rp.txt, rp.cls)+
         pol("Realita 2026", f(R,mk), "kv-py")+pol("2027 vs 2026", ry.pct, ry.cls, ry.txt);
     } else {
-      var P26=r27Val(G.p26, ids, mm, met), P26c=r27Val(G.p26, sh, mm, met), R25c=r27Val(G.r25, sh, mm, met);
-      var a=r27Rozdiel(Hc, Rc, mk), b=r27Rozdiel(Hc, P26c, mk), c=r27Rozdiel(Hc, R25c, mk);
+      /* v karte len plán 2027 a porovnanie s realitou 2026 + odhad (bez roku 2025 a plánu 2026) */
+      var a=r27Rozdiel(Hc, Rc, mk);
       h=pol("Plán 2027", f(H,mk), "kv-real")+pol("Realita 2026 + odhad", f(R,mk), "kv-py")+
-        pol("Plán 2027 vs realita 2026", a.txt, a.cls, a.pct)+pol("Plán 2026", f(P26,mk), "kv-py")+
-        pol("Plán 2027 vs plán 2026", b.txt, b.cls, b.pct)+(jeNB?'':pol("Plán 2027 vs realita 2025", c.txt, c.cls, c.pct));
+        pol("Plán 2027 vs realita 2026", a.txt, a.cls, a.pct);
     }
-    return '<div class="kpi-obal"><div class="kpi-nadpis">'+nazov+'</div><div class="kpi kpi-blok"><div class="kv-rad'+((jeNB&&!vyk)?' kv-rad-5':'')+'">'+h+'</div>'+
+    return '<div class="kpi-obal"><div class="kpi-nadpis">'+nazov+'</div><div class="kpi kpi-blok"><div class="kv-rad'+(vyk?'':' kv-rad-3')+'">'+h+'</div>'+
       '<div class="ksub">'+per+(pozn?' · '+pozn:'')+'</div></div></div>';
   }
   return '<div class="kpi-grid kpi-grid-2">'+okno("Výnos","v","rev")+okno("Marža","m","mar")+'</div>';
@@ -9141,13 +9491,13 @@ function r27RenderOdchylky(s){
    Firestore: kolekcia resultsImport, dokumenty r27_<typ>_<služba>. */
 var R27_DOCS = {};          /* id dokumentu -> { typ, sluzba, riadky:[...], autor, cas, subor } */
 var R27_LOK = "cg_r27_v1";
-function r27DocId(typ, sluzba, ctx){ return ((ctx||r27Ctx())==="nb"?"r27nb_":"r27_")+typ+"_"+sluzba; }
+function r27DocId(typ, sluzba, ctx, firma){ return ((ctx||r27Ctx())==="nb"?"r27nb_":"r27_")+typ+"_"+sluzba+(firma?"_"+firma:""); }
 function r27DocCtx(id){ return id.indexOf("r27nb_")===0 ? "nb" : "celk"; }
 function r27Zluc(){
   var out=[], outNB=[];
   Object.keys(R27_DOCS).forEach(function(id){ var d=R27_DOCS[id]; if(!d||!d.riadky) return; var cil=(r27DocCtx(id)==="nb")?outNB:out;
     d.riadky.forEach(function(a){ cil.push({ rok:STRUKTURA_2027.rok, mes:a[0], typ:d.typ, sluzba:d.sluzba, firma:a[1]||"", siet:a[2]||"", produkt:a[3]||"",
-      klientIco:a[4]||"", klient:a[5]||"", obchodnik:a[6]||"", v:+a[7]||0, m:+a[8]||0, mS:0, e:+a[9]||0, k:+a[10]||0 }); }); });
+      klientIco:a[4]||"", klient:r27TopKlient(d.sluzba, a[5]||""), klientOrig:a[5]||"", obchodnik:a[6]||"", v:+a[7]||0, m:+a[8]||0, mS:0, e:+a[9]||0, k:+a[10]||0 }); }); });
   DATA_2027.riadky=out; DATA_NB27.riadky=outNB;
 }
 function r27LokUloz(){ try{ localStorage.setItem(R27_LOK, JSON.stringify(R27_DOCS)); }catch(e){} }
@@ -9156,16 +9506,16 @@ function r27Prekresli(){ try{ if(r27Aktivny()) renderAll(); }catch(e){} }
 function r27Sleduj(){
   if(!FB.db) return;
   ["celk","nb"].forEach(function(ctx){ ["plan","realita"].forEach(function(typ){
-    STRUKTURA_2027.sluzby.forEach(function(sl){
-      var id=r27DocId(typ, sl.id, ctx);
+    STRUKTURA_2027.sluzby.forEach(function(sl){ [""].concat(STRUKTURA_2027.firmy.map(function(f){ return f.id; })).forEach(function(fid){
+      var id=r27DocId(typ, sl.id, ctx, fid);
       FB.db.collection(FB_IMPORT).doc(id).onSnapshot(function(doc){
         if(!doc.exists){ if(R27_DOCS[id]){ delete R27_DOCS[id]; r27Zluc(); r27LokUloz(); r27Prekresli(); } return; }
         var z=doc.data()||{}, riadky=[];
         try{ riadky=JSON.parse(z.riadky||"[]"); }catch(e){ return; }
-        R27_DOCS[id]={ typ:typ, sluzba:sl.id, riadky:riadky, autor:z.autor||"", cas:z.cas||0, subor:z.subor||"" };
+        R27_DOCS[id]={ typ:typ, sluzba:sl.id, firma:fid, riadky:riadky, autor:z.autor||"", cas:z.cas||0, subor:z.subor||"" };
         r27Zluc(); r27LokUloz(); r27Prekresli();
       }, function(){});
-    });
+    }); });
   }); });
 }
 /* --- čítanie vzoru --- */
@@ -9179,6 +9529,20 @@ async function r27CitajExcel(file){
     return r27CitajNB(await wb.sheet(nbList), file.name, nbList);
   }
   if(r27Ctx()==="nb") throw new Error("Plán New business 2027 sa nahráva zo súboru Plan_2027_NB_struktura_CromwellGroup.xlsx (hárok „Plán NB“). V tomto súbore taký hárok nie je.");
+  /* celkové výsledky: plán oddelenia v štruktúre šablóny (napr. KOLOS_Plan_BALIKY_2027 – hárok „Plán 2027“),
+     prípadne s rozpisom na klientov v hárku „Klienti 2027“ */
+  /* KOLOS – business plán 2027 (hárky „Business Plan“ a „AD 2027_Kolos“): adresné + neadresné doručovanie */
+  var bpList=wb.sheetNames.filter(function(n){ return r27Nrm(n)==="business plan"; })[0],
+      adList=wb.sheetNames.filter(function(n){ return /^ad\s*2027/.test(r27Nrm(n)); })[0];
+  if(bpList && adList) return r27CitajKolosBP(await wb.sheet(bpList), await wb.sheet(adList), file.name, adList);
+  /* CROMWELL – plán adresného doručovania 2027 (hárok „AD 2027“, súhrnné riadky Spolu hore) */
+  var crwAd=wb.sheetNames.filter(function(n){ return r27Nrm(n)==="ad 2027"; })[0];
+  if(crwAd && !bpList) return r27CitajCromwellAD(await wb.sheet(crwAd), file.name, crwAd);
+  if(!wb.sheetNames.some(function(n){ return r27Nrm(n)==="udaje"; })){
+    var sabl=null, sablCell=null;
+    for(var si=0; si<wb.sheetNames.length && !sabl; si++){ var cl=await wb.sheet(wb.sheetNames[si]); if(r27JeSablona(cl)){ sabl=wb.sheetNames[si]; sablCell=cl; } }
+    if(sabl) return r27CitajOddelenie(wb, sabl, sablCell, file.name);
+  }
   var meno=wb.sheetNames.filter(function(n){ return r27Nrm(n)==="udaje"; })[0] || wb.sheetNames[0];
   var cell=await wb.sheet(meno);
   var STLPCE={ rok:"rok", mesiac:"mesiac", typ:"typ", sluzba:"sluzba", produkt:"produkt", firma:"firma", siet:"siet",
@@ -9230,9 +9594,16 @@ function r27NbKluc(x){
     .map(function(w){ return w==="sk"?"slovensko":w; }).filter(Boolean);
   return t.sort().join(" ");
 }
-function r27CitajNB(cell, subor, list){
-  var SEKCIE={ "tlac":"tlac", "adresne dorucovanie":"adresne", "neadresne dorucovanie":"neadresne", "zelena posta":"zelena",
-               "baliky":"baliky", "digitalne sluzby":"digital", "digital":"digital" };
+var R27_SEKCIE={ "tlac":"tlac", "adresne dorucovanie":"adresne", "neadresne dorucovanie":"neadresne", "zelena posta":"zelena",
+                 "baliky":"baliky", "digitalne sluzby":"digital", "digital":"digital" };
+/* je hárok v štruktúre šablóny plánu (nadpis služby v stĺpci A a „1“ v stĺpci D)? */
+function r27JeSablona(cell){
+  for(var r=1;r<=60;r++){ var a=r27Nrm(cell(r,1)), d=cell(r,4); if(R27_SEKCIE[a] && !cell(r,2) && (d===1||d==="1")) return true; }
+  return false;
+}
+function r27CitajNB(cell, subor, list, opt){
+  opt=opt||{};
+  var SEKCIE=R27_SEKCIE;
   var SIET={ crw:"CRW", cromwell:"CRW", sp:"SP", posta:"SP", kolos:"Kolos", balik:"Kolos" };
   function cislo(v){ if(v===null||v===undefined||v==="") return 0; if(typeof v==="number") return v;
     var x=Number(String(v).replace(/\s/g,"").replace(",",".")); return isFinite(x)?x:NaN; }
@@ -9286,7 +9657,7 @@ function r27CitajNB(cell, subor, list){
   });
   Object.keys(bunky).forEach(function(bk){ var b=bunky[bk], key="plan|"+b.sl;
     if(!vysl[key]) vysl[key]={ typ:"plan", sluzba:b.sl, riadky:[], v:0, m:0, k:0 };
-    vysl[key].riadky.push([b.mes, "", b.siet, b.prod, "", "", "", b.v, b.m, 0, b.k]);
+    vysl[key].riadky.push([b.mes, opt.firmaFn?opt.firmaFn(b.sl):"", b.siet, b.prod, "", "", "", b.v, b.m, 0, b.k]);
     vysl[key].v+=b.v; vysl[key].m+=b.m; vysl[key].k+=b.k;
   });
   Object.keys(vysl).forEach(function(key){ vysl[key].riadky.sort(function(x,y){ return x[0]-y[0] || String(x[3]).localeCompare(String(y[3]),"sk"); }); });
@@ -9297,7 +9668,228 @@ function r27CitajNB(cell, subor, list){
     if(!e.ok || (Math.abs(e.s)<0.5 && Math.abs(nase)>=0.5)) upoz.push(s.nazov+" – riadok SPOLU ("+naz+", riadok "+e.r+") je v exceli prázdny alebo má chybu vo vzorci; dashboard počíta súčet z produktov: "+fmtNum(nase)+(mk==="k"?" ks":" €"));
     else if(Math.abs(e.s-nase)>0.5) upoz.push(s.nazov+" – SPOLU v exceli ("+naz+") je "+fmtNum(e.s)+(mk==="k"?" ks":" €")+", súčet produktov je "+fmtNum(nase)+(mk==="k"?" ks":" €")+" – skontrolujte vzorec v riadku "+e.r);
   }); });
-  return { skupiny:vysl, chyby:chyby, upozornenia:upoz, subor:subor, nb:true };
+  return { skupiny:vysl, chyby:chyby, upozornenia:upoz, subor:subor, nb:!opt.firmaFn };
+}
+
+/* ---------- KOLOS business plán 2027 ----------
+   Adresné: hárok „AD 2027_Kolos“ – bloky po klientoch (stĺpec B), riadky „MaZ CRW ks / €“, „TaZ SP € “…,
+     marža za produkt v riadku „MAZ / TAZ / PZ MARŽA SPOLU“ (nie je rozdelená na siete). Mesiace 1–12 = stĺpce E–P.
+     „ost / ostat / refakturácia“ pri TaZ = Transakčná adresná zásielka – refakturácia. Blok NEW BUSINES sa podľa
+     R27_KOLOS_NB berie alebo vynecháva (v exceli nie je v súčte Revenue).
+   Neadresné: hárok „Business Plan“ – skupiny klientov (obrat / marža / pokrytie), plán 1–12 = stĺpce O–Z;
+     produkt Letáky do schránok, sieť Kolos. Kontrola voči riadkom SPOLU v exceli. */
+var R27_KOLOS_NB=true;   /* blok NEW BUSINESS v adresnom je v exceli zahrnutý v súčtoch (Spolu €, ks, marža) */
+var R27_KOLOS_AD_KL=[ ["drogerie","DM drogerie markt"],["helvetia","Helvetia"],["g3world","G3 Worldwide (Österreichische Post)"],["osterreich","G3 Worldwide (Österreichische Post)"],
+  ["fann","FAnn parfumérie"],["mincov","Slovenský mincový obchod"],["lego","LEGO"],["agency","Euro-Agency (Mountfield)"],["mountfield","Euro-Agency (Mountfield)"],
+  ["bencont","Bencont"],["medicom","Medicom"],["sparkys","Sparkys"],["agostini","De Agostini"],["newbusines","New Business"] ];
+function r27CitajKolosBP(bp, ad, subor, adList){
+  function cislo(v){ if(v===null||v===undefined||v==="") return 0; if(typeof v==="number") return v;
+    var x=Number(String(v).replace(/\s/g,"").replace(",",".")); return isFinite(x)?x:0; }
+  function kl(x){ return r27Nrm(x).replace(/[^a-z0-9]/g,""); }
+  var chyby=[], upoz=[], bunky={}, sAD=r27Sluzba("adresne"), sND=r27Sluzba("neadresne");
+  var PROD={ taz:"Transakčná adresná zásielka", tazref:"Transakčná adresná zásielka - refakturácia", maz:"Marketingová adresná zásielka", pz:"Potvrdená zásielka" };
+  function pridaj(sl, prod, siet, klient, mes, met, x){ if(!x) return;
+    if(sl==="adresne" && (sAD.spolocnaMarza||[]).indexOf(prod)<0) siet="";   /* na siete sa delí len Transakčná a Marketingová */
+    var k=sl+"|"+prod+"|"+siet+"|"+klient+"|"+mes;
+    if(!bunky[k]) bunky[k]={ sl:sl, prod:prod, siet:siet, kl:klient, mes:mes, v:0, m:0, k:0 };
+    bunky[k][met]+=x; }
+  /* --- adresné --- */
+  var spolu={v:0,m:0,k:0}, klient="", blok={}, prazdne=0, vynechaneNB={v:0,m:0,k:0}, refNext=false;
+  function zavriBlok(){ /* marža za produkt: spoločná marža bez siete, inak podľa siete s výnosom */
+    Object.keys(blok).forEach(function(pk){ var b=blok[pk]; if(!b.mar) return;
+      var spol=(sAD.spolocnaMarza||[]).indexOf(PROD[pk])>=0;
+      var cielP=pk, cb=b;
+      if(pk==="taz" && !b.vs && blok.tazref && blok.tazref.vs){ cielP="tazref"; cb=blok.tazref; spol=false; }
+      for(var m=1;m<=12;m++){ var x=b.mar[m-1]; if(!x) continue;
+        if(klient==="New Business" && !R27_KOLOS_NB){ vynechaneNB.m+=x; continue; }
+        if(spol){ pridaj("adresne", PROD[cielP], "", klient, m, "m", x); continue; }
+        var siete=Object.keys(cb.siet||{}), tot=siete.reduce(function(a,s){ return a+cb.siet[s]; },0);
+        if(!tot){ pridaj("adresne", PROD[cielP], "", klient, m, "m", x); continue; }
+        siete.forEach(function(s){ pridaj("adresne", PROD[cielP], s, klient, m, "m", x*cb.siet[s]/tot); }); }
+    }); blok={}; }
+  for(var r=1;r<=600;r++){
+    var B=ad(r,2), C=ad(r,3), c=r27Nrm(String(C==null?"":C).replace(/€/g," eur ")).replace(/\s+/g," ").trim();
+    if(!B && !C){ if(++prazdne>40) break; continue; } prazdne=0;
+    if(r27Nrm(ad(r,1))==="ges" || /spolu spolu/.test(r27Nrm(B))){   /* súčtové riadky celej služby – na kontrolu */
+      if(c==="spolu ks") spolu.k=cislo(ad(r,17)); else if(c==="spolu eur") spolu.v=cislo(ad(r,17)); else if(/^spolu marza/.test(c)) spolu.m=cislo(ad(r,17));
+      continue; }
+    if(B){ var bk=kl(B), nk=null;
+      R27_KOLOS_AD_KL.some(function(x){ if(bk.indexOf(x[0])>=0){ nk=x[1]; return true; } return false; });
+      if(!nk) nk=R27_OSTATNI;
+      if(nk!==klient){ zavriBlok(); klient=nk; } }
+    if(!c) continue;
+    var mm=/^(taz|maz|pz)\s*(pt)?\s*(crw|sp)\s*(ks|eur)\s*(.*)$/.exec(c);
+    if(mm){ var pk=mm[1], siet=mm[3]==="crw"?"CRW":"SP", met=mm[4]==="ks"?"k":"v", suf=mm[5]||"";
+      if(pk==="taz" && /ost|ref/.test(suf)) pk="tazref";
+      if(met==="v" && pk==="taz" && refNext) pk="tazref";
+      refNext = (met==="k" && pk==="tazref");
+      if(!blok[pk]) blok[pk]={ v:0, vs:0, siet:{} };
+      for(var m=1;m<=12;m++){ var x=cislo(ad(r,4+m)); if(!x) continue;
+        if(klient==="New Business" && !R27_KOLOS_NB){ vynechaneNB[met]+=x; continue; }
+        pridaj("adresne", PROD[pk], siet, klient, m, met, x);
+        if(met==="v"){ blok[pk].vs+=x; blok[pk].siet[siet]=(blok[pk].siet[siet]||0)+x; } }
+      continue; }
+    var mz=/^(taz|maz|pz)\s*mar[zź]a spolu$/.exec(c.replace("ź","z"));
+    if(mz){ var pk2=mz[1]; if(!blok[pk2]) blok[pk2]={ v:0, vs:0, siet:{} };
+      blok[pk2].mar=[]; for(var m2=1;m2<=12;m2++) blok[pk2].mar.push(cislo(ad(r,4+m2))); }
+  }
+  zavriBlok();
+  /* --- neadresné (Business Plan) --- */
+  var ndSpolu=null, v0=0, zac=0;
+  for(var r2=1;r2<=300;r2++){ var a=r27Nrm(bp(r2,1));
+    if(/^dorucovanie\s*-?\s*neadresn/.test(a)){ zac=r2; break; } }
+  if(!zac) chyby.push("hárok „Business Plan“: nenašiel sa riadok „Doručovanie - neadresná - obrat“");
+  else {
+    function rad(rr){ var o=[]; for(var m=1;m<=12;m++) o.push(cislo(bp(rr,14+m))); return o; }
+    function sum(a){ return a.reduce(function(x,y){ return x+y; },0); }
+    ndSpolu={ v:sum(rad(zac)), m:sum(rad(zac+1)), k:0 };
+    for(var q=zac+1;q<zac+12;q++) if(/^pokrytie/.test(r27Nrm(bp(q,1)))){ ndSpolu.k=sum(rad(q)); break; }
+    for(var r3=zac+1;r3<=zac+80;r3++){
+      var A=bp(r3,1), an=r27Nrm(A);
+      if(/^mrs|^grafika|^postovne/.test(an)) break;
+      if(!an || /^marza|^pokrytie/.test(an)) continue;
+      if(r27Nrm(bp(r3+1,1)).indexOf("marza")!==0) continue;
+      var meno=String(A).replace(/\s*-\s*obrat\s*$/i,"").replace(/\s+/g," ").trim();
+      if(/^aq$/i.test(meno)) meno="Akvizície (AQ)";
+      var vv=rad(r3), mmv=rad(r3+1), kk=null;
+      for(var q2=r3+1;q2<=r3+4;q2++) if(/^pokrytie/.test(r27Nrm(bp(q2,1)))){ kk=rad(q2); break; }
+      for(var m3=1;m3<=12;m3++){ pridaj("neadresne","Letáky do schránok","Kolos",meno,m3,"v",vv[m3-1]); pridaj("neadresne","Letáky do schránok","Kolos",meno,m3,"m",mmv[m3-1]); if(kk) pridaj("neadresne","Letáky do schránok","Kolos",meno,m3,"k",kk[m3-1]); }
+    }
+  }
+  /* --- výstup --- */
+  var vysl={};
+  Object.keys(bunky).forEach(function(k){ var b=bunky[k], key="plan|"+b.sl+"|kolos";
+    if(!vysl[key]) vysl[key]={ typ:"plan", sluzba:b.sl, firma:"kolos", riadky:[], v:0, m:0, k:0 };
+    vysl[key].riadky.push([b.mes, "kolos", b.siet, b.prod, "", b.kl, "", Math.round(b.v*100)/100, Math.round(b.m*100)/100, 0, Math.round(b.k)]);
+    vysl[key].v+=b.v; vysl[key].m+=b.m; vysl[key].k+=b.k; });
+  Object.keys(vysl).forEach(function(key){ vysl[key].riadky.sort(function(x,y){ return x[0]-y[0] || String(x[3]).localeCompare(String(y[3]),"sk") || String(x[5]).localeCompare(String(y[5]),"sk"); }); });
+  function kontrola(nazov, g, e){ if(!e) return; ["v","m","k"].forEach(function(mk){ var a=g?g[mk]:0, b=e[mk]||0;
+    if(Math.abs(a-b)>1) upoz.push(nazov+" – "+({v:"výnos",m:"marža",k:"kusy"})[mk]+": súčet v exceli "+fmtNum(Math.round(b))+", načítané "+fmtNum(Math.round(a))); }); }
+  kontrola("Adresné doručovanie (hárok „"+adList+"“)", vysl["plan|adresne|kolos"], spolu);
+  kontrola("Neadresné doručovanie (Business Plan)", vysl["plan|neadresne|kolos"], ndSpolu);
+  if(vynechaneNB.v) upoz.push("Adresné – blok NEW BUSINESS ("+fmtNum(Math.round(vynechaneNB.v))+" € výnos, "+fmtNum(Math.round(vynechaneNB.m))+" € marža, "+fmtNum(Math.round(vynechaneNB.k))+" ks) sa nenačítal.");
+  return { skupiny:vysl, chyby:chyby, upozornenia:upoz, subor:subor, nb:false, firmaPlan:"Kolos" };
+}
+
+/* ---------- CROMWELL – plán adresného doručovania 2027 (New_BP_2027_Adress…xlsx, hárok „AD 2027“) ----------
+   Berú sa súhrnné riadky „Spolu“ na začiatku hárku (stĺpec C = produkt + sieť + ks / €, mesiace 1–12 = stĺpce E–P):
+   TaZ CRW / SP, z TaZ SP sa odpočíta refakturácia (riadky „TaZ refakturácie“), MaZ CRW / SP, PZ CRW, Zberná jazda.
+   Marža je v exceli za produkt (TaZ, MaZ, PZ, ZJ) – pri Transakčnej a Marketingovej je spoločná pre obe siete.
+   Riadky New Bussines sa nečítajú (nie sú v súčte „Spolu €“). Kontrola voči riadkom SPOLU SPOLU. */
+function r27CitajCromwellAD(cell, subor, list){
+  function cislo(v){ if(v===null||v===undefined||v==="") return 0; if(typeof v==="number") return v;
+    var x=Number(String(v).replace(/\s/g,"").replace(",",".")); return isFinite(x)?x:0; }
+  var P={ taz:"Transakčná adresná zásielka", ref:"Transakčná adresná zásielka - refakturácia", maz:"Marketingová adresná zásielka", pz:"Potvrdená zásielka", zj:"Zberná jazda" };
+  var R={}, spolu={}, chyby=[], upoz=[];
+  function rad(r){ var o=[]; for(var m=1;m<=12;m++) o.push(cislo(cell(r,4+m))); return o; }
+  for(var r=1;r<=80;r++){
+    var b=r27Nrm(cell(r,2)), c=r27Nrm(String(cell(r,3)==null?"":cell(r,3)).replace(/€/g," eur ")).replace(/\s+/g," ").trim();
+    if(!c) continue;
+    if(/^spolu spolu/.test(b)){ if(c==="spolu ks") spolu.k=rad(r); else if(c==="spolu eur") spolu.v=rad(r); else if(/^spolu marza/.test(c)) spolu.m=rad(r); continue; }
+    if(!/^spolu/.test(b)) { if(/^new bus/.test(b)) continue; if(Object.keys(R).length) break; continue; }
+    var k=null;
+    if(/^taz crw ks$/.test(c)) k="taz|CRW|k"; else if(/^taz crw eur$/.test(c)) k="taz|CRW|v";
+    else if(/^taz sp ks$/.test(c)) k="tazsp|SP|k"; else if(/^taz sp eur$/.test(c)) k="tazsp|SP|v";
+    else if(/^taz refakturaci\w* ks$/.test(c)) k="ref||k"; else if(/^taz refakturaci\w* eur$/.test(c)) k="ref||v";
+    else if(/^taz marza/.test(c)) k="taz||m";
+    else if(/^maz crw ks$/.test(c)) k="maz|CRW|k"; else if(/^maz crw eur$/.test(c)) k="maz|CRW|v";
+    else if(/^maz sp ks$/.test(c)) k="maz|SP|k"; else if(/^maz sp eur$/.test(c)) k="maz|SP|v";
+    else if(/^maz marza/.test(c)) k="maz||m";
+    else if(/^pz crw ks$/.test(c)) k="pz||k"; else if(/^pz crw eur$/.test(c)) k="pz||v"; else if(/^pz marza/.test(c)) k="pz||m";
+    else if(/^zbern\w* jazd\w* ks$/.test(c)) k="zj||k"; else if(/^zbern\w* jazd\w* eur$/.test(c)) k="zj||v"; else if(/^zj marza/.test(c)) k="zj||m";
+    if(k) R[k]=rad(r);
+  }
+  if(!R["taz|CRW|v"]) chyby.push("hárok „"+list+"“: nenašli sa súhrnné riadky Spolu (TaZ CRW €)");
+  /* TaZ SP bez refakturácie = TaZ SP − refakturácia */
+  ["k","v"].forEach(function(mk){ var a=R["tazsp|SP|"+mk], rf=R["ref||"+mk]; if(a) R["taz|SP|"+mk]=a.map(function(x,i){ return x-(rf?rf[i]:0); }); delete R["tazsp|SP|"+mk]; });
+  var bunky={};
+  Object.keys(R).forEach(function(k){ var q=k.split("|"), prod=P[q[0]], siet=q[1], met=q[2];
+    R[k].forEach(function(x,i){ if(!x) return; var bk=prod+"|"+siet+"|"+(i+1);
+      if(!bunky[bk]) bunky[bk]={ prod:prod, siet:siet, mes:i+1, v:0, m:0, k:0 }; bunky[bk][met]+=x; }); });
+  var g={ typ:"plan", sluzba:"adresne", firma:"cromwell", riadky:[], v:0, m:0, k:0 };
+  Object.keys(bunky).forEach(function(bk){ var b=bunky[bk];
+    g.riadky.push([b.mes, "cromwell", b.siet, b.prod, "", "", "", Math.round(b.v*100)/100, Math.round(b.m*100)/100, 0, Math.round(b.k)]);
+    g.v+=b.v; g.m+=b.m; g.k+=b.k; });
+  g.riadky.sort(function(x,y){ return x[0]-y[0] || String(x[3]).localeCompare(String(y[3]),"sk") || String(x[2]).localeCompare(String(y[2])); });
+  function sum(a){ return (a||[]).reduce(function(x,y){ return x+y; },0); }
+  ["v","m","k"].forEach(function(mk){ if(!spolu[mk]) return; var e=sum(spolu[mk]), n=g[mk];
+    if(Math.abs(e-n)>1) upoz.push("Adresné · Cromwell – "+({v:"výnos",m:"marža",k:"kusy"})[mk]+": riadok SPOLU v exceli "+fmtNum(Math.round(e))+(mk==="k"?" ks":" €")+", súčet produktov "+fmtNum(Math.round(n))+(mk==="k"?" ks":" €")+" – do dashboardu sa berú produkty"); });
+  var vysl={}; if(g.riadky.length) vysl["plan|adresne|cromwell"]=g;
+  return { skupiny:vysl, chyby:chyby, upozornenia:upoz, subor:subor, nb:false };
+}
+/* firma pre plán oddelenia: ak službu robí jediná firma, je to ona; inak podľa nadpisu hárku (KOLOS / Cromwell / ZPC) */
+function r27FirmaPreSluzbu(id, nadpis){
+  var f={}; r27Historia().forEach(function(r){ if(r.sluzba===id && r.firma && r.rok>=2025) f[r.firma]=1; });
+  var k=Object.keys(f); if(k.length===1) return k[0];
+  var t=r27Nrm(nadpis);
+  if(/kolos/.test(t)) return "kolos"; if(/cromwell/.test(t)) return "cromwell"; if(/zpc/.test(t)) return "zpc";
+  return "";
+}
+async function r27CitajOddelenie(wb, sabl, cell, subor){
+  var nadpis=String(cell(1,1)||"")+" "+subor;
+  var firmaFn=function(id){ return r27FirmaPreSluzbu(id, nadpis); };
+  var res=r27CitajNB(cell, subor, sabl, { firmaFn:firmaFn });
+  var kln=wb.sheetNames.filter(function(n){ return /^klienti/.test(r27Nrm(n)); })[0];
+  if(kln){
+    var hint=(Object.keys(res.skupiny)[0]||"").split("|")[1];
+    var kl=r27CitajKlienti(await wb.sheet(kln), hint, firmaFn);
+    if(kl){
+      res.chyby=res.chyby.concat(kl.chyby);
+      Object.keys(kl.skupiny).forEach(function(key){
+        var p=res.skupiny[key], sid=key.split("|")[1];
+        /* kontrola: súčet klientov za produkt = produkt v hárku plánu */
+        if(p){ var prodP={}; p.riadky.forEach(function(r){ ["v","m","k"].forEach(function(mk,i){ var kk=sid+"|"+r[3]+"|"+mk; prodP[kk]=(prodP[kk]||0)+r[[7,8,10][i]]; }); });
+          var vs={}; Object.keys(prodP).concat(Object.keys(kl.prodSuma)).forEach(function(x){ if(x.indexOf(sid+"|")===0) vs[x]=1; });
+          Object.keys(vs).forEach(function(x){ var a=prodP[x]||0, b=kl.prodSuma[x]||0; if(Math.abs(a-b)>1){ var q=x.split("|");
+            res.upozornenia.push(r27Sluzba(sid).nazov+" · "+q[1]+" ("+({v:"výnos",m:"marža",k:"kusy"})[q[2]]+"): v hárku „"+sabl+"“ "+fmtNum(a)+", súčet klientov v hárku „"+kln+"“ "+fmtNum(b)+" – do dashboardu sa berú klienti"); } }); }
+        res.skupiny[key]=kl.skupiny[key];
+      });
+      res.klienti=kln;
+    }
+  }
+  res.nb=false;
+  return res;
+}
+/* ---------- plán po klientoch (hárok „Klienti 2027“: Klient · Segment plánu · … · Metrika · 1 – 12) ----------
+   Jeden klient má pod sebou riadky Kusy / Tržba / Marža. Segment plánu = produkt (napr. Balík SK). */
+function r27CitajKlienti(cell, sluzbaHint, firmaFn){
+  function cislo(v){ if(v===null||v===undefined||v==="") return 0; if(typeof v==="number") return v;
+    var x=Number(String(v).replace(/\s/g,"").replace(",",".")); return isFinite(x)?x:NaN; }
+  var hr=0, cK=0, cS=0, cM=0, mc={};
+  for(var r=1;r<=80 && !hr;r++){
+    var k=0,sg=0,mt=0;
+    for(var c=1;c<=30;c++){ var t=r27Nrm(cell(r,c)); if(t==="klient") k=c; else if(/^segment/.test(t)||t==="produkt") sg=sg||c; else if(t==="metrika"||t==="ukazovatel") mt=c; }
+    if(k && sg && mt){ hr=r; cK=k; cS=sg; cM=mt;
+      for(var c2=1;c2<=40;c2++){ var v=cell(r,c2), n=Number(v); if(v!==null && v!=="" && n>=1 && n<=12 && Math.round(n)===n && !mc[n]) mc[n]=c2; } }
+  }
+  if(!hr || Object.keys(mc).length<12) return null;
+  var chyby=[], bunky={}, prodSuma={};
+  var sluzby=STRUKTURA_2027.sluzby.slice().sort(function(a,b){ return (a.id===sluzbaHint?-1:0)-(b.id===sluzbaHint?-1:0); });
+  var prazdne=0;
+  for(var r3=hr+1;r3<=3000;r3++){
+    var kl=cell(r3,cK), sgv=cell(r3,cS), mtv=r27Nrm(cell(r3,cM));
+    if(!kl && !sgv && !mtv){ if(++prazdne>40) break; continue; } prazdne=0;
+    if(!sgv || !mtv) continue;                                   /* nadpisy skupín klientov */
+    if(/^spolu/.test(r27Nrm(kl))) continue;
+    var met=/^kusy/.test(mtv)?"k":(/^(trzba|vynos)/.test(mtv)?"v":(/^marza/.test(mtv)&&!/%/.test(mtv)?"m":null));
+    if(!met) continue;
+    var kk=r27NbKluc(sgv), sl=null, prod=null;
+    sluzby.some(function(s){ var p=s.produkty.filter(function(x){ return r27NbKluc(x)===kk; })[0]; if(p){ sl=s; prod=p; return true; } return false; });
+    if(!prod){ chyby.push("hárok klientov, riadok "+r3+": produkt „"+sgv+"“ nie je v číselníku produktov"); continue; }
+    var meno=String(kl||"").trim()||"Bez klienta";
+    for(var m=1;m<=12;m++){ var x=cislo(cell(r3,mc[m])); if(isNaN(x)){ chyby.push("hárok klientov, riadok "+r3+": v mesiacoch musia byť čísla"); break; } if(!x) continue;
+      var bk=sl.id+"|"+prod+"|"+meno+"|"+m;
+      if(!bunky[bk]) bunky[bk]={ sl:sl.id, prod:prod, kl:meno, mes:m, v:0, m:0, k:0 };
+      bunky[bk][met]+=x;
+      var pk=sl.id+"|"+prod+"|"+met; prodSuma[pk]=(prodSuma[pk]||0)+x; }
+  }
+  var vysl={};
+  Object.keys(bunky).forEach(function(bk){ var b=bunky[bk], key="plan|"+b.sl;
+    if(!vysl[key]) vysl[key]={ typ:"plan", sluzba:b.sl, riadky:[], v:0, m:0, k:0 };
+    vysl[key].riadky.push([b.mes, firmaFn?firmaFn(b.sl):"", "", b.prod, "", b.kl, "", b.v, b.m, 0, b.k]);
+    vysl[key].v+=b.v; vysl[key].m+=b.m; vysl[key].k+=b.k; });
+  Object.keys(vysl).forEach(function(key){ vysl[key].riadky.sort(function(x,y){ return x[0]-y[0] || String(x[3]).localeCompare(String(y[3]),"sk") || String(x[5]).localeCompare(String(y[5]),"sk"); }); });
+  return { skupiny:vysl, chyby:chyby, prodSuma:prodSuma };
 }
 /* --- dialóg --- */
 function r27Zavri(){ var o=document.getElementById("r27-ov"); if(o) o.remove(); }
@@ -9309,11 +9901,11 @@ function r27Dialog(vysl){
   var tit = r27Ctx()==="nb" ? "Plán New business 2027" : "Plán a realita 2027";
   var h='<div class="r27-dlg" role="dialog" aria-modal="true" aria-label="'+tit+'"><div class="r27-dlg-h"><b>'+tit+'</b><button type="button" class="r27-x" data-r27dlg="zavri" aria-label="Zavrieť">✕</button></div>';
   if(vysl){
-    h+='<p class="r27-dlg-p">Súbor <b>'+r27Esc(vysl.subor)+'</b>. Uložením sa pri uvedených službách nahradí doterajší plán alebo realita – ostatné služby ostanú bez zmeny.</p>';
+    h+='<p class="r27-dlg-p">Súbor <b>'+r27Esc(vysl.subor)+'</b>'+(vysl.klienti?' – plán sa načíta po klientoch (hárok „'+r27Esc(vysl.klienti)+'“)':'')+'. Uložením sa pri uvedených službách nahradí doterajší plán alebo realita – ostatné služby ostanú bez zmeny.</p>';
     if(keys.length){
       h+='<table class="r27-dlg-t"><thead><tr><th>Služba</th><th>Typ</th><th>Riadkov</th><th>Výnos spolu</th><th>Marža spolu</th><th>Teraz v dashboarde</th></tr></thead><tbody>'+
-        keys.map(function(k){ var g=vysl.skupiny[k], ex=R27_DOCS[r27DocId(g.typ,g.sluzba)];
-          return '<tr><td>'+r27Esc(r27Sluzba(g.sluzba).nazov)+'</td><td>'+(g.typ==="plan"?"plán":"realita")+'</td><td>'+g.riadky.length+'</td><td>'+fmtNum(g.v)+' €</td><td>'+fmtNum(g.m)+' €</td><td>'+
+        keys.map(function(k){ var g=vysl.skupiny[k], ex=R27_DOCS[r27DocId(g.typ,g.sluzba,null,g.firma)];
+          return '<tr><td>'+r27Esc(r27Sluzba(g.sluzba).nazov)+(g.firma?' · '+r27Esc((STRUKTURA_2027.firmy.filter(function(f){ return f.id===g.firma; })[0]||{nazov:g.firma}).nazov):'')+'</td><td>'+(g.typ==="plan"?"plán":"realita")+'</td><td>'+g.riadky.length+'</td><td>'+fmtNum(g.v)+' €</td><td>'+fmtNum(g.m)+' €</td><td>'+
             (ex?('nahradí sa: '+ex.riadky.length+' riadkov · '+r27Esc(ex.autor||"")+' '+kedy(ex.cas)):'nové')+'</td></tr>'; }).join('')+'</tbody></table>';
     } else h+='<p class="r27-dlg-p r27-dlg-zle">V súbore sa nenašiel žiadny použiteľný riadok.</p>';
     if(vysl.upozornenia && vysl.upozornenia.length) h+='<div class="r27-dlg-upoz"><b>Upozornenie</b> – údaje sa dajú uložiť, ale v exceli odporúčam opraviť:<ul>'+
@@ -9324,7 +9916,7 @@ function r27Dialog(vysl){
   var docs=Object.keys(R27_DOCS).filter(function(id){ return r27DocCtx(id)===r27Ctx(); }).sort();
   h+='<div class="r27-dlg-sek"><b>Nahraté v dashboarde</b>'+(docs.length?
     '<table class="r27-dlg-t"><tbody>'+docs.map(function(id){ var d=R27_DOCS[id], sl=r27Sluzba(d.sluzba);
-      return '<tr><td>'+r27Esc(sl?sl.nazov:d.sluzba)+'</td><td>'+(d.typ==="plan"?"plán":"realita")+'</td><td>'+d.riadky.length+' riadkov</td><td>'+r27Esc(d.autor||"")+' · '+kedy(d.cas)+(d.subor?' · '+r27Esc(d.subor):'')+'</td>'+
+      return '<tr><td>'+r27Esc(sl?sl.nazov:d.sluzba)+(d.firma?' · '+r27Esc((STRUKTURA_2027.firmy.filter(function(f){ return f.id===d.firma; })[0]||{nazov:d.firma}).nazov):'')+'</td><td>'+(d.typ==="plan"?"plán":"realita")+'</td><td>'+d.riadky.length+' riadkov</td><td>'+r27Esc(d.autor||"")+' · '+kedy(d.cas)+(d.subor?' · '+r27Esc(d.subor):'')+'</td>'+
         '<td><button type="button" class="r27-del" data-r27del="'+id+'">Zmazať</button></td></tr>'; }).join('')+'</tbody></table>'
     : '<p class="r27-dlg-p">Zatiaľ nič.</p>')+'</div>';
   h+='<div class="r27-dlg-f">'+(vysl&&keys.length?'<button type="button" class="r27-ok" data-r27dlg="uloz">Uložiť do dashboardu</button>':'')+
@@ -9349,10 +9941,15 @@ function r27Dialog(vysl){
 }
 function r27Uloz(vysl){
   var kto=FB.meno||(FB.uzivatel&&FB.uzivatel.email)||"", cas=Date.now(), sluby=[];
-  Object.keys(vysl.skupiny).forEach(function(k){ var g=vysl.skupiny[k], id=r27DocId(g.typ,g.sluzba);
-    R27_DOCS[id]={ typ:g.typ, sluzba:g.sluzba, riadky:g.riadky, autor:kto, cas:cas, subor:vysl.subor };
+  Object.keys(vysl.skupiny).forEach(function(k){ var g=vysl.skupiny[k], id=r27DocId(g.typ,g.sluzba,null,g.firma);
+    R27_DOCS[id]={ typ:g.typ, sluzba:g.sluzba, firma:g.firma||"", riadky:g.riadky, autor:kto, cas:cas, subor:vysl.subor };
+    /* plán jednej firmy: z celoslužbového plánu sa vyhodia riadky tejto firmy, aby sa nezrátali dvakrát */
+    if(g.firma){ var gid=r27DocId(g.typ,g.sluzba), gd=R27_DOCS[gid];
+      if(gd && gd.riadky && gd.riadky.some(function(a){ return a[1]===g.firma; })){
+        gd.riadky=gd.riadky.filter(function(a){ return a[1]!==g.firma; });
+        if(FB.db && FB.uzivatel) sluby.push(FB.db.collection(FB_IMPORT).doc(gid).set({ riadky:JSON.stringify(gd.riadky), autor:gd.autor||kto, subor:gd.subor||"", cas:gd.cas||cas, typ:gd.typ, sluzba:gd.sluzba })); } }
     if(FB.db && FB.uzivatel){
-      sluby.push(FB.db.collection(FB_IMPORT).doc(id).set({ riadky:JSON.stringify(g.riadky), autor:kto, email:(FB.uzivatel.email||""), subor:vysl.subor, cas:cas, typ:g.typ, sluzba:g.sluzba }));
+      sluby.push(FB.db.collection(FB_IMPORT).doc(id).set({ riadky:JSON.stringify(g.riadky), autor:kto, email:(FB.uzivatel.email||""), subor:vysl.subor, cas:cas, typ:g.typ, sluzba:g.sluzba, firma:g.firma||"" }));
     }
   });
   r27Zluc(); r27LokUloz(); r27Zavri(); r27Prekresli();
@@ -9409,7 +10006,7 @@ var MANUAL = {};
 var MANUAL_CANEDIT = false;
 var MGMT = {m:[],st:{},ob:{},kat:{}};
 var state = { year: defaultYear(), months: [1,2,3], segment: "all", expanded: {}, segExpanded: null,
-              graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", marGlobal: "mar", odchFirma: null, rozpadRezim: "firmy", odchPrah: "10", komOpen: null, ptKomOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
+              graphMode: "plnenie", marView: "obrat", dpView: "mesiace", dpRealMon: false, dpPlanMon: false, dpPyMon: false, segChartMetric: "rev", marGlobal: "mar", odchFirma: null, rozpadRezim: "firmy", odchPrah: "10", komOpen: null, ptKomOpen: null, chkOpen: false, marMode: {}, subExpanded: null };
 
 
 /* --- bezpečný prístup k DOM (v maske sú niektoré bloky odstránené) --- */
@@ -9631,7 +10228,7 @@ function renderFilters(){
 
   var q = _EL("f-quarter");
   q.innerHTML = '<button data-q="all">Celý rok</button><button data-q="ytd" class="qb-ytd">YTD</button>' +
-    [1,2,3,4].map(function(n){return '<button data-q="'+n+'" title="Q'+n+' – Ctrl + klik pridá ďalší kvartál">Q'+n+'</button>';}).join("");
+    [1,2,3,4].map(function(n){return '<button data-q="'+n+'" title="Q'+n+' – klik pridá alebo odoberie kvartál">Q'+n+'</button>';}).join("");
 
   var mo = _EL("f-month");
   mo.innerHTML = MONTHS.map(function(name,i){
@@ -12033,13 +12630,50 @@ _EL("f-segment").addEventListener("click", function(e){
   } else { delete SEG_SKUPINY.multi; state.segment=k; }
   state.expanded={}; state.tblExpanded=null;
   state.segExpanded=null; state.subExpanded=null; state.komOpen=null;
+  fokusPodlaSluzby();
   renderFilters(); renderAll();
 });
+/* okno jednej služby: pri prepnutí služby v lište sa prepíše názov (a pri „Všetko“ / viacerých službách sa okno zavrie) */
+function fokusPodlaSluzby(){
+  var n=document.getElementById("nbpr"); if(!n || !n.classList.contains("sluzba-fokus")) return;
+  var id=state.segment, o=(id && id!=="all" && !SEG_SKUPINY.multi) ? segObj(id) : null;
+  if(o && o.name){
+    state.tblExpanded=id;
+    var nz=document.getElementById("fokus-nazov"); if(nz) nz.textContent=o.name;
+    if(FOKUS_NAVRAT) FOKUS_NAVRAT.tblExpanded=null;
+  } else {
+    n.classList.remove("sluzba-fokus");
+    var hd=document.getElementById("fokus-hd"); if(hd) hd.hidden=true;
+    presunKomentare(false); presunDlazdice(false);
+    FOKUS_NAVRAT=null; state.tblExpanded=null;
+  }
+}
+/* po zmene obdobia (YTD, kvartály, mesiace) sú mesiace v Detailnom prehľade zbalené –
+   vidno len súčet za obdobie (a YTD); jednotlivé mesiace sa rozbalia cez „+“ pri bloku */
+function dpZbalMesiace(){ state.dpRealMon=false; state.dpPlanMon=false; state.dpPyMon=false; }
+var Q_VYBER=null;   /* mesiace, ktoré vznikli klikaním na kvartály (vtedy ďalší klik kvartál pridá / odoberie) */
 _EL("f-quarter").addEventListener("click", function(e){
   var b=e.target.closest("button"); if(!b) return;
   var q=b.dataset.q;
-  if(q==="all"){ state.months=[1,2,3,4,5,6,7,8,9,10,11,12]; }
-  else if(q==="ytd"){ state.months=ytdMesiace(); }
+  function rovnake(a,b){ return a.length===b.length && a.every(function(m){ return b.indexOf(m)>=0; }); }
+  /* návrat z YTD / posledného kvartálu: posledný mesiac s výsledkami */
+  function zaklad(){ var p=0; try{ p=poslednyMesiac(); }catch(_){} return [p||new Date().getMonth()+1]; }
+  if(q==="all"){ state.months=[1,2,3,4,5,6,7,8,9,10,11,12]; Q_VYBER=null; }
+  else if(q==="ytd"){
+    /* druhý klik na YTD výber zruší */
+    state.months = rovnake(state.months, ytdMesiace()) ? zaklad() : ytdMesiace(); Q_VYBER=null; }
+  else if(!(e.ctrlKey || e.metaKey || e.shiftKey)){
+    /* klik na kvartál ho pridá alebo odoberie – dá sa označiť viac kvartálov naraz.
+       Ak bolo predtým zvolené niečo iné (mesiac, YTD, celý rok), začína sa od tohto kvartálu. */
+    var qm0=QUARTERS[+q];
+    var zQ = Q_VYBER && rovnake(state.months, Q_VYBER);
+    if(!zQ) state.months=qm0.slice();
+    else if(qm0.every(function(m){ return state.months.indexOf(m)>=0; })){
+      state.months=state.months.filter(function(m){ return qm0.indexOf(m)<0; });
+      if(!state.months.length) state.months=zaklad();
+    } else { qm0.forEach(function(m){ if(state.months.indexOf(m)<0) state.months.push(m); }); sortMonths(); }
+    Q_VYBER = state.months.every(function(m){ return [1,2,3,4].some(function(k){ return QUARTERS[k].indexOf(m)>=0 && QUARTERS[k].every(function(x){ return state.months.indexOf(x)>=0; }); }); }) ? state.months.slice() : null;
+  }
   else{
     /* ak je zobrazený len automaticky predvolený mesiac, štvrťrok ho nahradí
        (inak by zostal visieť mimo zvoleného obdobia); ďalšie kliky sa už pridávajú */
@@ -12055,6 +12689,7 @@ _EL("f-quarter").addEventListener("click", function(e){
       state.months=qm.slice();
     }
   }
+  dpZbalMesiace();
   syncChips(); renderAll();
 });
 
@@ -12149,12 +12784,13 @@ _EL("f-month").addEventListener("click", function(e){
     if(idx>=0){ if(state.months.length>1) state.months.splice(idx,1); } else { state.months.push(m); sortMonths(); }
   }
   MES_POSL=m;
+  dpZbalMesiace();
   syncChips(); renderAll();
 });
 _EL("f-reset").addEventListener("click", function(){
   state.year=defaultYear(); state.months=defaultMonths(); state.segment="all";
   state.expanded={}; state.graphMode="plnenie"; state.dpView="mesiace";
-  state.dpRealMon=true; state.dpPlanMon=false; state.dpPyMon=false;
+  state.dpRealMon=false; state.dpPlanMon=false; state.dpPyMon=false;
   state.subExpanded=null; state.segExpanded=null; state.tblExpanded=null; state.komOpen=null;
   renderFilters(); renderAll();
 });
@@ -16350,6 +16986,7 @@ function nbTabNastav(id){
    dole komentáre, postreh a prihlásenie
    ===================================================================== */
 var RAIL_IKO = {
+  sumar:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="3" width="16" height="18" rx="1.5"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>',
   celk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>',
   nb:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5l2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9l-5.2 2.7 1-5.8-4.3-4.1 5.9-.9z"/></svg>',
   plan:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M9 9.5V20"/></svg>',
@@ -16401,11 +17038,11 @@ function nbRailVloz(){
 /* celkové výsledky: na širších obrazovkách vždy len jedna časť – grafy alebo detailný prehľad */
 var CELK_TAB="detail";   /* po načítaní sa v celkových výsledkoch vždy zobrazí Detailný prehľad */
 function celkTabNastav(id){
-  CELK_TAB=(id==="detail"||id==="odchylky"||id==="plan")?id:"grafy";
+  CELK_TAB=(id==="detail"||id==="odchylky"||id==="plan"||id==="sumar")?id:"grafy";
   try{ localStorage.setItem("cg_celk_tab", CELK_TAB); }catch(e){}
   var r=document.getElementById("nbpr");
-  if(r){ r.classList.toggle("celk-tab-grafy", CELK_TAB==="grafy"); r.classList.toggle("celk-tab-detail", CELK_TAB==="detail"); r.classList.toggle("celk-tab-odchylky", CELK_TAB==="odchylky"); r.classList.toggle("celk-tab-plan", CELK_TAB==="plan"); }
-  try{ if(!NB.on){ if(CELK_TAB==="detail") renderTable(); else if(CELK_TAB==="odchylky"){ odchSekciaVloz(); odchSekciaRender(); } else if(CELK_TAB==="plan"){ celkPlanVloz(); celkRenderPlanTab(); } else renderGraphs(); } }catch(e){}
+  if(r){ r.classList.toggle("celk-tab-grafy", CELK_TAB==="grafy"); r.classList.toggle("celk-tab-detail", CELK_TAB==="detail"); r.classList.toggle("celk-tab-odchylky", CELK_TAB==="odchylky"); r.classList.toggle("celk-tab-plan", CELK_TAB==="plan"); r.classList.toggle("celk-tab-sumar", CELK_TAB==="sumar"); }
+  try{ if(!NB.on){ if(CELK_TAB==="sumar"){ celkSumarVloz(); celkRenderSumar(); } else if(CELK_TAB==="detail") renderTable(); else if(CELK_TAB==="odchylky"){ odchSekciaVloz(); odchSekciaRender(); } else if(CELK_TAB==="plan"){ celkPlanVloz(); celkRenderPlanTab(); } else renderGraphs(); } }catch(e){}
   try{ nbRailRender(); }catch(e){}
 }
 function nbRailRender(){
@@ -16421,7 +17058,9 @@ function nbRailRender(){
   } else if(NB.on){
     cs.innerHTML = NB_TABY.map(function(t){ return btn("tab:"+t[0], RAIL_IKO[t[0]]||RAIL_IKO.plan, t[1], NB_TAB===t[0]); }).join("");
   } else {
-    cs.innerHTML = btn("ctab:detail", RAIL_IKO.detail, "Detailný prehľad", CELK_TAB==="detail") + btn("ctab:plan", RAIL_IKO.plan, "Plán vs. realita", CELK_TAB==="plan") + btn("ctab:grafy", RAIL_IKO.sluzby, "Grafy podľa segmentu", CELK_TAB==="grafy") + btn("ctab:odchylky", RAIL_IKO.odch, "Odchýlky od plánu", CELK_TAB==="odchylky");
+    /* záložky celkových výsledkov s popisom priamo pod ikonkou */
+    function btnL(rl, ico, tip, on, popis){ return '<button type="button" class="rl-btn rl-lab'+(on?" rl-on":"")+'" data-rl="'+rl+'" aria-label="'+tip+'"'+(on?' aria-current="page"':'')+'>'+ico+'<span class="rl-pop">'+popis+'</span></button>'; }
+    cs.innerHTML = btnL("ctab:detail", RAIL_IKO.detail, "Tabuľka – detailný prehľad", CELK_TAB==="detail", "Tabuľka") + btnL("ctab:sumar", RAIL_IKO.sumar, "Sumár v číslach", CELK_TAB==="sumar", "Sumár") + btnL("ctab:plan", RAIL_IKO.plan, "Kvartál – plán vs. realita", CELK_TAB==="plan", "Kvartál") + btnL("ctab:grafy", RAIL_IKO.sluzby, "Grafy podľa segmentu", CELK_TAB==="grafy", "Grafy") + btnL("ctab:odchylky", RAIL_IKO.odch, "Odchýlky od plánu", CELK_TAB==="odchylky", "Odchýlky");
   }
 }
 
@@ -17423,6 +18062,160 @@ function celkPlanVloz(){
     var k=b.getAttribute("data-cpq"); CPLAN_OTV[k]=!CPLAN_OTV[k]; celkRenderPlanTab(); });
 }
 
+/* =====================================================================
+   SUMÁR V ČÍSLACH (celkové výsledky · rok 2027) – prehľad jednej služby pre vedenie,
+   bez grafov: hlavné čísla, kľúčové ukazovatele, štvrťroky, zistenia, produkty, top klienti.
+   Zatiaľ pripravené a odskúšané na Balíkoch; šablóna je spoločná pre všetky služby.
+   ===================================================================== */
+function celkSumarVloz(){
+  if(document.getElementById("celk-sumar")) return;
+  var v=document.getElementById("vysledky"), dp=document.getElementById("dp-card"); if(!v) return;
+  var d=document.createElement("section"); d.id="celk-sumar"; d.className="celk-sumar"; d.setAttribute("aria-label","Sumár v číslach");
+  if(dp && dp.parentNode===v) v.insertBefore(d, dp); else v.appendChild(d);
+  d.addEventListener("click", function(e){
+    var t=e.target.closest("[data-r27val]"); if(!t) return;
+    R27_BEZ_VALADIA=(t.getAttribute("data-r27val")==="bez"); try{ localStorage.setItem("cg_r27_bezval", R27_BEZ_VALADIA?"1":"0"); }catch(_){}
+    renderAll(); });
+}
+var SM_OPEN={p:{}, k:{}}, SM_MET="v";
+try{ SM_MET=localStorage.getItem("cg_sm_met")||"v"; }catch(e){}
+function celkRenderSumar(){
+  var host=document.getElementById("celk-sumar"); if(!host) return;
+  if(!host.__smKlik){ host.__smKlik=1; host.addEventListener("click", function(ev){
+    var mb=ev.target.closest && ev.target.closest("[data-smmet]");
+    if(mb){ SM_MET=mb.getAttribute("data-smmet"); try{ localStorage.setItem("cg_sm_met", SM_MET); }catch(_){} celkRenderSumar(); return; }
+    var tr=ev.target.closest && ev.target.closest("tr[data-smo]"); if(!tr) return;
+    var typ=tr.getAttribute("data-smo"), n=tr.getAttribute("data-smn"); SM_OPEN[typ][n]=!SM_OPEN[typ][n]; celkRenderSumar(); }); }
+  if(NB.on || (typeof CC!=="undefined" && CC.on) || CELK_TAB!=="sumar") return;
+  function msg(t){ host.innerHTML='<div class="sm-msg">'+t+'</div>'; }
+  if(!r27AktivnyCelk()){ msg('Sumár v číslach je pripravený pre <b>rok 2027 – plán</b>. Prepnite v hornej lište rok na 2027.'); return; }
+  var ids=segList().filter(function(id){ return !!r27Sluzba(id); });
+  if(ids.length!==1){ msg('Vyberte v hornej lište <b>jednu službu</b> – sumár je zatiaľ pripravený pre <b>Balíky</b>.'); return; }
+  var id=ids[0], sl=r27Sluzba(id), G=r27Skupiny(), A=G.hl, B=(STRUKTURA_2027.faza==="vyk"?G.pl:G.r26);
+  if(!r27Ma({rok:A.rok, typ:A.typ, sluzba:id})){ msg('<b>'+sl.nazov+'</b>: '+A.t.replace(" · "," ")+' zatiaľ nie je nahratý – sumár sa zobrazí po nahratí plánu (tlačidlo Plán 2027 hore).'); return; }
+  var mm=dpPer(), ROK=[1,2,3,4,5,6,7,8,9,10,11,12], na1000=(id==="neadresne"), jednotka=na1000?1000:1;
+  var nA=A.t.replace(" · "," "), nB=B.t.replace(" · "," ");
+  function sum(g, extra, met, mesiace){ var x=r27Suma(function(r){ return r.rok===g.rok && r.typ===g.typ && r.sluzba===id && (!extra || extra(r)); }, mesiace||mm, met); return x.ma?x.s:0; }
+  function e0(x){ return fmtNum(Math.round(x))+" €"; }
+  function k0(x){ return fmtNum(Math.round(x)); }
+  function c2(x){ return r27FmtCena(x); }
+  function pc(x){ return r27FmtPct(x); }
+  function ix(a,b){ return (b && Math.abs(b)>0.5) ? fmtNum(Math.round(a/b*100))+" %" : "—"; }
+  function dl(a,b,fm){ var d=a-b; return (d>=0?"+":"−")+fm(Math.abs(d)); }
+  function cl(a,b){ return a>=b?"p":"n"; }
+  var maKl=r27Riadky().some(function(r){ return r.rok===STRUKTURA_2027.rok && r.sluzba===id && r.klient; });
+  var bezVal=function(r){ return r.klient!=="Valadio"; };
+  var ukazBezVal = (id==="baliky" && !R27_BEZ_VALADIA && r27Riadky().some(function(r){ return r.sluzba===id && r.klient==="Valadio"; }));
+  var vA=sum(A,null,"v"), mA=sum(A,null,"m"), kA=sum(A,null,"k"), eA=sum(A,null,"e"), vB=sum(B,null,"v"), mB=sum(B,null,"m"), kB=sum(B,null,"k"), eB=sum(B,null,"e");
+  var bvA=sum(A,bezVal,"v"), bmA=sum(A,bezVal,"m"), bkA=sum(A,bezVal,"k"), bvB=sum(B,bezVal,"v"), bmB=sum(B,bezVal,"m"), bkB=sum(B,bezVal,"k");
+  var obd=periodLabel()+" · 2027";
+  /* --- klienti --- */
+  var kl={};
+  if(maKl) r27Riadky().forEach(function(r){ if(r.rok===STRUKTURA_2027.rok && r.sluzba===id && mm.indexOf(r.mes)>=0 && r.klient && (r.typ===A.typ)) kl[r.klient]=1; });
+  var klZ=Object.keys(kl).map(function(k){ var f=function(r){ return r.klient===k; }; return { n:k, a:sum(A,f,"v"), b:sum(B,f,"v"), m:sum(A,f,"m"), mb:sum(B,f,"m"), ka:sum(A,f,"k"), kb:sum(B,f,"k") }; })
+    .sort(function(x,y){ return (x.n===R27_OSTATNI)-(y.n===R27_OSTATNI) || y.a-x.a; });
+  var novi=klZ.filter(function(k){ return k.n!==R27_OSTATNI && k.a>0 && k.b < k.a*0.1 && k.a > vA*0.03; });
+  /* --- produkty --- */
+  var prZ=sl.produkty.map(function(p){ var f=function(r){ return r.produkt===p; };
+    return { n:p, a:sum(A,f,"v"), b:sum(B,f,"v"), ma:sum(A,f,"m"), mb:sum(B,f,"m"), ka:sum(A,f,"k"), kb:sum(B,f,"k") }; })
+    .filter(function(p){ return p.a || p.b; });
+  /* --- hlavné čísla --- */
+  var h='<div class="sm-hd"><div class="sm-t1">'+sl.nazov+' · '+nA.toLowerCase()+' v číslach</div><div class="sm-t2">'+obd+' · porovnanie s „'+nB+'“'+(R27_BEZ_VALADIA&&id==="baliky"?' · <b>bez Valadia</b>':'')+'</div></div>';
+  if(id==="baliky") h+='<div class="sm-tog">'+r27ValadioTog()+'</div>';
+  function karta(l,v,pod,c){ return '<div class="sm-k"><span>'+l+'</span><b>'+v+'</b><i class="'+(c||'')+'">'+pod+'</i></div>'; }
+  h+='<div class="sm-kp">'+karta('Výnos '+nA.toLowerCase(), e0(vA), ix(vA,vB)+' oproti '+(B.rok||''), cl(vA,vB))+
+     karta('Marža '+nA.toLowerCase(), e0(mA), ix(mA,mB)+' oproti '+(B.rok||''), cl(mA,mB))+
+     karta('Maržovosť', vA?pc(mA/vA*100):'—', nB+': '+(vB?pc(mB/vB*100):'—'), (vA&&vB)?cl(mA/vA,mB/vB):'');
+  if(klZ.length && klZ[0].n!==R27_OSTATNI) h+=karta('Najväčší klient: '+r27Esc(klZ[0].n), vA?pc(klZ[0].a/vA*100):'—', e0(klZ[0].a)+' z plánu','');
+  else h+=karta('Kusy', k0(kA), ix(kA,kB)+' oproti '+(B.rok||''), cl(kA,kB));
+  if(ukazBezVal) h+=karta('Bez Valadia', e0(bvA), ix(bvA,bvB)+' oproti '+(B.rok||''), cl(bvA,bvB));
+  else if(kA) h+=karta('Ø cena '+(na1000?'na 1 000 ks':'na kus'), c2(vA/kA*jednotka), nB+': '+(kB?c2(vB/kB*jednotka):'—'), (kA&&kB)?cl(vA/kA,vB/kB):'');
+  h+='</div>';
+  /* --- kľúčové ukazovatele (vždy najprv plán, potom realita) --- */
+  var jn=na1000?'na 1 000 ks':'na kus', maKs=!!(kA||kB);
+  var t='<table class="sm-t"><thead><tr><th></th><th class="pl">'+nA+'</th><th>'+nB+'</th><th>Rozdiel</th><th>Index</th>'+
+    (ukazBezVal?'<th class="sep">'+nA+'<br><span>bez Valadia</span></th><th>Index<br><span>bez Valadia</span></th>':'')+
+    (maKs?'<th class="sep">Ø '+jn+'<br><span>'+nA+'</span></th><th>Ø '+jn+'<br><span>'+nB+'</span></th><th>Index<br><span>Ø '+jn+'</span></th>':'')+'</tr></thead><tbody>';
+  function riadok(n,a,b,fm,ba,bb,o){ o=o||{};
+    var x='<tr'+(o.sek?' class="s"':'')+'><td class="l">'+n+'</td><td class="pl'+(o.sek?'':' b')+'">'+(a===null?'—':fm(a))+'</td><td>'+(b===null?'—':fm(b))+'</td>';
+    if(o.bezPor) x+='<td></td><td></td>';
+    else x+='<td class="'+((a!==null&&b!==null)?cl(a,b):'')+'">'+((a!==null&&b!==null)?dl(a,b,fm):'—')+'</td><td class="'+((a!==null&&b!==null)?cl(a,b):'')+' b">'+((a!==null&&b!==null)?ix(a,b):'—')+'</td>';
+    if(ukazBezVal) x+='<td class="sep">'+(ba===null||ba===undefined?'':fm(ba))+'</td><td class="'+((!o.bezPor&&ba!=null&&bb!=null)?cl(ba,bb):'')+'">'+((!o.bezPor&&ba!=null&&bb!=null)?ix(ba,bb):'')+'</td>';
+    if(maKs){ var ja=o.ja, jb=o.jb;
+      x+='<td class="sep">'+(ja==null?'':c2(ja))+'</td><td>'+(jb==null?'':c2(jb))+'</td><td class="'+((ja!=null&&jb!=null)?cl(ja,jb):'')+'">'+((ja!=null&&jb!=null)?ix(ja,jb):'')+'</td>'; }
+    return x+'</tr>'; }
+  var per=function(x,k){ return k?x/k*jednotka:null; };
+  t+=riadok('Výnos',vA,vB,e0,bvA,bvB,{ja:per(vA,kA), jb:per(vB,kB)});
+  t+=riadok('Marža',mA,mB,e0,bmA,bmB,{ja:per(mA,kA), jb:per(mB,kB)});
+  t+=riadok('Maržovosť', vA?mA/vA*100:null, vB?mB/vB*100:null, pc, bvA?bmA/bvA*100:null, null, {sek:true, bezPor:true});
+  if(sl.ebitda) t+=riadok('EBITDA',eA,eB,e0,null,null);
+  t+=riadok('Kusy',kA,kB,k0,bkA,bkB);
+  t+='</tbody></table>';
+  /* --- prepínač Výnos / Marža / Kusy pre štvrťroky, produkty a klientov --- */
+  var MET=(SM_MET==="m"||SM_MET==="k")?SM_MET:"v", fm=(MET==="k"?k0:e0), metN={v:"Výnos",m:"Marža",k:"Kusy"}[MET];
+  function xv(o,strana){ return strana==="a" ? (MET==="v"?o.a:MET==="m"?(o.ma!==undefined?o.ma:o.m):o.ka) : (MET==="v"?o.b:MET==="m"?o.mb:o.kb); }
+  var totA=(MET==="v"?vA:MET==="m"?mA:kA);
+  function metTog(){ return '<span class="chart-toggle tog-maly r27-valtog sm-met" role="group" aria-label="Ukazovateľ">'+[["v","Výnos"],["m","Marža"],["k","Kusy"]].map(function(x){
+    return '<button class="chart-toggle-btn" type="button" data-smmet="'+x[0]+'" aria-pressed="'+(MET===x[0])+'">'+x[1]+'</button>'; }).join('')+'</span>'; }
+  /* --- štvrťroky (celý rok) --- */
+  var Q=[[1,2,3],[4,5,6],[7,8,9],[10,11,12]];
+  var q='<table class="sm-t sm-q"><thead><tr><th></th><th>Q1</th><th>Q2</th><th>Q3</th><th>Q4</th><th>Rok</th></tr></thead><tbody>';
+  q+='<tr><td class="l">'+nA+'</td>'+Q.map(function(x){ return '<td class="pl b">'+fm(sum(A,null,MET,x))+'</td>'; }).join('')+'<td class="pl b">'+fm(sum(A,null,MET,ROK))+'</td></tr>';
+  q+='<tr><td class="l">'+nB+'</td>'+Q.map(function(x){ return '<td>'+fm(sum(B,null,MET,x))+'</td>'; }).join('')+'<td>'+fm(sum(B,null,MET,ROK))+'</td></tr>';
+  q+='<tr><td class="l">Index</td>'+Q.concat([ROK]).map(function(x){ var a=sum(A,null,MET,x), b=sum(B,null,MET,x); return '<td class="'+cl(a,b)+' b">'+ix(a,b)+'</td>'; }).join('')+'</tr>';
+  q+='</tbody></table>';
+  /* --- na čo sa pozrieť (vypočítané z čísel) --- */
+  var zis=[];
+  var rast=prZ.slice().sort(function(x,y){ return (y.a-y.b)-(x.a-x.b); });
+  if(rast.length && rast[0].a-rast[0].b>0) zis.push('Najväčší rast: <b>'+r27Esc(rast[0].n)+'</b> '+dl(rast[0].a,rast[0].b,e0)+(vA-vB>0?' – '+pc((rast[0].a-rast[0].b)/(vA-vB)*100)+' celkového rastu':'')+'.');
+  var pokl=rast.filter(function(p){ return p.a-p.b<0; });
+  if(pokl.length) zis.push('Pokles: '+pokl.map(function(p){ return r27Esc(p.n)+' '+dl(p.a,p.b,e0); }).join(', ')+'.');
+  if(vA && vB){ var dm=mA/vA*100-mB/vB*100; if(Math.abs(dm)>=0.5) zis.push('Maržovosť '+(dm<0?'klesá':'rastie')+' z '+pc(mB/vB*100)+' na <b>'+pc(mA/vA*100)+'</b>'+(rast.length && rast[0].a>0 && rast[0].ma/rast[0].a*100 < mA/vA*100 && dm<0 ? ' – rast ide cez '+r27Esc(rast[0].n)+' s nižšou maržovosťou':'')+'.'); }
+  if(novi.length){ var sn=novi.reduce(function(x,k){ return x+k.a; },0); zis.push('Plán stojí na <b>nových objemoch</b> ('+novi.map(function(k){ return r27Esc(k.n); }).join(', ')+') – spolu <b>'+e0(sn)+'</b>, t. j. <b>'+pc(sn/vA*100)+'</b> plánu.'); }
+  var topK=klZ.filter(function(k){ return k.n!==R27_OSTATNI; }).slice(0,3);
+  if(topK.length===3 && vA) zis.push('Top 3 klienti tvoria <b>'+pc(topK.reduce(function(x,k){ return x+k.a; },0)/vA*100)+'</b> plánu.');
+  if(ukazBezVal) zis.push('Bez Valadia je plán na <b>'+ix(bvA,bvB)+'</b> „'+nB+'“.');
+  if(maKl===false) zis.push('Plán tejto služby zatiaľ nie je rozpísaný na klientov.');
+  h+='<h3>Kľúčové ukazovatele</h3>'+t;
+  h+='<div class="sm-g2"><div><h3>Po štvrťrokoch '+metTog()+'</h3>'+q+'</div><div>'+(zis.length?'<h3>Na čo sa pozrieť</h3><ul>'+zis.map(function(z){ return '<li>'+z+'</li>'; }).join('')+'</ul>':'')+'</div></div>';
+  /* --- po produktoch --- */
+  var p='<h3>Po produktoch '+metTog()+'</h3><table class="sm-t"><thead><tr><th></th><th class="pl">'+metN+' '+nA.toLowerCase()+'</th><th>'+metN+' '+nB.toLowerCase()+'</th><th>Rozdiel</th><th>Index</th><th class="sep">Podiel</th>'+
+    '<th class="sep">Maržovosť<br><span>'+nA+'</span></th><th>Maržovosť<br><span>'+nB+'</span></th>'+
+    (maKs?'<th class="sep">Ø cena '+jn+'<br><span>'+nA+'</span></th><th>Ø cena '+jn+'<br><span>'+nB+'</span></th>':'')+'</tr></thead><tbody>';
+  function chev(o){ return '<span class="sm-ch'+(o?' o':'')+'">›</span>'; }
+  function rp(n, a, b, ma, mb, ka, kb, tot, o){ o=o||{}; var zak=o.zak||totA;
+    var xa=(MET==="v"?a:MET==="m"?ma:ka), xb=(MET==="v"?b:MET==="m"?mb:kb);
+    return '<tr'+(tot?' class="tot"':o.sub?' class="sub"':o.klik?' class="klik'+(o.open?' open':'')+'" data-smo="p" data-smn="'+r27Esc(o.klik)+'"':'')+'><td class="l">'+(o.klik?chev(o.open):'')+n+'</td><td class="pl'+(o.sub?'':' b')+'">'+(xa?fm(xa):'—')+'</td><td>'+(xb?fm(xb):'—')+'</td><td class="'+cl(xa,xb)+'">'+dl(xa,xb,fm)+'</td><td class="'+cl(xa,xb)+(o.sub?'':' b')+'">'+(xb>0.5&&(!o.sub||xb>=xa*0.1)?ix(xa,xb):(o.sub||xa<=0?'—':'nový'))+'</td><td class="sep">'+(tot?'100 %':(zak&&xa?pc(xa/zak*100):'—'))+'</td>'+
+      '<td class="sep">'+(a?pc(ma/a*100):'—')+'</td><td>'+(b?pc(mb/b*100):'—')+'</td>'+
+      (maKs?'<td class="sep">'+(ka?c2(a/ka*jednotka):'—')+'</td><td>'+(kb?c2(b/kb*jednotka):'—')+'</td>':'')+'</tr>'; }
+  var topMena=klZ.map(function(k){ return k.n; });
+  prZ.forEach(function(r){ var op=!!SM_OPEN.p[r.n];
+    p+=rp(r27Esc(r.n), r.a, r.b, r.ma, r.mb, r.ka, r.kb, false, maKl?{klik:r.n, open:op}:null);
+    if(maKl && op){
+      topMena.map(function(kn){ var f=function(x){ return x.produkt===r.n && x.klient===kn; };
+        return { n:kn, a:sum(A,f,"v"), b:sum(B,f,"v"), ma:sum(A,f,"m"), mb:sum(B,f,"m"), ka:sum(A,f,"k"), kb:sum(B,f,"k") }; })
+       .filter(function(x){ return Math.abs(x.a)>0.5 || Math.abs(x.b)>0.5; })
+       .sort(function(x,y){ return (x.n===R27_OSTATNI)-(y.n===R27_OSTATNI) || y.a-x.a; })
+       .forEach(function(x){ p+=rp(r27Esc(x.n), x.a, x.b, x.ma, x.mb, x.ka, x.kb, false, {sub:true, zak:xv(r,"a")}); });
+    } });
+  p+=rp(sl.nazov+' spolu', vA, vB, mA, mB, kA, kB, true)+'</tbody></table>';
+  h+=p;
+  /* --- top klienti --- */
+  if(klZ.length){
+    var k='<h3>Top klienti '+metTog()+'</h3><table class="sm-t"><thead><tr><th></th><th class="pl">'+metN+' '+nA.toLowerCase()+'</th><th>'+metN+' '+nB.toLowerCase()+'</th><th>Rozdiel</th><th>Index</th><th class="sep">Podiel na pláne</th><th>Kumulatívne</th><th class="sep">Maržovosť<br><span>'+nA+'</span></th></tr></thead><tbody>', cum=0;
+    klZ.forEach(function(r){ var ra=xv(r,"a"), rb=xv(r,"b"); cum+=ra; var ost=(r.n===R27_OSTATNI), nov=novi.indexOf(r)>=0;
+      var op=!!SM_OPEN.k[r.n];
+      k+='<tr class="klik'+(ost?' oth':'')+(op?' open':'')+'" data-smo="k" data-smn="'+r27Esc(r.n)+'"><td class="l">'+chev(op)+r27Esc(r.n)+(nov?' <span class="sm-tag">nový objem</span>':'')+'</td><td class="pl b">'+fm(ra)+'</td><td>'+(Math.abs(rb)>0.5?fm(rb):'—')+'</td><td class="'+cl(ra,rb)+'">'+dl(ra,rb,fm)+'</td><td class="'+cl(ra,rb)+' b">'+(rb>=ra*0.1&&rb>0.5?ix(ra,rb):'—')+'</td><td class="sep">'+(totA?pc(ra/totA*100):'—')+'</td><td>'+(ost||!totA?'':pc(cum/totA*100))+'</td><td class="sep">'+(r.a?pc(r.m/r.a*100):'—')+'</td></tr>';
+      if(op) prZ.map(function(pp){ var f=function(x){ return x.klient===r.n && x.produkt===pp.n; }; return { n:pp.n, a:sum(A,f,"v"), b:sum(B,f,"v"), m:sum(A,f,"m"), mb:sum(B,f,"m"), ka:sum(A,f,"k"), kb:sum(B,f,"k") }; })
+        .filter(function(x){ return Math.abs(xv(x,"a"))>0.5 || Math.abs(xv(x,"b"))>0.5; }).sort(function(x,y){ return xv(y,"a")-xv(x,"a"); })
+        .forEach(function(x){ var xa=xv(x,"a"), xb=xv(x,"b"); k+='<tr class="sub"><td class="l">'+r27Esc(x.n)+'</td><td class="pl">'+(xa?fm(xa):'—')+'</td><td>'+(Math.abs(xb)>0.5?fm(xb):'—')+'</td><td class="'+cl(xa,xb)+'">'+dl(xa,xb,fm)+'</td><td class="'+cl(xa,xb)+'">'+(xb>=xa*0.1&&xb>0.5?ix(xa,xb):'—')+'</td><td class="sep">'+(ra&&xa?pc(xa/ra*100):'—')+'</td><td></td><td class="sep">'+(x.a?pc(x.m/x.a*100):'—')+'</td></tr>'; });
+    });
+    k+='</tbody></table>';
+    h+=k;
+  }
+  host.innerHTML='<div class="sm-w">'+h+'</div>';
+}
+
 
 /* =====================================================================
    ZÁPORNÉ ČÍSLA VŽDY ČERVENOU – v celom dashboarde aj vo vyskakovacích oknách.
@@ -17504,7 +18297,7 @@ function dpPasyVyrovnaj(){
   var povodnyRenderLoga=renderAll;
   renderAll=function(){ var r=povodnyRenderLoga.apply(this, arguments); try{ logaVyrovnaj(); }catch(e){} try{ odchSledujKomentare(); odchZarovnajRiadky(); }catch(e){} return r; };
   var povodneGrafy=renderGraphs;
-  renderGraphs=function(){ var r=povodneGrafy.apply(this, arguments); try{ odchSekciaRender(); }catch(e){} try{ celkRenderPlanTab(); }catch(e){} return r; };
+  renderGraphs=function(){ var r=povodneGrafy.apply(this, arguments); try{ odchSekciaRender(); }catch(e){} try{ celkRenderPlanTab(); }catch(e){} try{ celkRenderSumar(); }catch(e){} return r; };
   var povodnaTabulka=renderTable;
   renderTable=function(){ var r=povodnaTabulka.apply(this, arguments); try{ dpVyskaVynosu(); }catch(e){} try{ dpOznacSkupiny(); }catch(e){} try{ dpPasyVyrovnaj(); requestAnimationFrame(dpPasyVyrovnaj); }catch(e){} return r; };
   var povodnyRender=renderAll;
@@ -17556,6 +18349,81 @@ window.addEventListener("hashchange", function(){
 });
 
 })();
+
+
+/* ===================== hlavička Tabuľky v štýle Sumáru =====================
+   Jeden sivý pás: hore názov skupiny (Plán 2027, Realita 2026 + odhad…), pod ním sivý doplnkový popis
+   (Celý rok, Sep, YTD, mesiace). Hlavný stĺpec (plán / realita) je modrý v hlavičke a jemne podfarbený
+   v celej výške tabuľky. Triedy sa doplnia po každom prekreslení. */
+function dpHlavStyl(root){
+  (root||document).querySelectorAll(".dp-stack table.dp-cmp").forEach(function(t){
+    var hd=t.querySelector("thead"); if(!hd || hd.rows.length<2) return;
+    var r1=hd.rows[0], r2=hd.rows[1], pos=0, hl=[], zac=[];
+    [].forEach.call(r1.cells, function(c){
+      if(c.rowSpan>1) return;
+      var n=c.colSpan||1; zac.push(pos);
+      if(c.classList.contains("dpg-real")) for(var i=0;i<n;i++) hl.push(pos+i);
+      c.classList.toggle("hx-1", n===1);
+      [].forEach.call(c.childNodes, function(x){ if(x.nodeType===3 && x.nodeValue.indexOf(" · ")>=0) x.nodeValue=x.nodeValue.replace(" · "," "); });
+      pos+=n; });
+    function oznac(cells){ cells.forEach(function(c,i){ c.classList.toggle("hx-a", hl.indexOf(i)>=0); c.classList.toggle("hx-g", i>0 && zac.indexOf(i)>=0); }); }
+    oznac([].slice.call(r2.cells));
+    [].forEach.call(t.tBodies, function(tb){ [].forEach.call(tb.rows, function(tr){
+      var cc=[].slice.call(tr.querySelectorAll(":scope > td.dp-cell")); if(cc.length===pos) oznac(cc); }); });
+  });
+}
+(function(){
+  var w=document.getElementById("dp-wrap"); if(!w || !window.MutationObserver) return;
+  var cak=0;
+  new MutationObserver(function(){ if(cak) return; cak=1; setTimeout(function(){ cak=0; try{ dpHlavStyl(w); }catch(e){} },0); }).observe(w,{childList:true, subtree:true});
+  setTimeout(function(){ try{ dpHlavStyl(w); }catch(e){} }, 300);
+})();
+/* ===================== fixná hlavička Detailného prehľadu =====================
+   Hlavička tabuľky sa správa ako „prilepená“: pri rolovaní ide s tabuľkou, a keď dorazí pod filtre,
+   zostane tam stáť (rovnaký vzhľad – Realita modrá, ostatné sivé, popisy Sep / YTD), kým sa tabuľka neskončí.
+   Je to kópia hlavičky vložená do #dp-wrap, takže má rovnaké štýly a fungujú aj tlačidlá +/−. */
+(function(){
+  var w=document.getElementById("dp-wrap"); if(!w) return;
+  var lista=document.createElement("div"); lista.id="dp-fixhead"; lista.className="dp-fixhead";
+  var zdroj=null, vyska=0;
+  function postav(){
+    try{ dpHlavStyl(w); }catch(e){}
+    if(lista.parentNode!==w) w.appendChild(lista);          /* po prekreslení tabuľky ju vrátime späť */
+    var t=w.querySelector(".dp-stack table"), th=t && t.querySelector("thead");
+    if(!th){ lista.innerHTML=""; zdroj=null; lista.classList.remove("on"); return; }
+    var cg=t.querySelector("colgroup");
+    lista.innerHTML='<table class="'+t.className+'" style="width:'+Math.round(t.getBoundingClientRect().width)+'px !important;margin:0">'+(cg?cg.outerHTML:'')+th.outerHTML+'</table>';
+    zdroj=th; vyska=th.getBoundingClientRect().height||40;
+    poloha();
+  }
+  function poloha(){
+    if(!zdroj || !document.body.contains(zdroj) || w.offsetParent===null){ lista.classList.remove("on"); return; }
+    var f=document.querySelector("#nbpr .filters"), hore=f ? Math.max(0, f.getBoundingClientRect().bottom) : 0;
+    var r=zdroj.getBoundingClientRect(), wr=w.getBoundingClientRect();
+    var MEDZERA=18;   /* odstup prilepenej hlavičky od hornej lišty */
+    var on = r.top < hore+MEDZERA && wr.bottom > hore+MEDZERA+vyska+40;
+    lista.classList.toggle("on", on);
+    if(on){ var tr=zdroj.closest("table").getBoundingClientRect();
+      lista.style.top=hore+"px"; lista.style.left=wr.left+"px"; lista.style.width=wr.width+"px";
+      if(lista.firstChild) lista.firstChild.style.marginLeft=(tr.left-wr.left)+"px"; }
+  }
+  new MutationObserver(function(){ if(lista.parentNode===w && w.querySelector(".dp-stack") && lista.firstChild && document.body.contains(zdroj)) return;
+    clearTimeout(postav._t); postav._t=setTimeout(postav,30); }).observe(w,{childList:true});
+  window.addEventListener("scroll", poloha, {passive:true});
+  window.addEventListener("resize", function(){ clearTimeout(postav._t); postav._t=setTimeout(postav,100); });
+  w.addEventListener("scroll", poloha, {passive:true});
+  setTimeout(postav, 400);
+})();
+
+/* výška sivého pruhu so službami = spodok riadku so službami */
+(function(){
+  function nastav(){ try{ var f=document.querySelector("#nbpr .filters"), g=f&&f.querySelector(".fgroup-seg"); if(!f||!g) return;
+    var lk=f.querySelector(".lista-karta"), h=lk ? Math.round(lk.getBoundingClientRect().top-f.getBoundingClientRect().top) : Math.round(g.getBoundingClientRect().bottom-f.getBoundingClientRect().top+6); if(h>20) f.style.setProperty("--lista-h", h+"px"); }catch(e){} }
+  window.addEventListener("resize", nastav); setTimeout(nastav,300); setTimeout(nastav,1500);
+  var f=document.querySelector("#nbpr .filters"); if(f && window.ResizeObserver) new ResizeObserver(nastav).observe(f);
+})();
+/* prepínač Po mesiacoch / Spolu je odstránený – zobrazenie je vždy po mesiacoch (mesiace cez +/−) */
+try{ state.dpView="mesiace"; }catch(e){}
 </script>
 <div class="mpanel-kryt" id="mpanel-kryt" hidden></div>
 <aside class="mpanel" id="mpanel" role="dialog" aria-modal="true" aria-label="Menu" hidden>
