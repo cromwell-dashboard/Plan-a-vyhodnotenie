@@ -9612,7 +9612,10 @@ async function r27CitajExcel(file){
   /* KOLOS – business plán 2027 (hárky „Business Plan“ a „AD 2027_Kolos“): adresné + neadresné doručovanie */
   var bpList=wb.sheetNames.filter(function(n){ return r27Nrm(n)==="business plan"; })[0],
       adList=wb.sheetNames.filter(function(n){ return /^ad\s*2027/.test(r27Nrm(n)); })[0];
-  if(bpList && adList) return r27CitajKolosBP(await wb.sheet(bpList), await wb.sheet(adList), file.name, adList);
+  var tlKolos=wb.sheetNames.filter(function(n){ return /^tlac 2027 import/.test(r27Nrm(n)); })[0],
+      tlKolosZdroj=wb.sheetNames.filter(function(n){ return r27Nrm(n)==="tlac 2027"; })[0];
+  if(bpList && adList) return r27CitajKolosBP(await wb.sheet(bpList), await wb.sheet(adList), file.name, adList,
+      tlKolos ? { cell: await wb.sheet(tlKolos), list: tlKolos, zdroj: tlKolosZdroj ? await wb.sheet(tlKolosZdroj) : null } : null);
   /* CROMWELL – plán adresného doručovania 2027 (hárok „AD 2027“, súhrnné riadky Spolu hore) */
   var crwAd=wb.sheetNames.filter(function(n){ return r27Nrm(n)==="ad 2027"; })[0];
   if(crwAd && !bpList) return r27CitajCromwellAD(await wb.sheet(crwAd), file.name, crwAd);
@@ -9841,7 +9844,7 @@ var R27_KOLOS_AD_KL=[ ["drogerie","DM drogerie markt"],["helvetia","Helvetia"],[
 function r27KolosMeno(b){ var k=r27Nrm(b).replace(/[^a-z0-9]/g,""), nk=null;
   R27_KOLOS_AD_KL.some(function(x){ if(k.indexOf(x[0])>=0){ nk=x[1]; return true; } return false; });
   return nk || String(b).replace(/\s+/g," ").replace(/[,\s]+$/,"").trim(); }
-function r27CitajKolosBP(bp, ad, subor, adList){
+function r27CitajKolosBP(bp, ad, subor, adList, tl){
   function cislo(v){ if(v===null||v===undefined||v==="") return 0; if(typeof v==="number") return v;
     var x=Number(String(v).replace(/\s/g,"").replace(",",".")); return isFinite(x)?x:0; }
   function kl(x){ return r27Nrm(x).replace(/[^a-z0-9]/g,""); }
@@ -9922,6 +9925,46 @@ function r27CitajKolosBP(bp, ad, subor, adList){
       for(var m3=1;m3<=12;m3++){ pridaj("neadresne","Letáky do schránok","Kolos",meno,m3,"v",vv[m3-1]); pridaj("neadresne","Letáky do schránok","Kolos",meno,m3,"m",mmv[m3-1]); if(kk) pridaj("neadresne","Letáky do schránok","Kolos",meno,m3,"k",kk[m3-1]); }
     }
   }
+  /* --- TLAČ Kolos: hárok „Tlač 2027 import“ (A firma, B klient, C obchodník, D produkt, E ukazovateľ, F–Q mesiace 1–12) --- */
+  var tlSpolu=null, tlBez=[];
+  if(tl && tl.cell){
+    var sTL=r27Sluzba("tlac"), tc=tl.cell, hr=0;
+    for(var h1=1;h1<=15 && !hr;h1++) if(r27Nrm(tc(h1,2))==="klient" && /^ukazovatel/.test(r27Nrm(tc(h1,5)))) hr=h1;
+    if(!hr) chyby.push("Hárok „"+tl.list+"“: nenašla som hlavičku (Firma, Klient, Obchodník, Produkt, Ukazovateľ, 1 – 12).");
+    else { var kAkt="", tlN=0;
+      for(var tr=hr+1; tr<=hr+600; tr++){
+        var bK=String(tc(tr,2)==null?"":tc(tr,2)).trim(); if(/^spolu/i.test(bK)) break;
+        if(bK) kAkt=bK;
+        var met=r27Nrm(tc(tr,5)), mk=/^vynos/.test(met)?"v":(/^marza/.test(met)?"m":(/^kus/.test(met)?"k":null)); if(!mk || !kAkt) continue;
+        var pr=String(tc(tr,4)==null?"":tc(tr,4)).trim(), prod=sTL.produkty.filter(function(x){ return r27Nrm(x)===r27Nrm(pr); })[0];
+        if(!prod){ var maHod=false; for(var mq=0;mq<12;mq++) if(cislo(tc(tr,6+mq))) maHod=true;
+          if(maHod) chyby.push("Hárok „"+tl.list+"“, riadok "+tr+": produkt „"+pr+"“ nepatrí pod Tlač."); continue; }
+        for(var m4=1;m4<=12;m4++){ var x4=cislo(tc(tr,5+m4)); if(x4){ pridaj("tlac",prod,"",kAkt,m4,mk,x4); tlN++; } }
+      }
+      if(!tlN) upoz.push("Hárok „"+tl.list+"“ nemá žiadne čísla plánu Tlače.");
+    }
+    /* kontrola voči súčtom v hárku „Tlač 2027“ (Obrat plán spolu, Marža 2027 plán spolu, Kusy Spolu) */
+    if(tl.zdroj){ tlSpolu={v:0,m:0,k:0}; var z=tl.zdroj;
+      for(var zr=1;zr<=60;zr++){ var za=r27Nrm(z(zr,1)), kam=/^obrat plan\s+spolu/.test(za)?"v":(/^marza 2027 plan\s+spolu/.test(za)?"m":(/^kusy\s+spolu/.test(za)?"k":null));
+        if(kam && !tlSpolu["_"+kam]){ tlSpolu["_"+kam]=1; for(var zm=0;zm<12;zm++) tlSpolu[kam]+=cislo(z(zr,2+zm)); } } }
+  }
+  /* --- TLAČ Kolos bez pomocného hárku: priamo z hárku „Business Plan“ (blok Tlač: klient / marža / kusy, mesiace plan 1 – 12) --- */
+  if(!tl){
+    function bpRad(rr){ var o=[]; for(var m=1;m<=12;m++) o.push(cislo(bp(rr,14+m))); return o; }
+    var tz=0; for(var t1=1;t1<=40 && !tz;t1++) if(r27Nrm(bp(t1,1)).replace(/[^a-z]/g,"")==="tlac") tz=t1;
+    if(!tz) upoz.push("Tlač Kolos sa nenačítala – v hárku Business Plan som nenašla blok „Tlač“.");
+    else { var sumR=function(a){ return a.reduce(function(x,y){ return x+y; },0); };
+      tlSpolu={ v:sumR(bpRad(tz)), m:sumR(bpRad(tz+1)), k:sumR(bpRad(tz+2)) }; tl={ list:"Business Plan – Tlač" };
+      for(var t2=tz+3;t2<=tz+60;t2++){
+        var an2=r27Nrm(bp(t2,1)); if(/^dorucovanie|^dorucenie/.test(an2)) break;
+        if(!an2 || /^marza|^kusy/.test(an2)) continue;
+        if(r27Nrm(bp(t2+1,1)).indexOf("marza")!==0) continue;
+        var men2=String(bp(t2,1)).replace(/[,;]\s*$/,"").replace(/\s*-\s*/g,"-").replace(/\s+/g," ").trim();
+        var vv2=bpRad(t2), mm2=bpRad(t2+1), kk2=/^kusy/.test(r27Nrm(bp(t2+2,1)))?bpRad(t2+2):null;
+        for(var m5=1;m5<=12;m5++){ pridaj("tlac","Kombinovaná tlač","",men2,m5,"v",vv2[m5-1]); pridaj("tlac","Kombinovaná tlač","",men2,m5,"m",mm2[m5-1]); if(kk2) pridaj("tlac","Kombinovaná tlač","",men2,m5,"k",kk2[m5-1]); }
+      }
+    }
+  }
   /* --- výstup --- */
   var vysl={};
   Object.keys(bunky).forEach(function(k){ var b=bunky[k], key="plan|"+b.sl+"|kolos";
@@ -9933,6 +9976,7 @@ function r27CitajKolosBP(bp, ad, subor, adList){
     if(Math.abs(a-b)>1) upoz.push(nazov+" – "+({v:"výnos",m:"marža",k:"kusy"})[mk]+": súčet v exceli "+fmtNum(Math.round(b))+", načítané "+fmtNum(Math.round(a))); }); }
   kontrola("Adresné doručovanie (hárok „"+adList+"“)", vysl["plan|adresne|kolos"], spolu);
   kontrola("Neadresné doručovanie (Business Plan)", vysl["plan|neadresne|kolos"], ndSpolu);
+  if(tlSpolu) kontrola("Tlač ("+(tl && tl.cell ? "hárok „Tlač 2027“" : "Business Plan")+")", vysl["plan|tlac|kolos"], tlSpolu);
   if(vynechaneNB.v) upoz.push("Adresné – blok NEW BUSINESS ("+fmtNum(Math.round(vynechaneNB.v))+" € výnos, "+fmtNum(Math.round(vynechaneNB.m))+" € marža, "+fmtNum(Math.round(vynechaneNB.k))+" ks) sa nenačítal.");
   return { skupiny:vysl, chyby:chyby, upozornenia:upoz, subor:subor, nb:false, firmaPlan:"Kolos" };
 }
@@ -18879,7 +18923,7 @@ function celkRenderSumar(){
       kN+=rpN(sl.nazov+' spolu', vA, mA, kA, vA, {tot:true, cum:''})+'</tbody></table>';
       h+=kN;
     }
-    host.innerHTML='<div class="sm-w">'+h+'</div>';
+    host.innerHTML='<div class="sm-w">'+h+'</div>'; smHlavMiesto(host);
     return;
   }
   /* --- po produktoch --- */
@@ -18916,13 +18960,15 @@ function celkRenderSumar(){
     k+='</tbody></table>';
     h+=k;
   }
-  host.innerHTML='<div class="sm-w">'+h+'</div>';
+  host.innerHTML='<div class="sm-w">'+h+'</div>'; smHlavMiesto(host);
 }
 
 
 /* ===================== SUMÁR – všetky služby naraz (filter „Všetko“ alebo viac služieb) =====================
    Celkové výsledky: plán 2027 vs realita 2026 + odhad; New business: produkty a klienti len ako rozpis plánu.
    Kusy sa naprieč službami nesčítavajú (rôzne jednotky) – ukazujú sa len pri jednotlivých službách. */
+/* prepínače (Firma, Valadio) stoja vpravo hore – nadpis nesmie ísť pod ne */
+function smHlavMiesto(host){ try{ var tg=host.querySelector('.sm-tog'), hd=host.querySelector('.sm-hd'); if(tg && hd) hd.style.paddingRight=(tg.offsetWidth+24)+'px'; }catch(e){} }
 function smVsetko(host, ids){
   var NBc=(r27Ctx()==="nb"), G=r27Skupiny(), A=G.hl, B=(STRUKTURA_2027.faza==="vyk"?G.pl:G.r26);
   var mm=dpPer(), nA=A.t.replace(" · "," "), nB=B.t.replace(" · "," ");
@@ -18933,7 +18979,8 @@ function smVsetko(host, ids){
   function chev(o){ return '<span class="sm-ch'+(o?' o':'')+'">›</span>'; }
   /* firmy */
   var fSet={}; r27Riadky().forEach(function(r){ if(ids.indexOf(r.sluzba)>=0 && r.firma && (r.rok===A.rok||r.rok===B.rok)) fSet[r.firma]=1; });
-  var firmy=STRUKTURA_2027.firmy.map(function(f){ return f.id; }).filter(function(k){ return fSet[k]; });
+  /* prepínač firmy slúži len na Cromwell / Kolos (tlač, adresné, neadresné) – ZPC Group sa filtruje cez služby hore */
+  var firmy=STRUKTURA_2027.firmy.map(function(f){ return f.id; }).filter(function(k){ return fSet[k] && k!=="zpc"; });
   if(SM_FIR && firmy.indexOf(SM_FIR)<0) SM_FIR=""; var FIR=SM_FIR;
   /* služby s plánom (porovnanie len za ne) */
   var sPlan=ids.filter(function(id){ return r27Riadky().some(function(r){ return r.rok===A.rok && r.typ===A.typ && r.sluzba===id && (!FIR||r.firma===FIR); }); });
@@ -18956,7 +19003,7 @@ function smVsetko(host, ids){
   function slTag(n){ var f=kf(n), ss={}; r27Riadky().forEach(function(r){ if(r.rok===A.rok && r.typ===A.typ && ids.indexOf(r.sluzba)>=0 && (!FIR||r.firma===FIR) && f(r)) ss[r.sluzba]=1; });
     var k=Object.keys(ss); if(n===R27_OSTATNI || !k.length) return ''; return ' <span class="sm-ftag">'+k.map(function(x){ return r27Sluzba(x).nazov; }).join(' + ')+'</span>'; }
   /* --- hlavička --- */
-  var firN=FIR?' · '+r27FirmaNazov(FIR):'', nazov=(ids.length===segList().length && state.segment==="all")?'Všetky služby':ids.map(function(i){ return r27Sluzba(i).nazov; }).join(', ');
+  var firN=FIR?' · '+r27FirmaNazov(FIR):'', nazov=(state.segment==="all")?'Všetky služby':ids.map(function(i){ return r27Sluzba(i).nazov; }).join(', ');
   var togF=(firmy.length>1)?'<span class="sm-firtog"><span class="sm-firl">Firma</span><span class="chart-toggle tog-maly r27-valtog" role="group" aria-label="Firma">'+[["","Spolu"]].concat(firmy.map(function(f){ return [f, r27FirmaNazov(f)]; })).map(function(x){
     return '<button class="chart-toggle-btn" type="button" data-smfir="'+x[0]+'" aria-pressed="'+(FIR===x[0])+'">'+r27Esc(x[1])+'</button>'; }).join('')+'</span></span>':'';
   var valT=(ids.indexOf("baliky")>=0 && r27Ctx()==="celk");
@@ -19027,7 +19074,7 @@ function smVsetko(host, ids){
     k+=rr('Spolu', {a:vA,b:vB,ma:mA,mb:mB}, NBc?vA:totM, {tot:true})+'</tbody></table>';
     h+=k;
   }
-  host.innerHTML='<div class="sm-w">'+h+'</div>';
+  host.innerHTML='<div class="sm-w">'+h+'</div>'; smHlavMiesto(host);
 }
 
 /* ===================== NB Tabuľka: vyskakovacie okno „Rozpis plánu“ =====================
