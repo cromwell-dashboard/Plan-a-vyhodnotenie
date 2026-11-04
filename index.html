@@ -6362,10 +6362,6 @@ html body #nbpr .nb-poc.nb-poc-pod:empty{display:none}
 #celk-sumar th.sm-sortth:hover{color:#3d4eb8}
 #celk-sumar th.sm-sortth .sm-sorti{font-style:normal;font-size:9px;margin-left:4px;opacity:.55}
 #celk-sumar th.sm-sortth.on .sm-sorti{opacity:1}
-.r27-fbok{font-size:11px;color:#1f7a3a;font-weight:600}
-.r27-fbno{font-size:11px;color:#b45309;font-weight:600}
-.r27-push{margin-left:6px;font:inherit;font-size:11px;padding:2px 8px;border:1px solid #3d4eb8;color:#3d4eb8;background:#fff;border-radius:3px;cursor:pointer}
-.r27-fbinfo{font-size:12px;color:#6b7385;margin-top:8px}
 </style>
 </head>
 <body>
@@ -9643,8 +9639,6 @@ function r27RenderOdchylky(s){
    Firestore: kolekcia resultsImport, dokumenty r27_<typ>_<služba>. */
 var R27_DOCS = {};          /* id dokumentu -> { typ, sluzba, riadky:[...], autor, cas, subor } */
 var R27_LOK = "cg_r27_v1";
-/* stav každého dokumentu plánu v databáze (Firestore): "ok" = je v databáze, "nie" = nie je, "chyba: …" = nedá sa čítať */
-var R27_FB_STAV = {};
 function r27DocId(typ, sluzba, ctx, firma){ return ((ctx||r27Ctx())==="nb"?"r27nb_":"r27_")+typ+"_"+sluzba+(firma?"_"+firma:""); }
 function r27DocCtx(id){ return id.indexOf("r27nb_")===0 ? "nb" : "celk"; }
 function r27Zluc(){
@@ -9663,13 +9657,12 @@ function r27Sleduj(){
     STRUKTURA_2027.sluzby.forEach(function(sl){ [""].concat(STRUKTURA_2027.firmy.map(function(f){ return f.id; })).forEach(function(fid){
       var id=r27DocId(typ, sl.id, ctx, fid);
       FB.db.collection(FB_IMPORT).doc(id).onSnapshot(function(doc){
-        R27_FB_STAV[id] = doc.exists ? "ok" : "nie";
         if(!doc.exists){ if(R27_DOCS[id]){ delete R27_DOCS[id]; r27Zluc(); r27LokUloz(); r27Prekresli(); } return; }
         var z=doc.data()||{}, riadky=[];
         try{ riadky=JSON.parse(z.riadky||"[]"); }catch(e){ return; }
         R27_DOCS[id]={ typ:typ, sluzba:sl.id, firma:fid, riadky:riadky, autor:z.autor||"", cas:z.cas||0, subor:z.subor||"" };
         r27Zluc(); r27LokUloz(); r27Prekresli();
-      }, function(err){ R27_FB_STAV[id]="chyba: "+((err&&(err.code||err.message))||"neznáma"); try{ console.warn("[r27] čítanie "+id+" zlyhalo", err); }catch(_){} });
+      }, function(){});
     }); });
   }); });
 }
@@ -10426,26 +10419,15 @@ function r27Dialog(vysl){
   var docs=Object.keys(R27_DOCS).filter(function(id){ return r27DocCtx(id)===r27Ctx(); }).sort();
   h+='<div class="r27-dlg-sek"><b>Nahraté v dashboarde</b>'+(docs.length?
     '<table class="r27-dlg-t"><tbody>'+docs.map(function(id){ var d=R27_DOCS[id], sl=r27Sluzba(d.sluzba);
-      var st=R27_FB_STAV[id], stH = st==="ok" ? '<span class="r27-fbok" title="Dokument je uložený v databáze – vidia ho všetci">✓ v databáze</span>'
-        : '<span class="r27-fbno" title="'+r27Esc(st||"databáza zatiaľ neodpovedala / nie ste prihlásená")+'">⚠ len v tomto prehliadači'+(st&&st!=="nie"?' ('+r27Esc(st)+')':'')+'</span>'+
-          ((FB.db && FB.uzivatel)?' <button type="button" class="r27-push" data-r27push="'+id+'">Odoslať do databázy</button>':'');
-      return '<tr><td>'+r27Esc(sl?sl.nazov:d.sluzba)+(d.firma?' · '+r27Esc((STRUKTURA_2027.firmy.filter(function(f){ return f.id===d.firma; })[0]||{nazov:d.firma}).nazov):'')+'<br>'+stH+'</td><td>'+(d.typ==="plan"?"plán":"realita")+'</td><td>'+d.riadky.length+' riadkov</td><td>'+r27Esc(d.autor||"")+' · '+kedy(d.cas)+(d.subor?' · '+r27Esc(d.subor):'')+'</td>'+
+      return '<tr><td>'+r27Esc(sl?sl.nazov:d.sluzba)+(d.firma?' · '+r27Esc((STRUKTURA_2027.firmy.filter(function(f){ return f.id===d.firma; })[0]||{nazov:d.firma}).nazov):'')+'</td><td>'+(d.typ==="plan"?"plán":"realita")+'</td><td>'+d.riadky.length+' riadkov</td><td>'+r27Esc(d.autor||"")+' · '+kedy(d.cas)+(d.subor?' · '+r27Esc(d.subor):'')+'</td>'+
         '<td><button type="button" class="r27-del" data-r27del="'+id+'">Zmazať</button></td></tr>'; }).join('')+'</tbody></table>'
-    : '<p class="r27-dlg-p">Zatiaľ nič.</p>')+
-    '<p class="r27-dlg-p r27-fbinfo">Databáza: '+((FB.db && FB.uzivatel) ? 'prihlásená ako <b>'+r27Esc(FB.meno||FB.uzivatel.email||"")+'</b>' : '<b>nie ste prihlásená</b> – plán sa ukladá len do tohto prehliadača')+'</p></div>';
+    : '<p class="r27-dlg-p">Zatiaľ nič.</p>')+'</div>';
   h+='<div class="r27-dlg-f">'+(vysl&&keys.length?'<button type="button" class="r27-ok" data-r27dlg="uloz">Uložiť do dashboardu</button>':'')+
      '<button type="button" class="r27-sec" data-r27dlg="vyber">'+(vysl?'Vybrať iný súbor':'Vybrať súbor (.xlsx)')+'</button>'+
      '<button type="button" class="r27-sec" data-r27dlg="zavri">Zavrieť</button></div></div>';
   var ov=document.createElement("div"); ov.id="r27-ov"; ov.className="r27-ov"; ov.innerHTML=h;
   document.body.appendChild(ov);
   ov.addEventListener("click", function(e){
-    var tp=e.target.closest("[data-r27push]");
-    if(tp){ var pid=tp.getAttribute("data-r27push"), pd=R27_DOCS[pid]; if(!pd || !(FB.db && FB.uzivatel)) return; tp.disabled=true; tp.textContent="Odosielam…";
-      FB.db.collection(FB_IMPORT).doc(pid).set({ riadky:JSON.stringify(pd.riadky), autor:pd.autor||FB.meno||"", email:(FB.uzivatel.email||""), subor:pd.subor||"", cas:pd.cas||Date.now(), typ:pd.typ, sluzba:pd.sluzba, firma:pd.firma||"" })
-        .then(function(){ return FB.db.collection(FB_IMPORT).doc(pid).get({source:"server"}); })
-        .then(function(d){ R27_FB_STAV[pid]=d.exists?"ok":"nie"; r27Dialog(vysl); })
-        .catch(function(err){ R27_FB_STAV[pid]="chyba: "+((err&&(err.code||err.message))||""); alert("Odoslanie do databázy sa nepodarilo: "+((err&&(err.code||err.message))||"")); r27Dialog(vysl); });
-      return; }
     var t=e.target.closest("[data-r27dlg],[data-r27del]");
     if(e.target===ov){ r27Zavri(); return; }
     if(!t) return;
@@ -10475,12 +10457,7 @@ function r27Uloz(vysl){
   });
   r27Zluc(); r27LokUloz(); r27Zavri(); r27Prekresli();
   if(!(FB.db && FB.uzivatel)){ alert("Nie ste prihlásená – údaje sú zatiaľ len v tomto prehliadači. Po prihlásení ich nahrajte znova, aby ich videli všetci."); return; }
-  Promise.all(sluby).then(function(){
-      /* overenie zo servera – či je plán naozaj v databáze (vidia ho aj kolegovia) */
-      return Promise.all(Object.keys(vysl.skupiny).map(function(k){ var g=vysl.skupiny[k], id=r27DocId(g.typ,g.sluzba,null,g.firma);
-        return FB.db.collection(FB_IMPORT).doc(id).get({source:"server"}).then(function(d){ R27_FB_STAV[id]=d.exists?"ok":"nie"; return d.exists; }); }));
-    }).then(function(ok){ if(ok && ok.some(function(x){ return !x; })) alert("Pozor: plán sa nepodarilo overiť v databáze – kolegovia ho nemusia vidieť. Otvorte Import plánu a skontrolujte stav pri službách.");
-      try{ fbStav("plán 2027 uložený","ok"); }catch(e){} })
+  Promise.all(sluby).then(function(){ try{ fbStav("plán 2027 uložený","ok"); }catch(e){} })
     .catch(function(err){ alert("Uloženie do databázy sa nepodarilo ("+(err&&(err.code||err.message)||"")+"). Údaje ostali len v tomto prehliadači."); });
 }
 (function(){
