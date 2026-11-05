@@ -9025,6 +9025,22 @@ function r27Rozpis(r, hp, zdroj){
   if(r.mS){ Object.keys(mv.o).forEach(function(k){ row(k.split("|")).mS += r.mS*mv.o[k]/mv.t; }); }
   return Object.keys(rows).map(function(k){ var x=rows[k]; x.zdroj=(r.zdroj||"")+" (po produktoch)"; return x; }).filter(function(x){ return x.v||x.m||x.k||x.mS; });
 }
+/* Adresné doručovanie Cromwell 2026 (Realita 2026 + odhad) natvrdo podľa excelu New_BP_2027__Adress_10centov_v2, hárok „ges ges 2026_2027“:
+   jan – sep = stĺpec „Real 2026 09“, okt – dec = „BP 26 -10 -12“; výnos = Spolu € (obrat), marža = Spolu € marža, kusy = Spolu ks.
+   Po skupinách klientov z excelu; v rámci skupiny sa zachová mesačný, produktový a klientsky mix dashboardu. Zvyšok = Ostatní + New Business ost
+   (New Business PZ nie je v SPOLU excelu, preto nie je ani tu). Súčet = SPOLU SPOLU. */
+var R27_AD26 = {"skup": [{"n": "Tatrabilling", "kl": ["Tatrabilling"], "G": {"v": 4018118.03, "m": 276574.28, "k": 4891037}, "H": {"v": 1071654.6, "m": 71340.6, "k": 1312000}}, {"n": "Slovenská sporiteľňa", "kl": ["Slovenská sporiteľňa"], "G": {"v": 2678710.36, "m": 900266.74, "k": 2130237}, "H": {"v": 665959.11, "m": 233066.98, "k": 535894}}, {"n": "365 bank", "kl": ["365.bank", "365.invest", "365.AHOJ"], "G": {"v": 1230327.47, "m": 327592.29, "k": 1021160}, "H": {"v": 231735.91, "m": 56369.55, "k": 194410}}, {"n": "Orange", "kl": ["Orange"], "G": {"v": 1790079.5, "m": 673410.47, "k": 1369655}, "H": {"v": 479252.55, "m": 180664.35, "k": 369600}}, {"n": "Tesco Club card", "kl": ["Tesco Club card"], "G": {"v": 497560.21, "m": 175570.14, "k": 425920}, "H": {"v": 131003.9, "m": 48092.3, "k": 108970}}, {"n": "ČSOB Group", "kl": ["ČSOB", "ČSOB poisťovňa"], "G": {"v": 1418901.38, "m": 425267.13, "k": 1138625}, "H": {"v": 505687.91, "m": 152168.91, "k": 106288.88}}, {"n": "O2", "kl": ["O2"], "G": {"v": 554280.02, "m": 226984.26, "k": 393900}, "H": {"v": 223915, "m": 91531, "k": 160750}}, {"n": "Generali Poisťovňa", "kl": ["Generali Poisťovňa"], "G": {"v": 623587.48, "m": 209973.23, "k": 492491}, "H": {"v": 176072.83, "m": 61301.13, "k": 143308}}, {"n": "T COM", "kl": ["Slovak Telekom", "Digi Slovakia"], "G": {"v": 1305549.9, "m": 1139900, "k": 1068709}, "H": {"v": 422955, "m": 361530, "k": 351000}}, {"n": "SSE", "kl": ["SSE"], "G": {"v": 849764.39, "m": 190565.11, "k": 607683}, "H": {"v": 262335, "m": 59949, "k": 186000}}, {"n": "PSS", "kl": ["PSS"], "G": {"v": 363016.64, "m": 133015.11, "k": 296079}, "H": {"v": 56800.56, "m": 21908.76, "k": 45726}}, {"n": "Möbelix + XXXLutz", "kl": ["Möbelix", "XXXLutz"], "G": {"v": 94677.6, "m": 33223.06, "k": 155976}, "H": {"v": 36300, "m": 6612, "k": 60000}}, {"n": "Metro", "kl": ["Metro"], "G": {"v": 87355, "m": 2530.75, "k": 209500}, "H": {"v": 50925, "m": 8767.5, "k": 105000}}], "zvysok": {"G": {"v": 884350.53, "m": 257726.9, "k": 898355}, "H": {"v": 229849.53, "m": 60267.01, "k": 198376}}};
+function r27Ad26(out){
+  var D=R27_AD26, sk={}, S={}, zv="*";
+  D.skup.forEach(function(g){ g.kl.forEach(function(k){ sk[k]=g.n; }); });
+  var ciel={}; D.skup.forEach(function(g){ ciel[g.n]=g; }); ciel[zv]=D.zvysok;
+  var vyb=function(r){ return r.rok===2026 && r.typ==="odhad" && r.sluzba==="adresne" && r.firma==="cromwell"; };
+  out.forEach(function(r){ if(!vyb(r)) return; var g=sk[r.klient]||zv, P=r.mes<=9?"G":"H", q=(S[g+"|"+P]=S[g+"|"+P]||{v:0,m:0,k:0});
+    q.v+=r.v||0; q.m+=r.m||0; q.k+=r.k||0; });
+  out.forEach(function(r){ if(!vyb(r)) return; var g=sk[r.klient]||zv, P=r.mes<=9?"G":"H", q=S[g+"|"+P], t=ciel[g][P];
+    ["v","m","k"].forEach(function(x){ var f=q[x]?t[x]/q[x]:1; if(x==="m" && r.mS!=null && r.m) r.mS=r.mS*f; r[x]=(r[x]||0)*f; }); });
+  return out;
+}
 function r27Historia(){
   if(r27Ctx()==="nb") return r27HistoriaNB();
   if(R27_CACHE.data===MASKA) return R27_CACHE.riadky;
@@ -9119,6 +9135,7 @@ function r27Historia(){
       }
     }
   });
+  r27Ad26(out);
   R27_CACHE={ data:MASKA, riadky:out };
   return out;
 }
